@@ -8,7 +8,7 @@ app.use(express.static(path.join('./')));
 app.get('/', function(request, response) {
   console.log('client');
   superagent
-    .get('http://localhost:3001')
+    .get('https://spendyapi/')
     .end(function(req, res) {
       response.send(res.text);
     });
