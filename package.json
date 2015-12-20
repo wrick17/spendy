@@ -1,0 +1,19 @@
+{
+  "name": "spendy",
+  "version": "1.0.0",
+  "description": "An expense management system for a group of people living together",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrick17/spendy.git"
+  },
+  "author": "Pratyush Poddar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wrick17/spendy/issues"
+  },
+  "homepage": "https://github.com/wrick17/spendy#readme"
+}
