@@ -1,2 +1,2 @@
-# expendible
+# spendy
 An expense management system for a group of people living together
