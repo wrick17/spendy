@@ -5,13 +5,8 @@ var express = require('express'),
 
 app.use(express.static(path.join('./')));
 
-app.get('/', function(request, response) {
-  console.log('client');
-  superagent
-    .get('https://spendyapi.herokuapp.com/')
-    .end(function(req, res) {
-      response.send(res.text);
-    });
+app.get('/', function(req, res) {
+ res.sendFile(__dirname + '/index.html');
 });
 
 var server = app.listen(process.env.PORT || 3000, function() {
