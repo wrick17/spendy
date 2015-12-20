@@ -8,7 +8,7 @@ app.use(express.static(path.join('./')));
 app.get('/', function(request, response) {
   console.log('client');
   superagent
-    .get('https://spendyapi/')
+    .get('https://spendyapi.herokuapp.com/')
     .end(function(req, res) {
       response.send(res.text);
     });
