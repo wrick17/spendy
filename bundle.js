@@ -4022,6 +4022,14 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _HeaderJsx = __webpack_require__(160);
+
+	var _HeaderJsx2 = _interopRequireDefault(_HeaderJsx);
+
+	var _DashboardJsx = __webpack_require__(163);
+
+	var _DashboardJsx2 = _interopRequireDefault(_DashboardJsx);
+
 	var App = (function (_React$Component) {
 	  _inherits(App, _React$Component);
 
@@ -4036,8 +4044,9 @@
 	    value: function render() {
 	      return _react2['default'].createElement(
 	        'div',
-	        null,
-	        'Yo Baby!!'
+	        { className: 'app' },
+	        _react2['default'].createElement(_HeaderJsx2['default'], null),
+	        _react2['default'].createElement(_DashboardJsx2['default'], null)
 	      );
 	    }
 	  }]);
@@ -4047,6 +4056,849 @@
 
 	exports['default'] = App;
 	module.exports = exports['default'];
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _LogoJsx = __webpack_require__(161);
+
+	var _LogoJsx2 = _interopRequireDefault(_LogoJsx);
+
+	var _ContainerJsx = __webpack_require__(162);
+
+	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
+
+	var Header = (function (_React$Component) {
+	  _inherits(Header, _React$Component);
+
+	  function Header() {
+	    _classCallCheck(this, Header);
+
+	    _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Header, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'header',
+	        { className: 'header' },
+	        _react2['default'].createElement(
+	          _ContainerJsx2['default'],
+	          null,
+	          _react2['default'].createElement(_LogoJsx2['default'], null)
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Header;
+	})(_react2['default'].Component);
+
+	exports['default'] = Header;
+	module.exports = exports['default'];
+
+/***/ },
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Logo = (function (_React$Component) {
+	  _inherits(Logo, _React$Component);
+
+	  function Logo() {
+	    _classCallCheck(this, Logo);
+
+	    _get(Object.getPrototypeOf(Logo.prototype), "constructor", this).apply(this, arguments);
+	  }
+
+	  _createClass(Logo, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        "div",
+	        { className: "logo" },
+	        _react2["default"].createElement(
+	          "a",
+	          { href: "/" },
+	          _react2["default"].createElement(
+	            "label",
+	            null,
+	            "Spendy"
+	          ),
+	          _react2["default"].createElement(
+	            "span",
+	            null,
+	            "Alpha"
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Logo;
+	})(_react2["default"].Component);
+
+	exports["default"] = Logo;
+	module.exports = exports["default"];
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Container = (function (_React$Component) {
+	  _inherits(Container, _React$Component);
+
+	  function Container() {
+	    _classCallCheck(this, Container);
+
+	    _get(Object.getPrototypeOf(Container.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Container, [{
+	    key: 'render',
+	    value: function render() {
+
+	      var classes = 'container ';
+	      if (this.props.className) classes += this.props.className;
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: classes },
+	        this.props.children
+	      );
+	    }
+	  }]);
+
+	  return Container;
+	})(_react2['default'].Component);
+
+	exports['default'] = Container;
+	;
+	module.exports = exports['default'];
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _OverviewJsx = __webpack_require__(164);
+
+	var _OverviewJsx2 = _interopRequireDefault(_OverviewJsx);
+
+	var _NewEntryJsx = __webpack_require__(165);
+
+	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
+
+	var _ContainerJsx = __webpack_require__(162);
+
+	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
+
+	var Dashboard = (function (_React$Component) {
+	  _inherits(Dashboard, _React$Component);
+
+	  function Dashboard() {
+	    _classCallCheck(this, Dashboard);
+
+	    _get(Object.getPrototypeOf(Dashboard.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Dashboard, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        _ContainerJsx2['default'],
+	        null,
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'dashboard' },
+	          _react2['default'].createElement(_OverviewJsx2['default'], null),
+	          _react2['default'].createElement(_NewEntryJsx2['default'], null)
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Dashboard;
+	})(_react2['default'].Component);
+
+	exports['default'] = Dashboard;
+	module.exports = exports['default'];
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Bounty = (function (_React$Component) {
+	  _inherits(Bounty, _React$Component);
+
+	  function Bounty() {
+	    _classCallCheck(this, Bounty);
+
+	    _get(Object.getPrototypeOf(Bounty.prototype), "constructor", this).apply(this, arguments);
+	  }
+
+	  _createClass(Bounty, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        "li",
+	        { className: "bounty" },
+	        _react2["default"].createElement(
+	          "label",
+	          null,
+	          _react2["default"].createElement(
+	            "span",
+	            { className: "rank" },
+	            "#",
+	            this.props.rank
+	          ),
+	          this.props.name
+	        ),
+	        _react2["default"].createElement(
+	          "span",
+	          null,
+	          "₹",
+	          this.props.bounty
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Bounty;
+	})(_react2["default"].Component);
+
+	var BountyList = (function (_React$Component2) {
+	  _inherits(BountyList, _React$Component2);
+
+	  function BountyList() {
+	    _classCallCheck(this, BountyList);
+
+	    _get(Object.getPrototypeOf(BountyList.prototype), "constructor", this).apply(this, arguments);
+	  }
+
+	  _createClass(BountyList, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        "ul",
+	        { className: "bounty-list" },
+	        _react2["default"].createElement(Bounty, { rank: "1", name: "Sayan", bounty: "1480" }),
+	        _react2["default"].createElement(Bounty, { rank: "2", name: "Abhishek", bounty: "1320" }),
+	        _react2["default"].createElement(Bounty, { rank: "3", name: "Pratyush", bounty: "100" }),
+	        _react2["default"].createElement(Bounty, { rank: "4", name: "Utsav", bounty: "0" })
+	      );
+	    }
+	  }]);
+
+	  return BountyList;
+	})(_react2["default"].Component);
+
+	var Overview = (function (_React$Component3) {
+	  _inherits(Overview, _React$Component3);
+
+	  function Overview() {
+	    _classCallCheck(this, Overview);
+
+	    _get(Object.getPrototypeOf(Overview.prototype), "constructor", this).apply(this, arguments);
+	  }
+
+	  _createClass(Overview, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        "div",
+	        { className: "overview" },
+	        _react2["default"].createElement(
+	          "h2",
+	          { className: "overview-header" },
+	          "Bounty"
+	        ),
+	        _react2["default"].createElement(BountyList, null)
+	      );
+	    }
+	  }]);
+
+	  return Overview;
+	})(_react2["default"].Component);
+
+	exports["default"] = Overview;
+	module.exports = exports["default"];
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDayPicker = __webpack_require__(166);
+
+	var _reactDayPicker2 = _interopRequireDefault(_reactDayPicker);
+
+	var NewEntry = (function (_React$Component) {
+	  _inherits(NewEntry, _React$Component);
+
+	  function NewEntry(props) {
+	    _classCallCheck(this, NewEntry);
+
+	    _get(Object.getPrototypeOf(NewEntry.prototype), 'constructor', this).call(this, props);
+	    this.setDate = this.setDate.bind(this);
+	    this.showPicker = this.showPicker.bind(this);
+	    this.closePicker = this.closePicker.bind(this);
+	    this.state = {
+	      date: 'Today',
+	      open: false
+	    };
+	  }
+
+	  _createClass(NewEntry, [{
+	    key: 'setDate',
+	    value: function setDate(e, day) {
+	      this.setState({
+	        date: day
+	      });
+	      this.closePicker();
+	    }
+	  }, {
+	    key: 'showPicker',
+	    value: function showPicker() {
+	      this.setState({
+	        open: true
+	      });
+	    }
+	  }, {
+	    key: 'closePicker',
+	    value: function closePicker() {
+	      this.setState({
+	        open: false
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'new-entry' },
+	        _react2['default'].createElement(
+	          'h2',
+	          { className: 'new-entry-header' },
+	          'Bounty'
+	        ),
+	        _react2['default'].createElement(
+	          'form',
+	          { className: 'entry-form' },
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2['default'].createElement(
+	              'label',
+	              null,
+	              'Date'
+	            ),
+	            _react2['default'].createElement(
+	              'div',
+	              { className: 'sub-form' },
+	              _react2['default'].createElement('input', { 'data-value': this.state.date, value: this.state.date.toString().slice(0, 15), onClick: this.showPicker }),
+	              this.state.open ? _react2['default'].createElement(_reactDayPicker2['default'], { toMonth: new Date(), onDayClick: this.setDate }) : null
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2['default'].createElement(
+	              'label',
+	              null,
+	              'Cost'
+	            ),
+	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost' })
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2['default'].createElement(
+	              'label',
+	              null,
+	              'Item'
+	            ),
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on' })
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2['default'].createElement(
+	              'label',
+	              null,
+	              'Contributer'
+	            ),
+	            _react2['default'].createElement(
+	              'select',
+	              null,
+	              _react2['default'].createElement(
+	                'option',
+	                { disabled: true },
+	                'Choose Contributer'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Sayan'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Abhishek'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Pratyush'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Utsav'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'form-group' },
+	            _react2['default'].createElement(
+	              'label',
+	              null,
+	              'Tag'
+	            ),
+	            _react2['default'].createElement(
+	              'select',
+	              null,
+	              _react2['default'].createElement(
+	                'option',
+	                { disabled: true },
+	                'Choose Tag'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Sayan'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Abhishek'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Pratyush'
+	              ),
+	              _react2['default'].createElement(
+	                'option',
+	                null,
+	                'Utsav'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return NewEntry;
+	})(_react2['default'].Component);
+
+	exports['default'] = NewEntry;
+	module.exports = exports['default'];
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";module.exports = __webpack_require__(167), module.exports.DateUtils = __webpack_require__(169), module.exports.LocaleUtils = __webpack_require__(170);
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";function _interopRequireDefault(e) {
+	  return e && e.__esModule ? e : { "default": e };
+	}function _toConsumableArray(e) {
+	  if (Array.isArray(e)) {
+	    for (var t = 0, a = Array(e.length); t < e.length; t++) a[t] = e[t];return a;
+	  }return Array.from(e);
+	}function _classCallCheck(e, t) {
+	  if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+	}function _inherits(e, t) {
+	  if ("function" != typeof t && null !== t) throw new TypeError("Super expression must either be null or a function, not " + typeof t);e.prototype = Object.create(t && t.prototype, { constructor: { value: e, enumerable: !1, writable: !0, configurable: !0 } }), t && (Object.setPrototypeOf ? Object.setPrototypeOf(e, t) : e.__proto__ = t);
+	}Object.defineProperty(exports, "__esModule", { value: !0 });var _createClass = (function () {
+	  function e(e, t) {
+	    for (var a = 0; a < t.length; a++) {
+	      var r = t[a];r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), Object.defineProperty(e, r.key, r);
+	    }
+	  }return function (t, a, r) {
+	    return a && e(t.prototype, a), r && e(t, r), t;
+	  };
+	})(),
+	    _get = function _get(e, t, a) {
+	  for (var r = !0; r;) {
+	    var n = e,
+	        o = t,
+	        s = a;r = !1, null === n && (n = Function.prototype);var i = Object.getOwnPropertyDescriptor(n, o);if (void 0 !== i) {
+	      if ("value" in i) return i.value;var l = i.get;if (void 0 === l) return;return l.call(s);
+	    }var c = Object.getPrototypeOf(n);if (null === c) return;e = c, t = o, a = s, r = !0, i = c = void 0;
+	  }
+	},
+	    _react = __webpack_require__(1),
+	    _react2 = _interopRequireDefault(_react),
+	    _Helpers = __webpack_require__(168),
+	    _Helpers2 = _interopRequireDefault(_Helpers),
+	    _DateUtils = __webpack_require__(169),
+	    _DateUtils2 = _interopRequireDefault(_DateUtils),
+	    _LocaleUtils = __webpack_require__(170),
+	    _LocaleUtils2 = _interopRequireDefault(_LocaleUtils),
+	    keys = { LEFT: 37, RIGHT: 39, ENTER: 13, SPACE: 32 },
+	    Caption = (function (e) {
+	  function t() {
+	    _classCallCheck(this, t), _get(Object.getPrototypeOf(t.prototype), "constructor", this).apply(this, arguments);
+	  }return _inherits(t, e), _createClass(t, [{ key: "render", value: function value() {
+	      var e = this.props,
+	          t = e.date,
+	          a = e.locale,
+	          r = e.localeUtils,
+	          n = e.onClick;return _react2["default"].createElement("div", { className: "DayPicker-Caption", onClick: n }, r.formatMonthTitle(t, a));
+	    } }]), t;
+	})(_react.Component),
+	    DayPicker = (function (e) {
+	  function t(e) {
+	    _classCallCheck(this, t), _get(Object.getPrototypeOf(t.prototype), "constructor", this).call(this, e), this.state = { currentMonth: _Helpers2["default"].startOfMonth(e.initialMonth) };
+	  }return _inherits(t, e), _createClass(t, null, [{ key: "propTypes", value: { className: _react.PropTypes.string, style: _react.PropTypes.object, tabIndex: _react.PropTypes.number, initialMonth: _react.PropTypes.instanceOf(Date), numberOfMonths: _react.PropTypes.number, modifiers: _react.PropTypes.object, locale: _react.PropTypes.string, localeUtils: _react.PropTypes.shape({ formatMonthTitle: _react.PropTypes.func, formatWeekdayShort: _react.PropTypes.func, formatWeekdayLong: _react.PropTypes.func, getFirstDayOfWeek: _react.PropTypes.func }), enableOutsideDays: _react.PropTypes.bool, canChangeMonth: _react.PropTypes.bool, fromMonth: _react.PropTypes.instanceOf(Date), toMonth: _react.PropTypes.instanceOf(Date), onDayClick: _react.PropTypes.func, onDayTouchTap: _react.PropTypes.func, onDayMouseEnter: _react.PropTypes.func, onDayMouseLeave: _react.PropTypes.func, onMonthChange: _react.PropTypes.func, onCaptionClick: _react.PropTypes.func, renderDay: _react.PropTypes.func, captionElement: _react.PropTypes.element }, enumerable: !0 }, { key: "defaultProps", value: { tabIndex: 0, initialMonth: new Date(), numberOfMonths: 1, locale: "en", localeUtils: _LocaleUtils2["default"], enableOutsideDays: !1, canChangeMonth: !0, renderDay: function renderDay(e) {
+	        return e.getDate();
+	      }, captionElement: _react2["default"].createElement(Caption, null) }, enumerable: !0 }]), _createClass(t, [{ key: "componentWillReceiveProps", value: function value(e) {
+	      this.props.initialMonth !== e.initialMonth && this.setState({ currentMonth: _Helpers2["default"].startOfMonth(e.initialMonth) });
+	    } }, { key: "allowPreviousMonth", value: function value() {
+	      var e = this.props.fromMonth;if (!e) return !0;var t = this.state.currentMonth;return _Helpers2["default"].getMonthsDiff(t, e) < 0;
+	    } }, { key: "allowNextMonth", value: function value() {
+	      var e = this.props,
+	          t = e.toMonth,
+	          a = e.numberOfMonths;if (!t) return !0;var r = this.state.currentMonth;return _Helpers2["default"].getMonthsDiff(r, t) >= a;
+	    } }, { key: "allowMonth", value: function value(e) {
+	      var t = this.props,
+	          a = t.fromMonth,
+	          r = t.toMonth;return a && _Helpers2["default"].getMonthsDiff(a, e) < 0 || r && _Helpers2["default"].getMonthsDiff(r, e) > 0 ? !1 : !0;
+	    } }, { key: "showMonth", value: function value(e) {
+	      this.allowMonth(e) && this.setState({ currentMonth: _Helpers2["default"].startOfMonth(e) });
+	    } }, { key: "showNextMonth", value: function value(e) {
+	      var t = this;if (this.allowNextMonth()) {
+	        var a = this.state.currentMonth,
+	            r = _DateUtils2["default"].addMonths(a, 1);this.setState({ currentMonth: r }, function () {
+	          e && e(), t.props.onMonthChange && t.props.onMonthChange(t.state.currentMonth);
+	        });
+	      }
+	    } }, { key: "showPreviousMonth", value: function value(e) {
+	      var t = this;if (this.allowPreviousMonth()) {
+	        var a = this.state.currentMonth,
+	            r = _DateUtils2["default"].addMonths(a, -1);this.setState({ currentMonth: r }, function () {
+	          e && e(), t.props.onMonthChange && t.props.onMonthChange(t.state.currentMonth);
+	        });
+	      }
+	    } }, { key: "focusPreviousDay", value: function value(e) {
+	      for (var t = e.parentNode.parentNode.parentNode.parentNode, a = t.querySelectorAll(".DayPicker-Day:not(.DayPicker-Day--outside)"), r = void 0, n = 0; n < a.length; n++) if (a[n] === e) {
+	        r = n;break;
+	      }if (0 === r) {
+	        var o = this.state.currentMonth,
+	            s = this.props.numberOfMonths,
+	            i = _DateUtils2["default"].addMonths(o, -s);this.setState({ currentMonth: i }, function () {
+	          a = t.querySelectorAll(".DayPicker-Day:not(.DayPicker-Day--outside)"), a[a.length - 1].focus();
+	        });
+	      } else a[r - 1].focus();
+	    } }, { key: "focusNextDay", value: function value(e) {
+	      for (var t = e.parentNode.parentNode.parentNode.parentNode, a = t.querySelectorAll(".DayPicker-Day:not(.DayPicker-Day--outside)"), r = void 0, n = 0; n < a.length; n++) if (a[n] === e) {
+	        r = n;break;
+	      }if (r === a.length - 1) {
+	        var o = this.state.currentMonth,
+	            s = this.props.numberOfMonths,
+	            i = _DateUtils2["default"].addMonths(o, s);this.setState({ currentMonth: i }, function () {
+	          a = t.querySelectorAll(".DayPicker-Day:not(.DayPicker-Day--outside)"), a[0].focus();
+	        });
+	      } else a[r + 1].focus();
+	    } }, { key: "handleKeyDown", value: function value(e) {
+	      switch (e.keyCode) {case keys.LEFT:
+	          this.showPreviousMonth();break;case keys.RIGHT:
+	          this.showNextMonth();}
+	    } }, { key: "handleDayKeyDown", value: function value(e, t, a) {
+	      switch ((e.persist(), e.keyCode)) {case keys.LEFT:
+	          e.preventDefault(), e.stopPropagation(), this.focusPreviousDay(e.target);break;case keys.RIGHT:
+	          e.preventDefault(), e.stopPropagation(), this.focusNextDay(e.target);break;case keys.ENTER:case keys.SPACE:
+	          e.preventDefault(), e.stopPropagation(), this.props.onDayClick && this.handleDayClick(e, t, a), this.props.onDayTouchTap && this.handleDayTouchTap(e, t, a);}
+	    } }, { key: "handleNextMonthClick", value: function value() {
+	      this.showNextMonth();
+	    } }, { key: "handlePrevMonthClick", value: function value() {
+	      this.showPreviousMonth();
+	    } }, { key: "handleCaptionClick", value: function value(e, t) {
+	      e.persist(), this.props.onCaptionClick(e, t);
+	    } }, { key: "handleDayTouchTap", value: function value(e, t, a) {
+	      e.persist(), a.indexOf("outside") > -1 && this.handleOutsideDayPress(t), this.props.onDayTouchTap(e, t, a);
+	    } }, { key: "handleDayClick", value: function value(e, t, a) {
+	      e.persist(), a.indexOf("outside") > -1 && this.handleOutsideDayPress(t), this.props.onDayClick(e, t, a);
+	    } }, { key: "handleDayMouseEnter", value: function value(e, t, a) {
+	      e.persist(), this.props.onDayMouseEnter(e, t, a);
+	    } }, { key: "handleDayMouseLeave", value: function value(e, t, a) {
+	      e.persist(), this.props.onDayMouseLeave(e, t, a);
+	    } }, { key: "handleOutsideDayPress", value: function value(e) {
+	      var t = this.state.currentMonth,
+	          a = this.props.numberOfMonths,
+	          r = _Helpers2["default"].getMonthsDiff(t, e);r > 0 && r >= a ? this.showNextMonth() : 0 > r && this.showPreviousMonth();
+	    } }, { key: "renderNavBar", value: function value() {
+	      var e = "DayPicker-NavButton DayPicker-NavButton";return _react2["default"].createElement("div", { className: "DayPicker-NavBar" }, this.allowPreviousMonth() && _react2["default"].createElement("span", { key: "prev", className: e + "--prev", onClick: this.handlePrevMonthClick.bind(this) }), this.allowNextMonth() && _react2["default"].createElement("span", { key: "next", className: e + "--next", onClick: this.handleNextMonthClick.bind(this) }));
+	    } }, { key: "renderMonth", value: function value(e, t) {
+	      var a = this,
+	          r = this.props,
+	          n = r.locale,
+	          o = r.localeUtils,
+	          s = r.onCaptionClick,
+	          i = r.captionElement,
+	          l = _react2["default"].cloneElement(i, { date: e, localeUtils: o, locale: n, onClick: s ? function (t) {
+	          return a.handleCaptionClick(t, e);
+	        } : null });return _react2["default"].createElement("div", { className: "DayPicker-Month", key: t }, l, _react2["default"].createElement("div", { className: "DayPicker-Weekdays" }, _react2["default"].createElement("div", { className: "DayPicker-WeekdaysRow" }, this.renderWeekDays())), _react2["default"].createElement("div", { className: "DayPicker-Body" }, this.renderWeeksInMonth(e)));
+	    } }, { key: "renderWeekDays", value: function value() {
+	      for (var e = this.props, t = e.locale, a = e.localeUtils, r = [], n = 0; 7 > n; n++) r.push(_react2["default"].createElement("div", { key: n, className: "DayPicker-Weekday" }, _react2["default"].createElement("abbr", { title: a.formatWeekdayLong(n, t) }, a.formatWeekdayShort(n, t))));return r;
+	    } }, { key: "renderWeeksInMonth", value: function value(e) {
+	      var t = this,
+	          a = this.props,
+	          r = a.locale,
+	          n = a.localeUtils,
+	          o = n.getFirstDayOfWeek(r);return _Helpers2["default"].getWeekArray(e, o).map(function (a, r) {
+	        return _react2["default"].createElement("div", { key: r, className: "DayPicker-Week", role: "row" }, a.map(function (a) {
+	          return t.renderDay(e, a);
+	        }));
+	      });
+	    } }, { key: "renderDay", value: function a(e, t) {
+	      var r = this,
+	          a = this.props.renderDay,
+	          n = this.props,
+	          o = n.enableOutsideDays,
+	          s = n.modifiers,
+	          i = "DayPicker-Day",
+	          l = [],
+	          c = "" + t.getFullYear() + t.getMonth() + t.getDate(),
+	          u = _DateUtils2["default"].isSameDay(t, new Date());u && l.push("today");var h = t.getMonth() !== e.getMonth();if ((h && l.push("outside"), s)) {
+	        var p = _Helpers2["default"].getModifiersForDay(t, s);l = [].concat(_toConsumableArray(l), _toConsumableArray(p));
+	      }if ((i += l.map(function (e) {
+	        return " " + i + "--" + e;
+	      }).join(""), h && !o)) return _react2["default"].createElement("div", { key: "outside-" + c, className: i });var y = this.props,
+	          f = y.onDayMouseEnter,
+	          d = y.onDayMouseLeave,
+	          D = y.onDayTouchTap,
+	          k = y.onDayClick,
+	          v = null;return !D && !k || h || (v = -1, 1 === t.getDate() && (v = this.props.tabIndex)), _react2["default"].createElement("div", { key: c, className: i, tabIndex: v, role: "gridcell", onKeyDown: function onKeyDown(e) {
+	          return r.handleDayKeyDown(e, t, l);
+	        }, onMouseEnter: f ? function (e) {
+	          return r.handleDayMouseEnter(e, t, l);
+	        } : null, onMouseLeave: d ? function (e) {
+	          return r.handleDayMouseLeave(e, t, l);
+	        } : null, onClick: k ? function (e) {
+	          return r.handleDayClick(e, t, l);
+	        } : null, onTouchTap: D ? function (e) {
+	          return r.handleDayTouchTap(e, t, l);
+	        } : null }, a(t));
+	    } }, { key: "render", value: function value() {
+	      var e = this.props,
+	          t = e.numberOfMonths,
+	          a = e.locale,
+	          r = e.style,
+	          n = e.tabIndex,
+	          o = e.canChangeMonth,
+	          s = this.state.currentMonth,
+	          i = "DayPicker DayPicker--" + a;this.props.onDayClick || this.props.onDayTouchTap || (i += " DayPicker--interactionDisabled"), this.props.className && (i = i + " " + this.props.className);for (var l = [], c = void 0, u = 0; t > u; u++) c = _DateUtils2["default"].addMonths(s, u), l.push(this.renderMonth(c, u));return _react2["default"].createElement("div", { className: i, style: r, role: "widget", tabIndex: o && n, onKeyDown: o && this.handleKeyDown.bind(this) }, o && this.renderNavBar(), l);
+	    } }]), t;
+	})(_react.Component);exports["default"] = DayPicker, module.exports = exports["default"];
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";function _interopRequireDefault(t) {
+	  return t && t.__esModule ? t : { "default": t };
+	}Object.defineProperty(exports, "__esModule", { value: !0 });var _DateUtils = __webpack_require__(169),
+	    _DateUtils2 = _interopRequireDefault(_DateUtils),
+	    _LocaleUtils = __webpack_require__(170),
+	    _LocaleUtils2 = _interopRequireDefault(_LocaleUtils);exports["default"] = { startOfMonth: function startOfMonth(t) {
+	    var e = _DateUtils2["default"].clone(t);return e.setDate(1), e.setHours(12, 0, 0, 0), e;
+	  }, getFirstDayOfMonth: function getFirstDayOfMonth(t) {
+	    return new Date(t.getFullYear(), t.getMonth(), 1, 12);
+	  }, getDaysInMonth: function getDaysInMonth(t) {
+	    var e = this.getFirstDayOfMonth(t);return e.setMonth(e.getMonth() + 1), e.setDate(e.getDate() - 1), e.getDate();
+	  }, getWeekArray: function getWeekArray(t) {
+	    for (var e = arguments.length <= 1 || void 0 === arguments[1] ? _LocaleUtils2["default"].getFirstDayOfWeek() : arguments[1], r = this.getDaysInMonth(t), a = [], n = [], l = [], u = 1; r >= u; u++) a.push(new Date(t.getFullYear(), t.getMonth(), u, 12));a.forEach(function (t) {
+	      n.length > 0 && t.getDay() === e && (l.push(n), n = []), n.push(t), a.indexOf(t) === a.length - 1 && l.push(n);
+	    });for (var o = l[0], u = 7 - o.length; u > 0; u--) {
+	      var s = _DateUtils2["default"].clone(o[0]);s.setDate(o[0].getDate() - 1), o.unshift(s);
+	    }for (var i = l[l.length - 1], u = i.length; 7 > u; u++) {
+	      var s = _DateUtils2["default"].clone(i[i.length - 1]);s.setDate(i[i.length - 1].getDate() + 1), i.push(s);
+	    }return l;
+	  }, getModifiersForDay: function getModifiersForDay(t, e) {
+	    var r = [];if (e) for (var a in e) {
+	      var n = e[a];n(t) && r.push(a);
+	    }return r;
+	  }, getMonthsDiff: function getMonthsDiff(t, e) {
+	    return e.getMonth() - t.getMonth() + 12 * (e.getFullYear() - t.getFullYear());
+	  } }, module.exports = exports["default"];
+
+/***/ },
+/* 169 */
+/***/ function(module, exports) {
+
+	"use strict";Object.defineProperty(exports, "__esModule", { value: !0 });var DateUtils = { addMonths: function addMonths(t, e) {
+	    var a = DateUtils.clone(t);return a.setMonth(t.getMonth() + e), a;
+	  }, clone: function clone(t) {
+	    return new Date(t.getTime());
+	  }, isSameDay: function isSameDay(t, e) {
+	    return t && e ? t.getDate() === e.getDate() && t.getMonth() === e.getMonth() && t.getFullYear() === e.getFullYear() : !1;
+	  }, isPastDay: function isPastDay(t) {
+	    var e = new Date();return e.setHours(0, 0, 0, 0), e > t;
+	  }, isDayBetween: function isDayBetween(t, e, a) {
+	    return t = DateUtils.clone(t), e = DateUtils.clone(e), a = DateUtils.clone(a), t.setHours(0, 0, 0, 0), e.setHours(0, 0, 0, 0), a.setHours(0, 0, 0, 0), t > e && a > t || t > a && e > t;
+	  }, addDayToRange: function addDayToRange(t) {
+	    var e = arguments.length <= 1 || void 0 === arguments[1] ? { from: null, to: null } : arguments[1],
+	        a = e.from,
+	        n = e.to;return a ? a && n && DateUtils.isSameDay(a, n) && DateUtils.isSameDay(t, a) ? (a = null, n = null) : n && a > t ? a = t : n && DateUtils.isSameDay(t, n) ? (a = t, n = t) : (n = t, a > n && (n = a, a = t)) : a = t, { from: a, to: n };
+	  }, isDayInRange: function isDayInRange(t, e) {
+	    var a = e.from,
+	        n = e.to;return a && DateUtils.isSameDay(t, a) || n && DateUtils.isSameDay(t, n) || a && n && DateUtils.isDayBetween(t, a, n);
+	  } };exports["default"] = DateUtils, module.exports = exports["default"];
+
+/***/ },
+/* 170 */
+/***/ function(module, exports) {
+
+	"use strict";Object.defineProperty(exports, "__esModule", { value: !0 });var WEEKDAYS_LONG = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+	    WEEKDAYS_SHORT = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+	    MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];exports["default"] = { formatMonthTitle: function formatMonthTitle(e) {
+	    return MONTHS[e.getMonth()] + " " + e.getFullYear();
+	  }, formatWeekdayShort: function formatWeekdayShort(e) {
+	    return WEEKDAYS_SHORT[e];
+	  }, formatWeekdayLong: function formatWeekdayLong(e) {
+	    return WEEKDAYS_LONG[e];
+	  }, getFirstDayOfWeek: function getFirstDayOfWeek() {
+	    return 0;
+	  }, getMonths: function getMonths() {
+	    return MONTHS;
+	  } }, module.exports = exports["default"];
 
 /***/ }
 /******/ ]);
