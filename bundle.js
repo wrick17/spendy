@@ -4427,21 +4427,21 @@
 /* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _react = __webpack_require__(1);
 
@@ -4457,18 +4457,18 @@
 	  function NewEntry(props) {
 	    _classCallCheck(this, NewEntry);
 
-	    _get(Object.getPrototypeOf(NewEntry.prototype), 'constructor', this).call(this, props);
+	    _get(Object.getPrototypeOf(NewEntry.prototype), "constructor", this).call(this, props);
 	    this.setDate = this.setDate.bind(this);
 	    this.showPicker = this.showPicker.bind(this);
 	    this.closePicker = this.closePicker.bind(this);
 	    this.state = {
-	      date: 'Today',
+	      date: new Date(),
 	      open: false
 	    };
 	  }
 
 	  _createClass(NewEntry, [{
-	    key: 'setDate',
+	    key: "setDate",
 	    value: function setDate(e, day) {
 	      this.setState({
 	        date: day
@@ -4476,141 +4476,141 @@
 	      this.closePicker();
 	    }
 	  }, {
-	    key: 'showPicker',
+	    key: "showPicker",
 	    value: function showPicker() {
 	      this.setState({
 	        open: true
 	      });
 	    }
 	  }, {
-	    key: 'closePicker',
+	    key: "closePicker",
 	    value: function closePicker() {
 	      this.setState({
 	        open: false
 	      });
 	    }
 	  }, {
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
-	      return _react2['default'].createElement(
-	        'div',
-	        { className: 'new-entry' },
-	        _react2['default'].createElement(
-	          'h2',
-	          { className: 'new-entry-header' },
-	          'Bounty'
+	      return _react2["default"].createElement(
+	        "div",
+	        { className: "new-entry" },
+	        _react2["default"].createElement(
+	          "h2",
+	          { className: "new-entry-header" },
+	          "Bounty"
 	        ),
-	        _react2['default'].createElement(
-	          'form',
-	          { className: 'entry-form' },
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'form-group' },
-	            _react2['default'].createElement(
-	              'label',
+	        _react2["default"].createElement(
+	          "form",
+	          { className: "entry-form" },
+	          _react2["default"].createElement(
+	            "div",
+	            { className: "form-group" },
+	            _react2["default"].createElement(
+	              "label",
 	              null,
-	              'Date'
+	              "Date:"
 	            ),
-	            _react2['default'].createElement(
-	              'div',
-	              { className: 'sub-form' },
-	              _react2['default'].createElement('input', { 'data-value': this.state.date, value: this.state.date.toString().slice(0, 15), onClick: this.showPicker }),
-	              this.state.open ? _react2['default'].createElement(_reactDayPicker2['default'], { toMonth: new Date(), onDayClick: this.setDate }) : null
+	            _react2["default"].createElement(
+	              "div",
+	              { className: "sub-form" },
+	              _react2["default"].createElement("input", { className: "date-picker", "data-value": this.state.date, value: this.state.date.toString().slice(0, 15), onClick: this.showPicker }),
+	              this.state.open ? _react2["default"].createElement(_reactDayPicker2["default"], { toMonth: new Date(), onDayClick: this.setDate }) : null
 	            )
 	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'form-group' },
-	            _react2['default'].createElement(
-	              'label',
+	          _react2["default"].createElement(
+	            "div",
+	            { className: "form-group" },
+	            _react2["default"].createElement(
+	              "label",
 	              null,
-	              'Cost'
+	              "Cost:"
 	            ),
-	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost' })
+	            _react2["default"].createElement("input", { type: "number", placeholder: "Total Cost" })
 	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'form-group' },
-	            _react2['default'].createElement(
-	              'label',
+	          _react2["default"].createElement(
+	            "div",
+	            { className: "form-group" },
+	            _react2["default"].createElement(
+	              "label",
 	              null,
-	              'Item'
+	              "Item:"
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on' })
+	            _react2["default"].createElement("input", { type: "text", placeholder: "Item spent on" })
 	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'form-group' },
-	            _react2['default'].createElement(
-	              'label',
+	          _react2["default"].createElement(
+	            "div",
+	            { className: "form-group" },
+	            _react2["default"].createElement(
+	              "label",
 	              null,
-	              'Contributer'
+	              "Contributer:"
 	            ),
-	            _react2['default'].createElement(
-	              'select',
+	            _react2["default"].createElement(
+	              "select",
 	              null,
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                { disabled: true },
-	                'Choose Contributer'
+	                "Choose Contributer"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Sayan'
+	                "Sayan"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Abhishek'
+	                "Abhishek"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Pratyush'
+	                "Pratyush"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Utsav'
+	                "Utsav"
 	              )
 	            )
 	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'form-group' },
-	            _react2['default'].createElement(
-	              'label',
+	          _react2["default"].createElement(
+	            "div",
+	            { className: "form-group" },
+	            _react2["default"].createElement(
+	              "label",
 	              null,
-	              'Tag'
+	              "Tag:"
 	            ),
-	            _react2['default'].createElement(
-	              'select',
+	            _react2["default"].createElement(
+	              "select",
 	              null,
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                { disabled: true },
-	                'Choose Tag'
+	                "Choose Tag"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Sayan'
+	                "Groceries"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Abhishek'
+	                "Entertainment"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Pratyush'
+	                "Extra Foodies"
 	              ),
-	              _react2['default'].createElement(
-	                'option',
+	              _react2["default"].createElement(
+	                "option",
 	                null,
-	                'Utsav'
+	                "Bills"
 	              )
 	            )
 	          )
@@ -4620,10 +4620,10 @@
 	  }]);
 
 	  return NewEntry;
-	})(_react2['default'].Component);
+	})(_react2["default"].Component);
 
-	exports['default'] = NewEntry;
-	module.exports = exports['default'];
+	exports["default"] = NewEntry;
+	module.exports = exports["default"];
 
 /***/ },
 /* 166 */

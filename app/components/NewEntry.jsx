@@ -8,7 +8,7 @@ export default class NewEntry extends React.Component {
     this.showPicker = this.showPicker.bind(this);
     this.closePicker = this.closePicker.bind(this);
     this.state = {
-      date: 'Today',
+      date: new Date(),
       open: false
     };
   }
@@ -34,22 +34,22 @@ export default class NewEntry extends React.Component {
         <h2 className="new-entry-header">Bounty</h2>
         <form className="entry-form">
           <div className="form-group">
-            <label>Date</label>
+            <label>Date:</label>
             <div className="sub-form">
-              <input data-value={this.state.date} value={this.state.date.toString().slice(0, 15)} onClick={this.showPicker} />
+              <input className="date-picker" data-value={this.state.date} value={this.state.date.toString().slice(0, 15)} onClick={this.showPicker} />
               { this.state.open ? <DayPicker toMonth={new Date()} onDayClick={this.setDate} /> : null }
             </div>
           </div>
           <div className="form-group">
-            <label>Cost</label>
+            <label>Cost:</label>
             <input type="number" placeholder="Total Cost" />
           </div>
           <div className="form-group">
-            <label>Item</label>
+            <label>Item:</label>
             <input type="text" placeholder="Item spent on" />
           </div>
           <div className="form-group">
-            <label>Contributer</label>
+            <label>Contributer:</label>
             <select>
               <option disabled>Choose Contributer</option>
               <option>Sayan</option>
@@ -59,13 +59,13 @@ export default class NewEntry extends React.Component {
             </select>
           </div>
           <div className="form-group">
-            <label>Tag</label>
+            <label>Tag:</label>
             <select>
               <option disabled>Choose Tag</option>
-              <option>Sayan</option>
-              <option>Abhishek</option>
-              <option>Pratyush</option>
-              <option>Utsav</option>
+              <option>Groceries</option>
+              <option>Entertainment</option>
+              <option>Extra Foodies</option>
+              <option>Bills</option>
             </select>
           </div>
         </form>
