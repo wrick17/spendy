@@ -572,18 +572,22 @@ a:hover {
   position: relative;
 }
 .dashboard-container .dashboard .new-entry .entry-form .form-group label {
-  flex: 5;
+  flex: 0 1 150px;
 }
 .dashboard-container .dashboard .new-entry .entry-form .form-group input,
 .dashboard-container .dashboard .new-entry .entry-form .form-group select {
   apperance: none;
   -webkit-appearance: none;
+  max-width: 150px;
   border-radius: 0;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #FFFFFF;
-  flex: 1 0 150px;
+  flex: 0 0 150px;
   padding: 5px 10px;
   font-size: 14px;
+}
+.dashboard-container .dashboard .new-entry .entry-form .form-group .day-picker {
+  max-width: 150px;
 }
 .dashboard-container .dashboard .new-entry .entry-form .form-group .day-picker .date-picker {
   top: auto;
@@ -601,6 +605,7 @@ a:hover {
 }
 .day-picker .date-picker-input {
   width: 100%;
+  background: white;
 }
 .day-picker .date-picker {
   overflow: auto;
