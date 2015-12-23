@@ -1,44 +1,18 @@
 import React from 'react';
-import DayPicker from "react-day-picker";
+import DatePicker from './DatePicker.jsx';
 
 export default class NewEntry extends React.Component {
-  constructor(props) {
-    super(props);
-    this.setDate = this.setDate.bind(this);
-    this.showPicker = this.showPicker.bind(this);
-    this.closePicker = this.closePicker.bind(this);
-    this.state = {
-      date: new Date(),
-      open: false
-    };
-  }
-  setDate(e, day) {
-    this.setState({
-      date: day
-    });
-    this.closePicker();
-  }
-  showPicker() {
-    this.setState({
-      open: true
-    });
-  }
-  closePicker() {
-    this.setState({
-      open: false
-    });
+  setDate(date) {
+
   }
   render() {
     return (
       <div className="new-entry">
-        <h2 className="new-entry-header">Bounty</h2>
+        <h2 className="new-entry-header">New Entry</h2>
         <form className="entry-form">
           <div className="form-group">
             <label>Date:</label>
-            <div className="sub-form">
-              <input className="date-picker" data-value={this.state.date} value={this.state.date.toString().slice(0, 15)} onClick={this.showPicker} />
-              { this.state.open ? <DayPicker toMonth={new Date()} onDayClick={this.setDate} /> : null }
-            </div>
+            <DatePicker setDate={this.setDate} />
           </div>
           <div className="form-group">
             <label>Cost:</label>

@@ -1,0 +1,22 @@
+.day-picker {
+  flex: 1 0 150px;
+  position: relative;
+  .date-picker-input {
+    width: 100%;
+  }
+  .date-picker {
+    overflow: auto;
+    top: calc(~"100% + 5px");
+    right: 0;
+    width: auto;
+    position: absolute;
+    background: white;
+    z-index: 10;
+    height: auto;
+    box-shadow: 1px 1px 8px @shadow-color;
+    font-size: 12px !important;
+    .dp-table .dp-cell {
+      padding: 3px 6px;
+    }
+  }
+}

@@ -1,7 +1,13 @@
-.dashboard {
-  display: flex;
-  flex-wrap: wrap;
+.dashboard-container {
+  height: calc(~"100vh - "@header-height);
+  overflow-y: auto;
+  padding-bottom: 10px;
 
-  @import "overview.less";
-  @import "newEntry.less";
+  .dashboard {
+    display: flex;
+    flex-wrap: wrap;
+
+    @import "overview.less";
+    @import "newEntry.less";
+  }
 }

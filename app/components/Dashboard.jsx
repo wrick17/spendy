@@ -6,7 +6,7 @@ import Container from './Container.jsx';
 export default class Dashboard extends React.Component {
   render() {
     return (
-      <Container>
+      <Container className="dashboard-container">
         <div className="dashboard">
           <Overview />
           <NewEntry />

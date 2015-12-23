@@ -1,4 +1,5 @@
 import React from 'react';
+import DatePicker from './DatePicker.jsx';
 
 class Bounty extends React.Component {
   render() {
@@ -28,7 +29,7 @@ export default class Overview extends React.Component {
   render() {
     return (
       <div className="overview">
-        <h2 className="overview-header">Bounty</h2>
+        <h2 className="overview-header"><label>Bounty</label><DatePicker setDate={this.setDate} view="year" /></h2>
         <BountyList />
       </div>
     );
