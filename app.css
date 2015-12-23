@@ -523,10 +523,23 @@ a:hover {
   margin: 10px 10px 0;
 }
 .dashboard-container .dashboard .overview .overview-header {
-  font-family: 'Roboto Condensed', sans-serif;
+  display: flex;
   padding-bottom: 10px;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.dashboard-container .dashboard .overview .overview-header label {
+  font-family: 'Roboto Condensed', sans-serif;
+  flex: 1;
+}
+.dashboard-container .dashboard .overview .overview-header .day-picker {
+  flex: 0 0 150px;
+  font-weight: normal;
+}
+.dashboard-container .dashboard .overview .overview-header .day-picker input {
+  text-align: right;
+  border: none;
+  font-size: 16px;
 }
 .dashboard-container .dashboard .overview .bounty-list .bounty {
   display: flex;
@@ -572,6 +585,16 @@ a:hover {
   padding: 5px 10px;
   font-size: 14px;
 }
+.dashboard-container .dashboard .new-entry .entry-form .form-group .day-picker .date-picker {
+  top: auto;
+  bottom: calc(100% + 5px);
+}
+@media (min-width: 640px) {
+  .dashboard-container .dashboard .new-entry .entry-form .form-group .day-picker .date-picker {
+    top: calc(100% + 5px);
+    bottom: auto;
+  }
+}
 .day-picker {
   flex: 1 0 150px;
   position: relative;
@@ -581,7 +604,7 @@ a:hover {
 }
 .day-picker .date-picker {
   overflow: auto;
-  bottom: calc(100% + 5px);
+  top: calc(100% + 5px);
   right: 0;
   width: auto;
   position: absolute;
@@ -592,11 +615,5 @@ a:hover {
   font-size: 12px !important;
 }
 .day-picker .date-picker .dp-table .dp-cell {
-  padding: 3px;
-}
-@media (min-width: 640px) {
-  .day-picker .date-picker {
-    top: calc(100% + 5px);
-    bottom: auto;
-  }
+  padding: 3px 6px;
 }

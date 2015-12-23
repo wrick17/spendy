@@ -30,6 +30,17 @@
         padding: 5px 10px;
         font-size: 14px;
       }
+      .day-picker .date-picker {
+        top: auto;
+        bottom:  calc(~"100% + 5px");
+      }
     }
+  }
+}
+
+@media (min-width: 640px) {
+  .new-entry .entry-form .form-group .day-picker .date-picker {
+    top: calc(~"100% + 5px");
+    bottom: auto;
   }
 }

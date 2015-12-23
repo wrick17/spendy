@@ -5,10 +5,23 @@
   border-radius: 5px;
   margin: 10px 10px 0;
   .overview-header {
-    .roboto;
+    display: flex;
     padding-bottom: 10px;
     margin-bottom: 0;
     border-bottom: 1px solid @shadow-color;
+    label {
+      .roboto;
+      flex: 1;
+    }
+    .day-picker {
+      flex: 0 0 150px;
+      font-weight: normal;
+      input {
+        text-align: right;
+        border: none;
+        font-size: 16px;
+      }
+    }
   }
   .bounty-list {
     .bounty {

@@ -6,7 +6,7 @@
   }
   .date-picker {
     overflow: auto;
-    bottom: calc(~"100% + 5px");
+    top: calc(~"100% + 5px");
     right: 0;
     width: auto;
     position: absolute;
@@ -16,14 +16,7 @@
     box-shadow: 1px 1px 8px @shadow-color;
     font-size: 12px !important;
     .dp-table .dp-cell {
-      padding: 3px;
+      padding: 3px 6px;
     }
-  }
-}
-
-@media (min-width: 640px) {
-  .day-picker .date-picker {
-    top: calc(~"100% + 5px");
-    bottom: auto;
   }
 }
