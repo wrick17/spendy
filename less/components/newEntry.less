@@ -18,21 +18,25 @@
       padding-bottom: 10px;
       position: relative;
       label {
-        flex: 5;
+        flex: 0 1 150px;
       }
       input, select {
         apperance: none;
         -webkit-appearance: none;
+        max-width: 150px;
         border-radius: 0;
         border: 1px solid @shadow-color;
         background: @white;
-        flex: 1 0 150px;
+        flex: 0 0 150px;
         padding: 5px 10px;
         font-size: 14px;
       }
-      .day-picker .date-picker {
-        top: auto;
-        bottom:  calc(~"100% + 5px");
+      .day-picker {
+        max-width: 150px;
+        .date-picker {
+          top: auto;
+          bottom:  calc(~"100% + 5px");
+        }
       }
     }
   }
