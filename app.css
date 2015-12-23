@@ -190,17 +190,16 @@ a:hover {
   flex-direction: column;
 }
 .container {
-  display: table;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
+  display: inline-block;
+  box-sizing: border-box;
 }
-@media (max-width: 1000px) {
+@media (min-width: 1000px) {
   .container {
-    display: inline-block;
-    box-sizing: border-box;
-    width: 100%;
+    display: table;
   }
 }
 .header {
@@ -224,71 +223,93 @@ a:hover {
   font-size: 10px;
   vertical-align: top;
 }
-.dashboard {
+.dashboard-container {
+  height: calc(100vh -  60px);
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+.dashboard-container .dashboard {
   display: flex;
   flex-wrap: wrap;
 }
-.dashboard .overview {
+.dashboard-container .dashboard .overview {
   flex: 1 0 300px;
-  padding: 15px;
+  padding: 10px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  margin: 10px;
+  margin: 10px 10px 0;
 }
-.dashboard .overview .overview-header {
+.dashboard-container .dashboard .overview .overview-header {
   font-family: 'Roboto Condensed', sans-serif;
   padding-bottom: 10px;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
-.dashboard .overview .bounty-list .bounty {
+.dashboard-container .dashboard .overview .bounty-list .bounty {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
 }
-.dashboard .overview .bounty-list .bounty label .rank {
+.dashboard-container .dashboard .overview .bounty-list .bounty label .rank {
   margin-right: 8px;
 }
-.dashboard .new-entry {
+.dashboard-container .dashboard .new-entry {
   flex: 1 0 300px;
-  padding: 15px;
+  padding: 10px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  margin: 10px;
+  margin: 10px 10px 0;
 }
-.dashboard .new-entry .new-entry-header {
+.dashboard-container .dashboard .new-entry .new-entry-header {
   font-family: 'Roboto Condensed', sans-serif;
   padding-bottom: 10px;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
-.dashboard .new-entry .entry-form {
+.dashboard-container .dashboard .new-entry .entry-form {
   margin: 15px 0;
 }
-.dashboard .new-entry .entry-form .form-group {
+.dashboard-container .dashboard .new-entry .entry-form .form-group {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
 }
-.dashboard .new-entry .entry-form .form-group label {
-  flex: 1;
+.dashboard-container .dashboard .new-entry .entry-form .form-group label {
+  flex: 5;
 }
-.dashboard .new-entry .entry-form .form-group .sub-form {
+.dashboard-container .dashboard .new-entry .entry-form .form-group .sub-form {
   display: flex;
   flex-direction: column;
-  flex: 1 0 100px;
+  flex: 1 0 150px;
+  position: relative;
 }
-.dashboard .new-entry .entry-form .form-group .sub-form input {
+.dashboard-container .dashboard .new-entry .entry-form .form-group .sub-form input {
   flex: auto;
 }
-.dashboard .new-entry .entry-form .form-group input,
-.dashboard .new-entry .entry-form .form-group select {
+.dashboard-container .dashboard .new-entry .entry-form .form-group input,
+.dashboard-container .dashboard .new-entry .entry-form .form-group select {
   apperance: none;
   -webkit-appearance: none;
   border-radius: 0;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #FFFFFF;
-  flex: 1 0 100px;
+  flex: 1 0 150px;
   padding: 5px 10px;
   font-size: 14px;
+}
+.day-picker {
+  background: white;
+  z-index: 10;
+  height: auto;
+  overflow: auto;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+}
+@media (min-width: 640px) {
+  .day-picker {
+    top: 0;
+    bottom: auto;
+  }
 }

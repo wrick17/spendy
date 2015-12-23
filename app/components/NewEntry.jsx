@@ -31,13 +31,13 @@ export default class NewEntry extends React.Component {
   render() {
     return (
       <div className="new-entry">
-        <h2 className="new-entry-header">Bounty</h2>
+        <h2 className="new-entry-header">New Entry</h2>
         <form className="entry-form">
           <div className="form-group">
             <label>Date:</label>
             <div className="sub-form">
-              <input className="date-picker" data-value={this.state.date} value={this.state.date.toString().slice(0, 15)} onClick={this.showPicker} />
-              { this.state.open ? <DayPicker toMonth={new Date()} onDayClick={this.setDate} /> : null }
+              <input className="date-picker" data-value={this.state.date} value={this.state.date.toString().slice(0, 15)} onClick={this.showPicker} disabled />
+              { this.state.open ? <div className="day-picker"><DayPicker enableOutsideDays={true} toMonth={new Date()} onDayClick={this.setDate} /></div> : null }
             </div>
           </div>
           <div className="form-group">

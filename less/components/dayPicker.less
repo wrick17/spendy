@@ -1,0 +1,17 @@
+.day-picker {
+  background: white;
+  z-index: 10;
+  height: auto;
+  overflow: auto;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  box-shadow: 1px 1px 8px @shadow-color;
+}
+
+@media (min-width: 640px) {
+  .day-picker {
+    top: 0;
+    bottom: auto;
+  }
+}
