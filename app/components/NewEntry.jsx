@@ -1,9 +1,73 @@
 import React from 'react';
 import DatePicker from './DatePicker.jsx';
+import services from './../services.jsx';
+
+class ChooseContributor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      contributors: []
+    };
+  }
+  componentDidMount() {
+    var that = this;
+    services.getAllContributers(function(contributors) {
+      var contributorsList = contributors.map(function(contributor) {
+        return (<option key={contributor._id} value={contributor._id} >{contributor.name}</option>)
+      });
+      that.setState({
+        contributors: contributorsList
+      });
+    });
+  }
+  render() {
+    return (
+      <select onChange={this.props.onChange}>
+        <option disabled>Choose Contributer...</option>
+        {this.state.contributors}
+      </select>
+    );
+  }
+}
+
+class ChooseTags extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tags: []
+    };
+  }
+  componentDidMount() {
+    var that = this;
+    services.getAllTags(function(tags) {
+      var tagsList = tags.map(function(tag) {
+        return (<option key={tag._id} value={tag._id} >{tag.name}</option>)
+      });
+      that.setState({
+        tags: tagsList
+      });
+    });
+  }
+  render() {
+    return (
+      <select onChange={this.props.onChange}>
+        <option disabled>Choose Tag...</option>
+        {this.state.tags}
+      </select>
+    );
+  }
+}
 
 export default class NewEntry extends React.Component {
-  setDate(date) {
-
+  constructor(props) {
+    super(props);
+    this.onChangeTag = this.onChangeTag.bind(this);
+  }
+  onChangeTag(e) {
+    console.log('tag ', e.target.value);
+  }
+  onChangeContributor(e) {
+    console.log('contributor ', e.target.value);
   }
   render() {
     return (
@@ -24,23 +88,11 @@ export default class NewEntry extends React.Component {
           </div>
           <div className="form-group">
             <label>Contributer:</label>
-            <select>
-              <option disabled>Choose Contributer</option>
-              <option>Sayan</option>
-              <option>Abhishek</option>
-              <option>Pratyush</option>
-              <option>Utsav</option>
-            </select>
+            <ChooseContributor onChange={this.onChangeContributor} />
           </div>
           <div className="form-group">
             <label>Tag:</label>
-            <select>
-              <option disabled>Choose Tag</option>
-              <option>Groceries</option>
-              <option>Entertainment</option>
-              <option>Extra Foodies</option>
-              <option>Bills</option>
-            </select>
+            <ChooseTags onChange={this.onChangeTag} />
           </div>
         </form>
       </div>

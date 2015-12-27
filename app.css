@@ -11,146 +11,9 @@
 .roboto {
   font-family: 'Roboto Condensed', sans-serif;
 }
-/* DayPicker styles */
-
-.DayPicker {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  position: relative;
-  padding: 1rem 0;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+.shadow {
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
-
-.DayPicker-Month {
-  display: table;
-  border-collapse: collapse;
-  border-spacing: 0;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  margin: 0 1rem;
-}
-
-  .DayPicker-NavBar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    padding: 0 .5rem;
-  }
-
-  .DayPicker-NavButton {
-    position: absolute;
-    width: 1.5rem;
-    height: 1.5rem;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    cursor: pointer;
-  }
-
-    .DayPicker-NavButton--prev {
-      left: 1rem;
-      background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjI2cHgiIGhlaWdodD0iNTBweCIgdmlld0JveD0iMCAwIDI2IDUwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnNrZXRjaD0iaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoL25zIj4KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggMy4zLjIgKDEyMDQzKSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5wcmV2PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc2tldGNoOnR5cGU9Ik1TUGFnZSI+CiAgICAgICAgPGcgaWQ9InByZXYiIHNrZXRjaDp0eXBlPSJNU0xheWVyR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEzLjM5MzE5MywgMjUuMDAwMDAwKSBzY2FsZSgtMSwgMSkgdHJhbnNsYXRlKC0xMy4zOTMxOTMsIC0yNS4wMDAwMDApIHRyYW5zbGF0ZSgwLjg5MzE5MywgMC4wMDAwMDApIiBmaWxsPSIjNTY1QTVDIj4KICAgICAgICAgICAgPHBhdGggZD0iTTAsNDkuMTIzNzMzMSBMMCw0NS4zNjc0MzQ1IEwyMC4xMzE4NDU5LDI0LjcyMzA2MTIgTDAsNC4yMzEzODMxNCBMMCwwLjQ3NTA4NDQ1OSBMMjUsMjQuNzIzMDYxMiBMMCw0OS4xMjM3MzMxIEwwLDQ5LjEyMzczMzEgWiIgaWQ9InJpZ2h0IiBza2V0Y2g6dHlwZT0iTVNTaGFwZUdyb3VwIj48L3BhdGg+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K");
-    }
-
-    .DayPicker-NavButton--next {
-      right: 1rem;
-      background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjI2cHgiIGhlaWdodD0iNTBweCIgdmlld0JveD0iMCAwIDI2IDUwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnNrZXRjaD0iaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoL25zIj4KICAgIDwhLS0gR2VuZXJhdG9yOiBTa2V0Y2ggMy4zLjIgKDEyMDQzKSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5uZXh0PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9IlBhZ2UtMSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc2tldGNoOnR5cGU9Ik1TUGFnZSI+CiAgICAgICAgPGcgaWQ9Im5leHQiIHNrZXRjaDp0eXBlPSJNU0xheWVyR3JvdXAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuOTUxNDUxLCAwLjAwMDAwMCkiIGZpbGw9IiM1NjVBNUMiPgogICAgICAgICAgICA8cGF0aCBkPSJNMCw0OS4xMjM3MzMxIEwwLDQ1LjM2NzQzNDUgTDIwLjEzMTg0NTksMjQuNzIzMDYxMiBMMCw0LjIzMTM4MzE0IEwwLDAuNDc1MDg0NDU5IEwyNSwyNC43MjMwNjEyIEwwLDQ5LjEyMzczMzEgTDAsNDkuMTIzNzMzMSBaIiBpZD0icmlnaHQiIHNrZXRjaDp0eXBlPSJNU1NoYXBlR3JvdXAiPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=");
-    }
-
-
-  .DayPicker-Caption {
-    display: table-caption;
-    height: 1.5rem;
-    text-align: center;
-  }
-
-  .DayPicker-Weekdays {
-    display: table-header-group;
-  }
-
-    .DayPicker-WeekdaysRow {
-      display: table-row;
-    }
-
-      .DayPicker-Weekday {
-        display: table-cell;
-        padding: .5rem;
-        font-size: .875em;
-        text-align: center;
-        color: #8b9898;
-      }
-
-  .DayPicker-Body {
-    display: table-row-group;
-  }
-
-    .DayPicker-Week {
-      display: table-row;
-    }
-
-      .DayPicker-Day {
-        display: table-cell;
-        padding: .5rem;
-        border: 1px solid #eaecec;
-        text-align: center;
-        cursor: pointer;
-        vertical-align: middle;
-      }
-
-  .DayPicker--interactionDisabled .DayPicker-Day {
-    cursor: default;
-  }
-
-/* Default modifiers */
-
-.DayPicker-Day--today {
-  color: #d0021b;
-  font-weight: 500;
-}
-
-.DayPicker-Day--disabled {
-  color: #dce0e0;
-  cursor: default;
-  background-color: #eff1f1;
-}
-
-.DayPicker-Day--outside {
-  cursor: default;
-  color: #dce0e0;
-}
-
-/* Example modifiers */
-
-.DayPicker-Day--sunday {
-  color: #dce0e0;
-  background-color: #f7f8f8;
-}
-
-.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-  color: #FFF;
-  background-color: #4A90E2;
-}
-
-/* Locales */
-
-.DayPicker--ar {
-  direction: rtl;
-}
-
 /*
 
  This file is part of the ZippyUI Framework
@@ -482,8 +345,33 @@ a:hover {
 }
 @media (min-width: 1000px) {
   .container {
-    display: table;
+    display: block;
   }
+}
+.day-picker {
+  flex: 1 0 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.day-picker .date-picker-input {
+  width: 100%;
+  background: white;
+}
+.day-picker .date-picker {
+  overflow: auto;
+  top: calc(100% + 5px);
+  right: 0;
+  width: auto;
+  position: absolute;
+  background: white;
+  z-index: 10;
+  height: auto;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+  font-size: 12px !important;
+}
+.day-picker .date-picker .dp-table .dp-cell {
+  padding: 3px 6px;
 }
 .header {
   height: 60px;
@@ -518,7 +406,8 @@ a:hover {
 .dashboard-container .dashboard .overview {
   flex: 1 0 300px;
   padding: 10px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   margin: 10px 10px 0;
 }
@@ -550,9 +439,10 @@ a:hover {
   margin-right: 8px;
 }
 .dashboard-container .dashboard .new-entry {
-  flex: 1 0 300px;
+  flex: 1 0 350px;
   padding: 10px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   margin: 10px 10px 0;
 }
@@ -572,22 +462,22 @@ a:hover {
   position: relative;
 }
 .dashboard-container .dashboard .new-entry .entry-form .form-group label {
-  flex: 0 1 150px;
+  flex: 0 1 200px;
 }
 .dashboard-container .dashboard .new-entry .entry-form .form-group input,
 .dashboard-container .dashboard .new-entry .entry-form .form-group select {
   apperance: none;
   -webkit-appearance: none;
-  max-width: 150px;
+  max-width: 200px;
   border-radius: 0;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #FFFFFF;
-  flex: 0 0 150px;
+  flex: 0 0 200px;
   padding: 5px 10px;
   font-size: 14px;
 }
 .dashboard-container .dashboard .new-entry .entry-form .form-group .day-picker {
-  max-width: 150px;
+  max-width: 200px;
 }
 .dashboard-container .dashboard .new-entry .entry-form .form-group .day-picker .date-picker {
   top: auto;
@@ -599,26 +489,150 @@ a:hover {
     bottom: auto;
   }
 }
-.day-picker {
-  flex: 1 0 150px;
-  position: relative;
+.dashboard-container .expenses-container {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin: 15px 10px 0;
+  padding: 10px;
 }
-.day-picker .date-picker-input {
+.dashboard-container .expenses-container .expenses-header {
+  display: flex;
+  padding-bottom: 10px;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.dashboard-container .expenses-container .expenses-header label {
+  font-family: 'Roboto Condensed', sans-serif;
+  flex: 1;
+}
+.dashboard-container .expenses-container .expenses-header .day-picker {
+  flex: 0 0 200px;
+  font-weight: normal;
+}
+.dashboard-container .expenses-container .expenses-header .day-picker input {
+  text-align: right;
+  border: none;
+  font-size: 16px;
+}
+.dashboard-container table {
   width: 100%;
-  background: white;
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
-.day-picker .date-picker {
+.dashboard-container table thead {
+  display: none;
+  border-bottom: 2px solid #e3e3e3;
+}
+.dashboard-container table thead tr th {
+  padding: 10px;
+  text-align: left;
+  text-transform: uppercase;
+}
+.dashboard-container table tbody tr {
+  display: inline-block;
+  padding: 10px 0;
+  width: 100%;
+  border-bottom: 1px solid #e3e3e3;
+}
+.dashboard-container table tbody tr:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.dashboard-container table tbody tr td {
+  display: block;
+  padding: 5px 10px;
+  text-align: right;
+}
+.dashboard-container table tbody tr td:before {
+  content: attr(data-label);
+  font-size: 14px;
+  float: left;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.dashboard-container table tbody tr:hover td {
+  background: #fcdddc;
+}
+@media screen and (min-width: 768px) {
+  .dashboard-container table thead {
+    display: table-header-group;
+  }
+  .dashboard-container table tbody tr {
+    display: table-row;
+  }
+  .dashboard-container table tbody tr td {
+    display: table-cell;
+    text-align: left;
+    padding: 10px;
+  }
+  .dashboard-container table tbody tr td:before {
+    display: none;
+  }
+}
+.expenses-page {
+  height: calc(100vh -  60px);
   overflow: auto;
-  top: calc(100% + 5px);
-  right: 0;
-  width: auto;
-  position: absolute;
-  background: white;
-  z-index: 10;
-  height: auto;
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-  font-size: 12px !important;
 }
-.day-picker .date-picker .dp-table .dp-cell {
-  padding: 3px 6px;
+.expenses-page .container {
+  padding: 10px;
+}
+.expenses-page table {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.expenses-page table thead {
+  display: none;
+  border-bottom: 2px solid #e3e3e3;
+}
+.expenses-page table thead tr th {
+  padding: 10px;
+  text-align: left;
+  text-transform: uppercase;
+}
+.expenses-page table tbody tr {
+  display: inline-block;
+  padding: 10px 0;
+  width: 100%;
+  border-bottom: 1px solid #e3e3e3;
+}
+.expenses-page table tbody tr:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.expenses-page table tbody tr td {
+  display: block;
+  padding: 5px 10px;
+  text-align: right;
+}
+.expenses-page table tbody tr td:before {
+  content: attr(data-label);
+  font-size: 14px;
+  float: left;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.expenses-page table tbody tr:hover td {
+  background: #fcdddc;
+}
+@media screen and (min-width: 768px) {
+  .expenses-page table thead {
+    display: table-header-group;
+  }
+  .expenses-page table tbody tr {
+    display: table-row;
+  }
+  .expenses-page table tbody tr td {
+    display: table-cell;
+    text-align: left;
+    padding: 10px;
+  }
+  .expenses-page table tbody tr td:before {
+    display: none;
+  }
 }

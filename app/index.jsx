@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App.jsx';
 import { Router, Route, Link, IndexRoute } from 'react-router';
-import Dashboard from './components/Dashboard.jsx';
 import createHistory from 'history/lib/createBrowserHistory';
+import Dashboard from './components/Dashboard.jsx';
+import Expenses from './components/Expenses.jsx';
 
-// Opt-out of persistent state, not recommended.
 var history = createHistory({
   queryKey: false
 });
@@ -15,6 +15,7 @@ ReactDOM.render(
     <Route path="/" component={App}>
       <IndexRoute component={Dashboard} />
       <Route path="dashboard" component={Dashboard} />
+      <Route path="expenses" component={Expenses} />
     </Route>
   </Router>,
   document.getElementById('app')
