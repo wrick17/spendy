@@ -1,0 +1,11 @@
+.expenses-page {
+  height: calc(~"100vh - "@header-height);
+  overflow: auto;
+
+  .container {
+    padding: 10px;
+    border-bottom: 1px solid @shadow-color;
+  }
+
+  @import (multiple) "expensesList.less";
+}

@@ -43,11 +43,18 @@ class DatePicker extends React.Component {
   handleClickOutside(e) {
     this.closePicker();
   }
+  componentDidMount() {
+    if (this.props.setDate) this.props.setDate(this.state.date);
+  }
   render() {
     var value = this.state.date.toString().slice(0, 15);
-    if (this.props.view === 'year') value = value.toString().slice(4, 7) + ' ' + value.slice(11, 15);
+    var classes = 'day-picker';
+    if (this.props.view === 'year') {
+      value = value.toString().slice(4, 7) + ' ' + value.slice(11, 15);
+      classes += ' squishy';
+    }
     return (
-      <div className="day-picker">
+      <div className={classes}>
         <input className="date-picker-input" data-value={this.state.date} value={value} onClick={this.showPicker} disabled />
         { this.state.open ? <DayPicker
           date={this.state.date}

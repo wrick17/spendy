@@ -3,5 +3,21 @@
   background: @primary-color;
   display: flex;
 
-  @import "logo.less" ;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @import "logo.less" ;
+
+    .links {
+      margin: 15px;
+      color: @white;
+      display: flex;
+      li {
+        margin-left: 15px;
+      }
+    }
+  }
+
 }

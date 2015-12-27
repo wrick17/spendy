@@ -17,3 +17,9 @@ module.exports = {
     ]
   }
 };
+
+// ,
+//       {
+//         test: /\.js?$/,
+//         loader: "uglify"
+//       }

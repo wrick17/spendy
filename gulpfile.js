@@ -26,7 +26,7 @@ gulp.task('watch-less', function() {
 });
 
 gulp.task('watch-jsx', function() {
-  gulp.watch('./app/**/*.jsx' , ['webpack']);
+  gulp.watch('./app/**/*.js*' , ['webpack']);
 });
 
 /* Task when running `gulp` from terminal */

@@ -1,0 +1,48 @@
+.add-container {
+  height: calc(~"100vh - "@header-height);
+  overflow-y: auto;
+  padding-bottom: 10px;
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .box-header {
+    .roboto;
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    border-bottom: 1px solid @shadow-color;
+  }
+
+  .add-tag-container, .add-contributor-container {
+    flex: 1 0 350px;
+    padding: 10px;
+    .shadow;
+    border-radius: 5px;
+    margin: 10px 10px 0;
+  }
+
+  .manage-tag-container, .manage-contributor-container {
+    flex: 1 0 300px;
+    padding: 10px;
+    margin: 10px 10px 0;
+    .shadow;
+    ul {
+      margin: 5px 0;
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 10px;
+        &:hover {
+          background: @light-red;
+        }
+        div {
+          font-size: 12px;
+          a {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+  }
+}
