@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(323);
+	var _componentsExpensesJsx = __webpack_require__(325);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(324);
+	var _componentsTagPageJsx = __webpack_require__(326);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(325);
+	var _componentsContributorPageJsx = __webpack_require__(327);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -5877,7 +5877,7 @@
 
 	var _OverviewJsx2 = _interopRequireDefault(_OverviewJsx);
 
-	var _NewEntryJsx = __webpack_require__(317);
+	var _NewEntryJsx = __webpack_require__(319);
 
 	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
 
@@ -5885,7 +5885,7 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(322);
+	var _ExpensesListJsx = __webpack_require__(324);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
@@ -5893,7 +5893,7 @@
 
 	var _DatePickerJsx2 = _interopRequireDefault(_DatePickerJsx);
 
-	var _servicesJsx = __webpack_require__(318);
+	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -5910,8 +5910,8 @@
 	    this.getOverview = this.getOverview.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      expenses: [],
-	      contributors: []
+	      expenses: 'loading',
+	      contributors: 'loading'
 	    };
 	  }
 
@@ -6025,6 +6025,14 @@
 
 	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
 
+	var _LoadingJsx = __webpack_require__(317);
+
+	var _LoadingJsx2 = _interopRequireDefault(_LoadingJsx);
+
+	var _NoRecordsJsx = __webpack_require__(318);
+
+	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
+
 	var Bounty = (function (_React$Component) {
 	  _inherits(Bounty, _React$Component);
 
@@ -6076,6 +6084,8 @@
 	  _createClass(BountyList, [{
 	    key: 'render',
 	    value: function render() {
+	      if (this.props.contributors === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
+	      if (this.props.contributors.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var rank = 1,
 	          contributors = _utilsJsx2['default'].sortByKey(this.props.contributors, 'expenditure');
 	      var bountyList = contributors.map(function (contributor) {
@@ -9460,6 +9470,106 @@
 /* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Loading = (function (_React$Component) {
+	  _inherits(Loading, _React$Component);
+
+	  function Loading() {
+	    _classCallCheck(this, Loading);
+
+	    _get(Object.getPrototypeOf(Loading.prototype), "constructor", this).apply(this, arguments);
+	  }
+
+	  _createClass(Loading, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        "div",
+	        { className: "loading" },
+	        "Loading..."
+	      );
+	    }
+	  }]);
+
+	  return Loading;
+	})(_react2["default"].Component);
+
+	exports["default"] = Loading;
+	module.exports = exports["default"];
+
+/***/ },
+/* 318 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var NoRecords = (function (_React$Component) {
+	  _inherits(NoRecords, _React$Component);
+
+	  function NoRecords() {
+	    _classCallCheck(this, NoRecords);
+
+	    _get(Object.getPrototypeOf(NoRecords.prototype), "constructor", this).apply(this, arguments);
+	  }
+
+	  _createClass(NoRecords, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2["default"].createElement(
+	        "div",
+	        { className: "no-records" },
+	        "No records to show!"
+	      );
+	    }
+	  }]);
+
+	  return NoRecords;
+	})(_react2["default"].Component);
+
+	exports["default"] = NoRecords;
+	module.exports = exports["default"];
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
@@ -9484,7 +9594,7 @@
 
 	var _DatePickerJsx2 = _interopRequireDefault(_DatePickerJsx);
 
-	var _servicesJsx = __webpack_require__(318);
+	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -9705,7 +9815,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9716,7 +9826,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _superagent = __webpack_require__(319);
+	var _superagent = __webpack_require__(321);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -9793,7 +9903,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9845,8 +9955,8 @@
 	  return "function" == typeof e ? new Request("GET", t).end(e) : 1 == arguments.length ? new Request("GET", t) : new Request(t, e);
 	}function del(t, e) {
 	  var r = request("DELETE", t);return e && r.end(e), r;
-	}var Emitter = __webpack_require__(320),
-	    reduce = __webpack_require__(321),
+	}var Emitter = __webpack_require__(322),
+	    reduce = __webpack_require__(323),
 	    root;root = "undefined" != typeof window ? window : "undefined" != typeof self ? self : undefined, request.getXHR = function () {
 	  if (!(!root.XMLHttpRequest || root.location && "file:" == root.location.protocol && root.ActiveXObject)) return new XMLHttpRequest();try {
 	    return new ActiveXObject("Microsoft.XMLHTTP");
@@ -9959,7 +10069,7 @@
 	}, module.exports = request;
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9990,7 +10100,7 @@
 	};
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -10000,7 +10110,7 @@
 	};
 
 /***/ },
-/* 322 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10023,9 +10133,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _servicesJsx = __webpack_require__(318);
+	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
+
+	var _LoadingJsx = __webpack_require__(317);
+
+	var _LoadingJsx2 = _interopRequireDefault(_LoadingJsx);
+
+	var _NoRecordsJsx = __webpack_require__(318);
+
+	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
 	var ExpenseTable = (function (_React$Component) {
 	  _inherits(ExpenseTable, _React$Component);
@@ -10039,11 +10157,8 @@
 	  _createClass(ExpenseTable, [{
 	    key: 'render',
 	    value: function render() {
-	      if (this.props.expenses.length < 1) return _react2['default'].createElement(
-	        'div',
-	        { className: 'no-records' },
-	        'No records to show!'
-	      );
+	      if (this.props.expenses === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
+	      if (this.props.expenses.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
 	      var expenses = this.props.expenses.map(function (expense) {
 	        return _react2['default'].createElement(
@@ -10198,7 +10313,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 323 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10225,11 +10340,11 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(322);
+	var _ExpensesListJsx = __webpack_require__(324);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
-	var _servicesJsx = __webpack_require__(318);
+	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -10243,7 +10358,7 @@
 	    this.getExpenses = this.getExpenses.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      expenses: []
+	      expenses: 'loading'
 	    };
 	  }
 
@@ -10289,7 +10404,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 324 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10316,9 +10431,17 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _servicesJsx = __webpack_require__(318);
+	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
+
+	var _LoadingJsx = __webpack_require__(317);
+
+	var _LoadingJsx2 = _interopRequireDefault(_LoadingJsx);
+
+	var _NoRecordsJsx = __webpack_require__(318);
+
+	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
 	var AddTag = (function (_React$Component) {
 	  _inherits(AddTag, _React$Component);
@@ -10401,18 +10524,20 @@
 	  return AddTag;
 	})(_react2['default'].Component);
 
-	var ManageTag = (function (_React$Component2) {
-	  _inherits(ManageTag, _React$Component2);
+	var ManageTagList = (function (_React$Component2) {
+	  _inherits(ManageTagList, _React$Component2);
 
-	  function ManageTag() {
-	    _classCallCheck(this, ManageTag);
+	  function ManageTagList() {
+	    _classCallCheck(this, ManageTagList);
 
-	    _get(Object.getPrototypeOf(ManageTag.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(ManageTagList.prototype), 'constructor', this).apply(this, arguments);
 	  }
 
-	  _createClass(ManageTag, [{
+	  _createClass(ManageTagList, [{
 	    key: 'render',
 	    value: function render() {
+	      if (this.props.tags === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
+	      if (this.props.tags.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
 	      var tags = this.props.tags.map(function (tag) {
 	        return _react2['default'].createElement(
@@ -10435,6 +10560,29 @@
 	        );
 	      });
 	      return _react2['default'].createElement(
+	        'ul',
+	        { className: 'tag-list' },
+	        tags
+	      );
+	    }
+	  }]);
+
+	  return ManageTagList;
+	})(_react2['default'].Component);
+
+	var ManageTag = (function (_React$Component3) {
+	  _inherits(ManageTag, _React$Component3);
+
+	  function ManageTag() {
+	    _classCallCheck(this, ManageTag);
+
+	    _get(Object.getPrototypeOf(ManageTag.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(ManageTag, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'manage-tag-container' },
 	        _react2['default'].createElement(
@@ -10442,11 +10590,7 @@
 	          { className: 'box-header' },
 	          'Manage Tags'
 	        ),
-	        _react2['default'].createElement(
-	          'ul',
-	          { className: 'tag-list' },
-	          tags
-	        )
+	        _react2['default'].createElement(ManageTagList, { tags: this.props.tags })
 	      );
 	    }
 	  }]);
@@ -10454,8 +10598,8 @@
 	  return ManageTag;
 	})(_react2['default'].Component);
 
-	var TagPage = (function (_React$Component3) {
-	  _inherits(TagPage, _React$Component3);
+	var TagPage = (function (_React$Component4) {
+	  _inherits(TagPage, _React$Component4);
 
 	  function TagPage(props) {
 	    _classCallCheck(this, TagPage);
@@ -10465,7 +10609,7 @@
 	    this.getAllTags = this.getAllTags.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      tags: []
+	      tags: 'loading'
 	    };
 	  }
 
@@ -10520,7 +10664,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 325 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10547,9 +10691,17 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _servicesJsx = __webpack_require__(318);
+	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
+
+	var _LoadingJsx = __webpack_require__(317);
+
+	var _LoadingJsx2 = _interopRequireDefault(_LoadingJsx);
+
+	var _NoRecordsJsx = __webpack_require__(318);
+
+	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
 	var AddContributor = (function (_React$Component) {
 	  _inherits(AddContributor, _React$Component);
@@ -10633,18 +10785,20 @@
 	  return AddContributor;
 	})(_react2['default'].Component);
 
-	var ManageContributor = (function (_React$Component2) {
-	  _inherits(ManageContributor, _React$Component2);
+	var ManageContributorList = (function (_React$Component2) {
+	  _inherits(ManageContributorList, _React$Component2);
 
-	  function ManageContributor() {
-	    _classCallCheck(this, ManageContributor);
+	  function ManageContributorList() {
+	    _classCallCheck(this, ManageContributorList);
 
-	    _get(Object.getPrototypeOf(ManageContributor.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(ManageContributorList.prototype), 'constructor', this).apply(this, arguments);
 	  }
 
-	  _createClass(ManageContributor, [{
+	  _createClass(ManageContributorList, [{
 	    key: 'render',
 	    value: function render() {
+	      if (this.props.contributors === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
+	      if (this.props.contributors.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
 	      var contributors = this.props.contributors.map(function (contributor) {
 	        return _react2['default'].createElement(
@@ -10667,6 +10821,29 @@
 	        );
 	      });
 	      return _react2['default'].createElement(
+	        'ul',
+	        { className: 'contributor-list' },
+	        contributors
+	      );
+	    }
+	  }]);
+
+	  return ManageContributorList;
+	})(_react2['default'].Component);
+
+	var ManageContributor = (function (_React$Component3) {
+	  _inherits(ManageContributor, _React$Component3);
+
+	  function ManageContributor() {
+	    _classCallCheck(this, ManageContributor);
+
+	    _get(Object.getPrototypeOf(ManageContributor.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(ManageContributor, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'manage-contributor-container' },
 	        _react2['default'].createElement(
@@ -10674,11 +10851,7 @@
 	          { className: 'box-header' },
 	          'Manage contributors'
 	        ),
-	        _react2['default'].createElement(
-	          'ul',
-	          { className: 'contributor-list' },
-	          contributors
-	        )
+	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors })
 	      );
 	    }
 	  }]);
@@ -10686,8 +10859,8 @@
 	  return ManageContributor;
 	})(_react2['default'].Component);
 
-	var ContributorPage = (function (_React$Component3) {
-	  _inherits(ContributorPage, _React$Component3);
+	var ContributorPage = (function (_React$Component4) {
+	  _inherits(ContributorPage, _React$Component4);
 
 	  function ContributorPage(props) {
 	    _classCallCheck(this, ContributorPage);
@@ -10697,7 +10870,7 @@
 	    this.getAllContributors = this.getAllContributors.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      contributors: []
+	      contributors: 'loading'
 	    };
 	  }
 
@@ -10738,7 +10911,7 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deleteTag: this.deleteContributor }),
+	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deletecontributor: this.deleteContributor }),
 	          _react2['default'].createElement(AddContributor, { refresh: this.refresh })
 	        )
 	      );

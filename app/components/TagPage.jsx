@@ -1,6 +1,8 @@
 import React from 'react';
 import Container from './Container.jsx';
 import services from './../services.jsx';
+import Loading from './Loading.jsx';
+import NoRecords from './NoRecords.jsx';
 
 class AddTag extends React.Component {
   constructor(props) {
@@ -52,8 +54,10 @@ class AddTag extends React.Component {
   }
 }
 
-class ManageTag extends React.Component {
+class ManageTagList extends React.Component {
   render() {
+    if (this.props.tags === 'loading') return <Loading />;
+    if (this.props.tags.length < 1) return <NoRecords />;
     var that = this;
     var tags = this.props.tags.map(function(tag) {
       return (
@@ -66,11 +70,19 @@ class ManageTag extends React.Component {
       );
     });
     return (
+      <ul className="tag-list">
+        {tags}
+      </ul>
+    );
+  }
+}
+
+class ManageTag extends React.Component {
+  render() {
+    return (
       <div className="manage-tag-container">
         <h2 className="box-header">Manage Tags</h2>
-        <ul className="tag-list">
-          {tags}
-        </ul>
+        <ManageTagList tags={this.props.tags} />
       </div>
     );
   }
@@ -83,7 +95,7 @@ export default class TagPage extends React.Component {
     this.getAllTags = this.getAllTags.bind(this);
     this.refresh = this.refresh.bind(this);
     this.state = {
-      tags: []
+      tags: 'loading'
     };
   }
   componentDidMount() {
