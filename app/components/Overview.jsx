@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from './DatePicker.jsx';
+import utils from './../utils.jsx';
 
 class Bounty extends React.Component {
   render() {
@@ -14,12 +15,13 @@ class Bounty extends React.Component {
 
 class BountyList extends React.Component {
   render() {
+    var rank = 1, contributors = utils.sortByKey(this.props.contributors, 'expenditure');
+    var bountyList = contributors.map(function(contributor) {
+      return (<Bounty key={contributor._id} rank={rank++} name={contributor.name} bounty={contributor.expenditure} />);
+    });
     return (
       <ul className="bounty-list">
-        <Bounty rank="1" name="Sayan" bounty="1480" />
-        <Bounty rank="2" name="Abhishek" bounty="1320" />
-        <Bounty rank="3" name="Pratyush" bounty="100" />
-        <Bounty rank="4" name="Utsav" bounty="0" />
+        {bountyList}
       </ul>
     );
   }
@@ -30,7 +32,7 @@ export default class Overview extends React.Component {
     return (
       <div className="overview">
         <h2 className="overview-header"><label>Bounty</label><DatePicker setDate={this.setDate} view="year" /></h2>
-        <BountyList />
+        <BountyList contributors={this.props.contributors} />
       </div>
     );
   }
