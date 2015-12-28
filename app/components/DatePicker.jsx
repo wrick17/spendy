@@ -28,6 +28,7 @@ class DatePicker extends React.Component {
     this.setState({
       date: month
     });
+    if (this.props.setDate) this.props.setDate(month);
     this.closePicker();
   }
   showPicker() {

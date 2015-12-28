@@ -31,7 +31,6 @@
 }
 .form {
   margin: 15px 0;
-  overflow: auto;
 }
 .form .form-group {
   display: flex;
@@ -586,8 +585,8 @@ a:hover {
   margin-bottom: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
-@media (min-width: 640px) {
-  .dashboard-container .dashboard .new-entry .entry-form .form-group .day-picker .date-picker {
+@media (min-width: 690px) {
+  .dashboard-container .dashboard .new-entry .form .form-group .day-picker .date-picker {
     top: calc(100% + 5px);
     bottom: auto;
   }
