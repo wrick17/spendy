@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(322);
+	var _componentsExpensesJsx = __webpack_require__(323);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(323);
+	var _componentsTagPageJsx = __webpack_require__(324);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(324);
+	var _componentsContributorPageJsx = __webpack_require__(325);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -5877,7 +5877,7 @@
 
 	var _OverviewJsx2 = _interopRequireDefault(_OverviewJsx);
 
-	var _NewEntryJsx = __webpack_require__(316);
+	var _NewEntryJsx = __webpack_require__(317);
 
 	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
 
@@ -5885,7 +5885,7 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(321);
+	var _ExpensesListJsx = __webpack_require__(322);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
@@ -5893,7 +5893,7 @@
 
 	var _DatePickerJsx2 = _interopRequireDefault(_DatePickerJsx);
 
-	var _servicesJsx = __webpack_require__(317);
+	var _servicesJsx = __webpack_require__(318);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -5907,9 +5907,11 @@
 
 	    _get(Object.getPrototypeOf(Dashboard.prototype), 'constructor', this).call(this, props);
 	    this.getExpenses = this.getExpenses.bind(this);
+	    this.getOverview = this.getOverview.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      expenses: []
+	      expenses: [],
+	      contributors: []
 	    };
 	  }
 
@@ -5917,6 +5919,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.getExpenses();
+	      this.getOverview();
 	    }
 	  }, {
 	    key: 'getExpenses',
@@ -5929,9 +5932,20 @@
 	      });
 	    }
 	  }, {
+	    key: 'getOverview',
+	    value: function getOverview() {
+	      var that = this;
+	      _servicesJsx2['default'].getAllContributors(function (contributors) {
+	        that.setState({
+	          contributors: contributors
+	        });
+	      });
+	    }
+	  }, {
 	    key: 'refresh',
 	    value: function refresh() {
 	      this.getExpenses();
+	      this.getOverview();
 	    }
 	  }, {
 	    key: 'render',
@@ -5945,7 +5959,7 @@
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'dashboard' },
-	            _react2['default'].createElement(_OverviewJsx2['default'], null),
+	            _react2['default'].createElement(_OverviewJsx2['default'], { contributors: this.state.contributors }),
 	            _react2['default'].createElement(_NewEntryJsx2['default'], { refresh: this.refresh })
 	          ),
 	          _react2['default'].createElement(
@@ -6007,6 +6021,10 @@
 
 	var _DatePickerJsx2 = _interopRequireDefault(_DatePickerJsx);
 
+	var _utilsJsx = __webpack_require__(316);
+
+	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
+
 	var Bounty = (function (_React$Component) {
 	  _inherits(Bounty, _React$Component);
 
@@ -6058,13 +6076,15 @@
 	  _createClass(BountyList, [{
 	    key: 'render',
 	    value: function render() {
+	      var rank = 1,
+	          contributors = _utilsJsx2['default'].sortByKey(this.props.contributors, 'expenditure');
+	      var bountyList = contributors.map(function (contributor) {
+	        return _react2['default'].createElement(Bounty, { key: contributor._id, rank: rank++, name: contributor.name, bounty: contributor.expenditure });
+	      });
 	      return _react2['default'].createElement(
 	        'ul',
 	        { className: 'bounty-list' },
-	        _react2['default'].createElement(Bounty, { rank: '1', name: 'Sayan', bounty: '1480' }),
-	        _react2['default'].createElement(Bounty, { rank: '2', name: 'Abhishek', bounty: '1320' }),
-	        _react2['default'].createElement(Bounty, { rank: '3', name: 'Pratyush', bounty: '100' }),
-	        _react2['default'].createElement(Bounty, { rank: '4', name: 'Utsav', bounty: '0' })
+	        bountyList
 	      );
 	    }
 	  }]);
@@ -6097,7 +6117,7 @@
 	          ),
 	          _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDate, view: 'year' })
 	        ),
-	        _react2['default'].createElement(BountyList, null)
+	        _react2['default'].createElement(BountyList, { contributors: this.props.contributors })
 	      );
 	    }
 	  }]);
@@ -9417,6 +9437,27 @@
 
 /***/ },
 /* 316 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var utils = {};
+
+	utils.sortByKey = function (array, key) {
+	  return array.sort(function (a, b) {
+	    var x = a[key];var y = b[key];
+	    return x > y ? -1 : x < y ? 1 : 0;
+	  });
+	};
+
+	exports["default"] = utils;
+	module.exports = exports["default"];
+
+/***/ },
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9443,7 +9484,7 @@
 
 	var _DatePickerJsx2 = _interopRequireDefault(_DatePickerJsx);
 
-	var _servicesJsx = __webpack_require__(317);
+	var _servicesJsx = __webpack_require__(318);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -9664,7 +9705,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9675,7 +9716,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _superagent = __webpack_require__(318);
+	var _superagent = __webpack_require__(319);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -9752,7 +9793,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9804,8 +9845,8 @@
 	  return "function" == typeof e ? new Request("GET", t).end(e) : 1 == arguments.length ? new Request("GET", t) : new Request(t, e);
 	}function del(t, e) {
 	  var r = request("DELETE", t);return e && r.end(e), r;
-	}var Emitter = __webpack_require__(319),
-	    reduce = __webpack_require__(320),
+	}var Emitter = __webpack_require__(320),
+	    reduce = __webpack_require__(321),
 	    root;root = "undefined" != typeof window ? window : "undefined" != typeof self ? self : undefined, request.getXHR = function () {
 	  if (!(!root.XMLHttpRequest || root.location && "file:" == root.location.protocol && root.ActiveXObject)) return new XMLHttpRequest();try {
 	    return new ActiveXObject("Microsoft.XMLHTTP");
@@ -9918,7 +9959,7 @@
 	}, module.exports = request;
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9949,7 +9990,7 @@
 	};
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9959,7 +10000,7 @@
 	};
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9982,7 +10023,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _servicesJsx = __webpack_require__(317);
+	var _servicesJsx = __webpack_require__(318);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -10157,7 +10198,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10184,11 +10225,11 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(321);
+	var _ExpensesListJsx = __webpack_require__(322);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
-	var _servicesJsx = __webpack_require__(317);
+	var _servicesJsx = __webpack_require__(318);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -10248,7 +10289,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10275,7 +10316,7 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _servicesJsx = __webpack_require__(317);
+	var _servicesJsx = __webpack_require__(318);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
@@ -10479,7 +10520,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10506,7 +10547,7 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _servicesJsx = __webpack_require__(317);
+	var _servicesJsx = __webpack_require__(318);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
