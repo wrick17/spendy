@@ -1,9 +1,12 @@
 import React from 'react';
 import services from './../services.jsx';
+import Loading from './Loading.jsx';
+import NoRecords from './NoRecords.jsx';
 
 class ExpenseTable extends React.Component {
   render() {
-    if (this.props.expenses.length < 1) return <div className="no-records">No records to show!</div>;
+    if (this.props.expenses === 'loading') return <Loading />;
+    if (this.props.expenses.length < 1) return <NoRecords />;
     var that = this;
     var expenses = this.props.expenses.map(function(expense) {
       return (

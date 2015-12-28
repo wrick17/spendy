@@ -9,7 +9,7 @@ export default class Expenses extends React.Component {
     this.getExpenses = this.getExpenses.bind(this);
     this.refresh = this.refresh.bind(this);
     this.state = {
-      expenses: []
+      expenses: 'loading'
     };
   }
   componentDidMount() {

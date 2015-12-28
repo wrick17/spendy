@@ -1,6 +1,8 @@
 import React from 'react';
 import Container from './Container.jsx';
 import services from './../services.jsx';
+import Loading from './Loading.jsx';
+import NoRecords from './NoRecords.jsx';
 
 class AddContributor extends React.Component {
   constructor(props) {
@@ -53,8 +55,10 @@ class AddContributor extends React.Component {
   }
 }
 
-class ManageContributor extends React.Component {
+class ManageContributorList extends React.Component {
   render() {
+    if (this.props.contributors === 'loading') return <Loading />;
+    if (this.props.contributors.length < 1) return <NoRecords />;
     var that = this;
     var contributors = this.props.contributors.map(function(contributor) {
       return (
@@ -67,11 +71,19 @@ class ManageContributor extends React.Component {
       );
     });
     return (
+      <ul className="contributor-list">
+        {contributors}
+      </ul>
+    );
+  }
+}
+
+class ManageContributor extends React.Component {
+  render() {
+    return (
       <div className="manage-contributor-container">
         <h2 className="box-header">Manage contributors</h2>
-        <ul className="contributor-list">
-          {contributors}
-        </ul>
+        <ManageContributorList contributors={this.props.contributors} />
       </div>
     );
   }
@@ -84,7 +96,7 @@ export default class ContributorPage extends React.Component {
     this.getAllContributors = this.getAllContributors.bind(this);
     this.refresh = this.refresh.bind(this);
     this.state = {
-      contributors: []
+      contributors: 'loading'
     };
   }
   componentDidMount() {
@@ -111,7 +123,7 @@ export default class ContributorPage extends React.Component {
     return (
       <div className="add-container">
         <Container>
-          <ManageContributor contributors={this.state.contributors} deleteTag={this.deleteContributor} />
+          <ManageContributor contributors={this.state.contributors} deletecontributor={this.deleteContributor} />
           <AddContributor refresh={this.refresh} />
         </Container>
       </div>

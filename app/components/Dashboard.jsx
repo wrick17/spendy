@@ -14,8 +14,8 @@ export default class Dashboard extends React.Component {
     this.getOverview = this.getOverview.bind(this);
     this.refresh = this.refresh.bind(this);
     this.state = {
-      expenses: [],
-      contributors: []
+      expenses: 'loading',
+      contributors: 'loading'
     };
   }
   componentDidMount() {
