@@ -6,6 +6,7 @@ import ExpensesList from './ExpensesList.jsx';
 import DatePicker from './DatePicker.jsx';
 import services from './../services.jsx';
 import { Link } from 'react-router'
+import utils from './../utils.jsx';
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -13,6 +14,8 @@ export default class Dashboard extends React.Component {
     this.getExpenses = this.getExpenses.bind(this);
     this.getOverview = this.getOverview.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.setDateExpenses = this.setDateExpenses.bind(this);
+    this.setDateBounty = this.setDateBounty.bind(this);
     this.state = {
       expenses: 'loading',
       contributors: 'loading'
@@ -30,28 +33,36 @@ export default class Dashboard extends React.Component {
       });
     });
   }
-  getOverview() {
+  getOverview(date = null) {
     var that = this;
     services.getAllContributors(function(contributors) {
       that.setState({
         contributors: contributors
       });
-    });
+    }, date);
   }
   refresh() {
     this.getExpenses();
     this.getOverview();
+  }
+  setDateBounty(date) {
+    this.getOverview(date);
+  }
+  setDateExpenses(date) {
   }
   render() {
     return (
       <div className="dashboard-container">
         <Container>
           <div className="dashboard">
-            <Overview contributors={this.state.contributors} />
+            <Overview contributors={this.state.contributors} setDate={this.setDateBounty} />
             <NewEntry refresh={this.refresh} />
           </div>
           <div className="expenses-container">
-            <h2 className="expenses-header"><label>Expenses for the month<Link to="/expenses">(see all)</Link></label><DatePicker setDate={this.setDate} view="year" /></h2>
+            <h2 className="expenses-header">
+              <label>Expenses for the month<Link to="/expenses">(see all)</Link></label>
+              <DatePicker setDate={this.setDateExpenses} view="year" />
+            </h2>
             <ExpensesList expenses={this.state.expenses} refresh={this.refresh} />
           </div>
         </Container>

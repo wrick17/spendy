@@ -1,7 +1,6 @@
 import React from 'react';
 import DayPicker from "react-date-picker";
 import listensToClickOutside from 'react-onclickoutside/decorator';
-var today = new Date();
 
 class DatePicker extends React.Component {
   constructor(props) {
@@ -11,11 +10,12 @@ class DatePicker extends React.Component {
     this.showPicker = this.showPicker.bind(this);
     this.closePicker = this.closePicker.bind(this);
     this.state = {
-      date: today,
+      date: new Date(),
       open: false
     };
   }
   setDate(e, day) {
+    console.log('date ', day);
     this.setState({
       date: day._d
     });
@@ -23,8 +23,8 @@ class DatePicker extends React.Component {
     if (this.props.setDate) this.props.setDate(day._d);
   }
   setMonth(e, month) {
+    console.log('date ', month);
     var month = month._d;
-    month.setDate(1);
     this.setState({
       date: month
     });
@@ -44,7 +44,7 @@ class DatePicker extends React.Component {
   handleClickOutside(e) {
     this.closePicker();
   }
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.setDate) this.props.setDate(this.state.date);
   }
   render() {
@@ -59,7 +59,7 @@ class DatePicker extends React.Component {
         <input className="date-picker-input" data-value={this.state.date} value={value} onClick={this.showPicker} disabled />
         { this.state.open ? <DayPicker
           date={this.state.date}
-          maxDate={today}
+          maxDate={new Date()}
           view={ this.props.view || "month" }
           onSelect={this.setMonth}
           onChange={this.setDate} /> : null }

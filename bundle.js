@@ -5861,7 +5861,7 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -5899,6 +5899,10 @@
 
 	var _reactRouter = __webpack_require__(162);
 
+	var _utilsJsx = __webpack_require__(316);
+
+	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
+
 	var Dashboard = (function (_React$Component) {
 	  _inherits(Dashboard, _React$Component);
 
@@ -5909,6 +5913,8 @@
 	    this.getExpenses = this.getExpenses.bind(this);
 	    this.getOverview = this.getOverview.bind(this);
 	    this.refresh = this.refresh.bind(this);
+	    this.setDateExpenses = this.setDateExpenses.bind(this);
+	    this.setDateBounty = this.setDateBounty.bind(this);
 	    this.state = {
 	      expenses: 'loading',
 	      contributors: 'loading'
@@ -5934,12 +5940,14 @@
 	  }, {
 	    key: 'getOverview',
 	    value: function getOverview() {
+	      var date = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
 	      var that = this;
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
 	        that.setState({
 	          contributors: contributors
 	        });
-	      });
+	      }, date);
 	    }
 	  }, {
 	    key: 'refresh',
@@ -5947,6 +5955,14 @@
 	      this.getExpenses();
 	      this.getOverview();
 	    }
+	  }, {
+	    key: 'setDateBounty',
+	    value: function setDateBounty(date) {
+	      this.getOverview(date);
+	    }
+	  }, {
+	    key: 'setDateExpenses',
+	    value: function setDateExpenses(date) {}
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -5959,7 +5975,7 @@
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'dashboard' },
-	            _react2['default'].createElement(_OverviewJsx2['default'], { contributors: this.state.contributors }),
+	            _react2['default'].createElement(_OverviewJsx2['default'], { contributors: this.state.contributors, setDate: this.setDateBounty }),
 	            _react2['default'].createElement(_NewEntryJsx2['default'], { refresh: this.refresh })
 	          ),
 	          _react2['default'].createElement(
@@ -5978,7 +5994,7 @@
 	                  '(see all)'
 	                )
 	              ),
-	              _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDate, view: 'year' })
+	              _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDateExpenses, view: 'year' })
 	            ),
 	            _react2['default'].createElement(_ExpensesListJsx2['default'], { expenses: this.state.expenses, refresh: this.refresh })
 	          )
@@ -6125,7 +6141,7 @@
 	            null,
 	            'Bounty'
 	          ),
-	          _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDate, view: 'year' })
+	          _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.props.setDate, view: 'year' })
 	        ),
 	        _react2['default'].createElement(BountyList, { contributors: this.props.contributors })
 	      );
@@ -6170,8 +6186,6 @@
 
 	var _reactOnclickoutsideDecorator2 = _interopRequireDefault(_reactOnclickoutsideDecorator);
 
-	var today = new Date();
-
 	var DatePicker = (function (_React$Component) {
 	  _inherits(DatePicker, _React$Component);
 
@@ -6184,7 +6198,7 @@
 	    this.showPicker = this.showPicker.bind(this);
 	    this.closePicker = this.closePicker.bind(this);
 	    this.state = {
-	      date: today,
+	      date: new Date(),
 	      open: false
 	    };
 	  }
@@ -6192,6 +6206,7 @@
 	  _createClass(DatePicker, [{
 	    key: 'setDate',
 	    value: function setDate(e, day) {
+	      console.log('date ', day);
 	      this.setState({
 	        date: day._d
 	      });
@@ -6201,8 +6216,8 @@
 	  }, {
 	    key: 'setMonth',
 	    value: function setMonth(e, month) {
+	      console.log('date ', month);
 	      var month = month._d;
-	      month.setDate(1);
 	      this.setState({
 	        date: month
 	      });
@@ -6229,8 +6244,8 @@
 	      this.closePicker();
 	    }
 	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      if (this.props.setDate) this.props.setDate(this.state.date);
 	    }
 	  }, {
@@ -6248,7 +6263,7 @@
 	        _react2['default'].createElement('input', { className: 'date-picker-input', 'data-value': this.state.date, value: value, onClick: this.showPicker, disabled: true }),
 	        this.state.open ? _react2['default'].createElement(_reactDatePicker2['default'], {
 	          date: this.state.date,
-	          maxDate: today,
+	          maxDate: new Date(),
 	          view: this.props.view || "month",
 	          onSelect: this.setMonth,
 	          onChange: this.setDate }) : null
@@ -9450,9 +9465,9 @@
 /* 316 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
+	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
 	var utils = {};
@@ -9464,8 +9479,59 @@
 	  });
 	};
 
-	exports["default"] = utils;
-	module.exports = exports["default"];
+	utils.firstDay = function (date) {
+	  return new Date(date.setDate(1));
+	};
+
+	utils.lastDay = function (date) {
+	  return new Date(new Date(new Date(date.setDate(1)).setMonth(date.getMonth() + 1)).setDate(0));
+	};
+
+	utils.groupByMonth = function (items) {
+	  var group = [],
+	      months = [];
+
+	  items.map(function (item) {
+	    var month = new Date(item.date).toString().slice(4, 7) + ' ' + new Date(item.date).toString().slice(11, 15);
+	    if (months.indexOf(month) === -1) {
+	      months.push(month);
+	      group.push({
+	        month: month,
+	        items: [item]
+	      });
+	    } else {
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = group[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var groupMember = _step.value;
+
+	          if (groupMember.month === month) group[group.indexOf(groupMember)].items.push(item);
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator['return']) {
+	            _iterator['return']();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+	    }
+	  });
+
+	  return group;
+	};
+
+	exports['default'] = utils;
+	module.exports = exports['default'];
 
 /***/ },
 /* 317 */
@@ -9705,6 +9771,7 @@
 	  }, {
 	    key: 'setDate',
 	    value: function setDate(date) {
+	      console.log('new entry', date);
 	      this.setState({
 	        date: date
 	      });
@@ -9721,6 +9788,7 @@
 	        'contributorId': this.state.contributorId,
 	        'tagId': this.state.tagId
 	      };
+	      console.log(data);
 	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
 	        that.props.refresh();
 	        that.setState({
@@ -9831,6 +9899,10 @@
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
+	var _utilsJsx = __webpack_require__(316);
+
+	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
+
 	var baseUrl = 'https://spendyapi.herokuapp.com/api/v1';
 	var services = {};
 
@@ -9838,7 +9910,7 @@
 	services.getAllEntries = function (callback) {
 	  _superagent2['default'].get(baseUrl + '/entry').end(function (err, res) {
 	    if (err) return callback(err);
-	    return callback(res.body.reverse());
+	    return callback(res.body);
 	  });
 	};
 
@@ -9879,7 +9951,13 @@
 
 	//contributor
 	services.getAllContributors = function (callback) {
-	  _superagent2['default'].get(baseUrl + '/contributor').end(function (err, res) {
+	  var date = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+	  var dateParams = '';
+	  if (date) {
+	    dateParams += '?fromDate=' + _utilsJsx2['default'].firstDay(date) + '&toDate=' + _utilsJsx2['default'].lastDay(date);
+	  }
+	  _superagent2['default'].get(baseUrl + '/contributor/' + dateParams).end(function (err, res) {
 	    if (err) return callback(err);
 	    return callback(res.body);
 	  });
@@ -10146,29 +10224,33 @@
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
-	var ExpenseTable = (function (_React$Component) {
-	  _inherits(ExpenseTable, _React$Component);
+	var _utilsJsx = __webpack_require__(316);
 
-	  function ExpenseTable() {
-	    _classCallCheck(this, ExpenseTable);
+	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
 
-	    _get(Object.getPrototypeOf(ExpenseTable.prototype), 'constructor', this).apply(this, arguments);
+	var ExpenseGroup = (function (_React$Component) {
+	  _inherits(ExpenseGroup, _React$Component);
+
+	  function ExpenseGroup() {
+	    _classCallCheck(this, ExpenseGroup);
+
+	    _get(Object.getPrototypeOf(ExpenseGroup.prototype), 'constructor', this).apply(this, arguments);
 	  }
 
-	  _createClass(ExpenseTable, [{
+	  _createClass(ExpenseGroup, [{
 	    key: 'render',
 	    value: function render() {
-	      if (this.props.expenses === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
-	      if (this.props.expenses.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
-	      var expenses = this.props.expenses.map(function (expense) {
+	      var expenseGroup = _utilsJsx2['default'].sortByKey(this.props.expenseGroup.items.reverse(), 'date').map(function (expense) {
+	        var date = new Date(expense.date);
+	        var displayDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
 	        return _react2['default'].createElement(
 	          'tr',
 	          { key: expense._id },
 	          _react2['default'].createElement(
 	            'td',
 	            { 'data-label': 'Date' },
-	            expense.date.toString().slice(0, 10).split('-').reverse().join('/')
+	            displayDate
 	          ),
 	          _react2['default'].createElement(
 	            'td',
@@ -10201,6 +10283,44 @@
 	            )
 	          )
 	        );
+	      });
+	      return _react2['default'].createElement(
+	        'tbody',
+	        null,
+	        _react2['default'].createElement(
+	          'tr',
+	          { className: 'month-header' },
+	          _react2['default'].createElement(
+	            'td',
+	            { 'data-label': 'Month', colSpan: '5' },
+	            this.props.expenseGroup.month
+	          )
+	        ),
+	        expenseGroup
+	      );
+	    }
+	  }]);
+
+	  return ExpenseGroup;
+	})(_react2['default'].Component);
+
+	var ExpenseTable = (function (_React$Component2) {
+	  _inherits(ExpenseTable, _React$Component2);
+
+	  function ExpenseTable() {
+	    _classCallCheck(this, ExpenseTable);
+
+	    _get(Object.getPrototypeOf(ExpenseTable.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(ExpenseTable, [{
+	    key: 'render',
+	    value: function render() {
+	      if (this.props.expenses === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
+	      if (this.props.expenses.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
+	      var that = this;
+	      var expenseGroups = _utilsJsx2['default'].groupByMonth(this.props.expenses).map(function (expenseGroup) {
+	        return _react2['default'].createElement(ExpenseGroup, { key: expenseGroup.month, expenseGroup: expenseGroup, contributorMap: that.props.contributorMap, tagMap: that.props.tagMap, deleteEntry: that.props.deleteEntry });
 	      });
 	      return _react2['default'].createElement(
 	        'table',
@@ -10243,11 +10363,7 @@
 	            )
 	          )
 	        ),
-	        _react2['default'].createElement(
-	          'tbody',
-	          null,
-	          expenses
-	        )
+	        expenseGroups
 	      );
 	    }
 	  }]);
@@ -10255,8 +10371,8 @@
 	  return ExpenseTable;
 	})(_react2['default'].Component);
 
-	var ExpensesList = (function (_React$Component2) {
-	  _inherits(ExpensesList, _React$Component2);
+	var ExpensesList = (function (_React$Component3) {
+	  _inherits(ExpensesList, _React$Component3);
 
 	  function ExpensesList(props) {
 	    _classCallCheck(this, ExpensesList);

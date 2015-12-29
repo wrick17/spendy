@@ -31,11 +31,9 @@ table {
         padding: 5px 10px;
         text-align: right;
         &:before {
-          content: attr(data-label);
-          font-size: 14px;
+          content: attr(data-label) + ":";
+          font-size: 16px;
           float: left;
-          text-transform: uppercase;
-          font-weight: bold;
         }
         &.actions {
           div {
@@ -49,8 +47,20 @@ table {
         }
       }
       &:hover {
+        background: @light-red;
         td {
           background: @light-red;
+        }
+      }
+      &.month-header {
+        font-weight: bold;
+        margin-top: 10px;
+        border-top: 1px solid @light-gray;
+        &:hover {
+          background: transparent;
+          td {
+            background: transparent;
+          }
         }
       }
     }

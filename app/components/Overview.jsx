@@ -35,7 +35,10 @@ export default class Overview extends React.Component {
   render() {
     return (
       <div className="overview">
-        <h2 className="overview-header"><label>Bounty</label><DatePicker setDate={this.setDate} view="year" /></h2>
+        <h2 className="overview-header">
+          <label>Bounty</label>
+          <DatePicker setDate={this.props.setDate} view="year" />
+        </h2>
         <BountyList contributors={this.props.contributors} />
       </div>
     );
