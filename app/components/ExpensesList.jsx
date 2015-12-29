@@ -4,6 +4,7 @@ import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import utils from './../utils.jsx';
 import Modal from './Modal.jsx';
+import NewEntry from './NewEntry.jsx'
 
 class ExpenseGroup extends React.Component {
   render() {
@@ -19,7 +20,13 @@ class ExpenseGroup extends React.Component {
           <td data-label="Contributor">{that.props.contributorMap[expense.contributorId] || 'Loading..'}</td>
           <td data-label="Tag">{that.props.tagMap[expense.tagId] || 'Loading..'}</td>
           <td data-label="Actions" className="actions">
-            <div onClick={that.props.editEntry} data-id={expense._id} >Edit</div>
+            <div onClick={that.props.editEntry}
+                data-cost={expense.cost}
+                data-item={expense.item}
+                data-contributor={expense.contributorId}
+                data-tag={expense.tagId}
+                data-date={expense.date}
+                data-id={expense._id} >Edit</div>
             <div onClick={that.props.deleteEntry} data-id={expense._id} >Delete</div>
           </td>
         </tr>
@@ -72,12 +79,18 @@ export default class ExpensesList extends React.Component {
   constructor(props) {
     super(props);
     this.deleteEntry = this.deleteEntry.bind(this);
-    this.showModal = this.showModal.bind(this);
+    this.editEntry = this.editEntry.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.state = {
+    this.updateEntry = this.updateEntry.bind(this);    this.state = {
+      id: '',
       tagMap: [],
       contributorMap: [],
-      isModalOpen: false
+      isModalOpen: false,
+      date: '',
+      cost: '',
+      item: '',
+      contributorId: '',
+      tagId: ''
     };
   }
   componentDidMount() {
@@ -107,14 +120,27 @@ export default class ExpensesList extends React.Component {
       if (that.props.refresh) that.props.refresh();
     });
   }
-  showModal() {
+  editEntry(e) {
     this.setState({
-      isModalOpen: true
+      isModalOpen: true,
+      id: e.target.dataset.id,
+      date: new Date(e.target.dataset.date),
+      cost: e.target.dataset.cost,
+      item: e.target.dataset.item,
+      contributorId: e.target.dataset.contributor,
+      tagId: e.target.dataset.tag
     });
   }
   closeModal() {
     this.setState({
       isModalOpen: false
+    });
+  }
+  updateEntry(data) {
+    var that = this;
+    services.updateEntry(this.state.id, data, function(res) {
+      that.closeModal();
+      if (that.props.refresh) that.props.refresh();
     });
   }
   render() {
@@ -124,13 +150,20 @@ export default class ExpensesList extends React.Component {
           expenses={this.props.expenses}
           contributorMap={this.state.contributorMap}
           tagMap={this.state.tagMap}
-          editEntry={this.showModal}
+          editEntry={this.editEntry}
           deleteEntry={this.deleteEntry} />
         <Modal
           title="Edit Expense"
           open={this.state.isModalOpen}
           closeModal={this.closeModal} >
-
+          <NewEntry
+            item={this.state.item}
+            date={this.state.date}
+            cost={this.state.cost}
+            contributorId={this.state.contributorId}
+            tagId={this.state.tagId}
+            updateEntry={this.updateEntry}
+            edit={true}/>
         </Modal>
       </div>
     );

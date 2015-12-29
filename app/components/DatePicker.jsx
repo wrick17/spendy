@@ -10,7 +10,7 @@ class DatePicker extends React.Component {
     this.showPicker = this.showPicker.bind(this);
     this.closePicker = this.closePicker.bind(this);
     this.state = {
-      date: new Date(),
+      date: this.props.date || new Date(),
       open: false
     };
   }

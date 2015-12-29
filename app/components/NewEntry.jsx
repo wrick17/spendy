@@ -4,11 +4,12 @@ import services from './../services.jsx';
 
 class Select extends React.Component {
   render() {
+    var that = this;
     var optionList = this.props.options.map(function(option) {
-      return (<option key={option._id} value={option._id} >{option.name}</option>)
+      return (<option key={option._id} value={option._id} >{option.name}</option>);
     });
     return (
-      <select onChange={this.props.onChange}>
+      <select value={this.props.selectedValue || null} onChange={this.props.onChange}>
         <option disabled>{this.props.default || 'Choose Option...'}</option>
         {optionList}
       </select>
@@ -26,11 +27,11 @@ export default class NewEntry extends React.Component {
     this.onChangeItemName = this.onChangeItemName.bind(this);
     this.setDate = this.setDate.bind(this);
     this.state = {
-      tagId: '',
-      contributorId: '',
-      cost: '',
-      item: '',
-      date: '',
+      tagId: this.props.tagId || '',
+      contributorId: this.props.contributorId || '',
+      cost: this.props.cost || '',
+      item: this.props.item || '',
+      date: this.props.date || '',
       tags: [],
       contributors: [],
       error: false
@@ -83,7 +84,8 @@ export default class NewEntry extends React.Component {
       'date': this.state.date,
       'contributorId': this.state.contributorId,
       'tagId': this.state.tagId
-    }
+    };
+    if (this.props.edit) return this.props.updateEntry(data);
     if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '' )
       services.createEntry(data, function(res) {
         that.props.refresh();
@@ -103,26 +105,26 @@ export default class NewEntry extends React.Component {
         <form className="form" onSubmit={this.addEntry} >
           <div className="form-group">
             <label>Date:</label>
-            <DatePicker setDate={this.setDate} />
+            <DatePicker date={this.state.date} setDate={this.setDate} />
           </div>
           <div className="form-group">
             <label>Cost:</label>
-            <input type="number" placeholder="Total Cost" onChange={this.onChangeCost} />
+            <input type="number" placeholder="Total Cost" value={this.state.cost} onChange={this.onChangeCost} />
           </div>
           <div className="form-group">
             <label>Item:</label>
-            <input type="text" placeholder="Item spent on" onChange={this.onChangeItemName} />
+            <input type="text" placeholder="Item spent on" value={this.state.item} onChange={this.onChangeItemName} />
           </div>
           <div className="form-group">
             <label>Contributor:</label>
-            <Select options={this.state.contributors} default="Choose Contributor" onChange={this.onChangeContributor} />
+            <Select options={this.state.contributors} default="Choose Contributor" selectedValue={this.state.contributorId} onChange={this.onChangeContributor} />
           </div>
           <div className="form-group">
             <label>Tag:</label>
-            <Select options={this.state.tags} default="Choose Tag" onChange={this.onChangeTag} />
+            <Select options={this.state.tags} default="Choose Tag" selectedValue={this.state.tagId} onChange={this.onChangeTag} />
           </div>
           { this.state.error ? <div className="error right">Please fill out all the details above</div> : null }
-          <button className="button right">Add</button>
+          <button className="button right">{this.props.edit ? 'Save' : 'Add'}</button>
         </form>
       </div>
     );

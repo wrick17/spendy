@@ -476,6 +476,8 @@ a:hover {
   width: 100%;
   background: #FFFFFF;
   height: auto;
+  max-height: 100vh;
+  overflow: auto;
 }
 .modal-wrapper .modal .container {
   padding: 20px;
@@ -715,6 +717,13 @@ a:hover {
 .dashboard-container table tbody tr.month-header:hover td {
   background: transparent;
 }
+.dashboard-container .form .form-group .day-picker .date-picker {
+  top: calc(105%);
+  bottom: auto;
+}
+.dashboard-container .modal-wrapper .modal .container {
+  padding-bottom: 50px;
+}
 @media screen and (min-width: 768px) {
   .dashboard-container table thead {
     display: table-header-group;
@@ -800,6 +809,13 @@ a:hover {
 }
 .expenses-page table tbody tr.month-header:hover td {
   background: transparent;
+}
+.expenses-page .form .form-group .day-picker .date-picker {
+  top: calc(105%);
+  bottom: auto;
+}
+.expenses-page .modal-wrapper .modal .container {
+  padding-bottom: 50px;
 }
 @media screen and (min-width: 768px) {
   .expenses-page table thead {

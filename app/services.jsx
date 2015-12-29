@@ -32,6 +32,17 @@ services.deleteEntry = function(id, callback) {
     });
 }
 
+services.updateEntry = function(id, data, callback) {
+  superagent
+    .put(baseUrl + '/entry/' + id)
+    .set('Content-Type', 'application/json')
+    .send(data)
+    .end(function(err, res) {
+      if (err) return callback(err);
+      return callback(res.body);
+    });
+}
+
 //tags
 services.getAllTags = function(callback) {
   superagent

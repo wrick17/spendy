@@ -6204,7 +6204,7 @@
 	    this.showPicker = this.showPicker.bind(this);
 	    this.closePicker = this.closePicker.bind(this);
 	    this.state = {
-	      date: new Date(),
+	      date: this.props.date || new Date(),
 	      open: false
 	    };
 	  }
@@ -9681,6 +9681,7 @@
 	  _createClass(Select, [{
 	    key: 'render',
 	    value: function render() {
+	      var that = this;
 	      var optionList = this.props.options.map(function (option) {
 	        return _react2['default'].createElement(
 	          'option',
@@ -9690,7 +9691,7 @@
 	      });
 	      return _react2['default'].createElement(
 	        'select',
-	        { onChange: this.props.onChange },
+	        { value: this.props.selectedValue || null, onChange: this.props.onChange },
 	        _react2['default'].createElement(
 	          'option',
 	          { disabled: true },
@@ -9718,11 +9719,11 @@
 	    this.onChangeItemName = this.onChangeItemName.bind(this);
 	    this.setDate = this.setDate.bind(this);
 	    this.state = {
-	      tagId: '',
-	      contributorId: '',
-	      cost: '',
-	      item: '',
-	      date: '',
+	      tagId: this.props.tagId || '',
+	      contributorId: this.props.contributorId || '',
+	      cost: this.props.cost || '',
+	      item: this.props.item || '',
+	      date: this.props.date || '',
 	      tags: [],
 	      contributors: [],
 	      error: false
@@ -9791,6 +9792,7 @@
 	        'contributorId': this.state.contributorId,
 	        'tagId': this.state.tagId
 	      };
+	      if (this.props.edit) return this.props.updateEntry(data);
 	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
 	        that.props.refresh();
 	        that.setState({
@@ -9822,7 +9824,7 @@
 	              null,
 	              'Date:'
 	            ),
-	            _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDate })
+	            _react2['default'].createElement(_DatePickerJsx2['default'], { date: this.state.date, setDate: this.setDate })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9832,7 +9834,7 @@
 	              null,
 	              'Cost:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', onChange: this.onChangeCost })
+	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', value: this.state.cost, onChange: this.onChangeCost })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9842,7 +9844,7 @@
 	              null,
 	              'Item:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', onChange: this.onChangeItemName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', value: this.state.item, onChange: this.onChangeItemName })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9852,7 +9854,7 @@
 	              null,
 	              'Contributor:'
 	            ),
-	            _react2['default'].createElement(Select, { options: this.state.contributors, 'default': 'Choose Contributor', onChange: this.onChangeContributor })
+	            _react2['default'].createElement(Select, { options: this.state.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9862,7 +9864,7 @@
 	              null,
 	              'Tag:'
 	            ),
-	            _react2['default'].createElement(Select, { options: this.state.tags, 'default': 'Choose Tag', onChange: this.onChangeTag })
+	            _react2['default'].createElement(Select, { options: this.state.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -9872,7 +9874,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            'Add'
+	            this.props.edit ? 'Save' : 'Add'
 	          )
 	        )
 	      );
@@ -9924,6 +9926,13 @@
 	};
 	services.deleteEntry = function (id, callback) {
 	  _superagent2['default']['delete'](baseUrl + '/entry/' + id).end(function (err, res) {
+	    if (err) return callback(err);
+	    return callback(res.body);
+	  });
+	};
+
+	services.updateEntry = function (id, data, callback) {
+	  _superagent2['default'].put(baseUrl + '/entry/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback(err);
 	    return callback(res.body);
 	  });
@@ -10248,6 +10257,10 @@
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
+	var _NewEntryJsx = __webpack_require__(319);
+
+	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
+
 	var ExpenseGroup = (function (_React$Component) {
 	  _inherits(ExpenseGroup, _React$Component);
 
@@ -10298,7 +10311,13 @@
 	            { 'data-label': 'Actions', className: 'actions' },
 	            _react2['default'].createElement(
 	              'div',
-	              { onClick: that.props.editEntry, 'data-id': expense._id },
+	              { onClick: that.props.editEntry,
+	                'data-cost': expense.cost,
+	                'data-item': expense.item,
+	                'data-contributor': expense.contributorId,
+	                'data-tag': expense.tagId,
+	                'data-date': expense.date,
+	                'data-id': expense._id },
 	              'Edit'
 	            ),
 	            _react2['default'].createElement(
@@ -10410,12 +10429,18 @@
 
 	    _get(Object.getPrototypeOf(ExpensesList.prototype), 'constructor', this).call(this, props);
 	    this.deleteEntry = this.deleteEntry.bind(this);
-	    this.showModal = this.showModal.bind(this);
+	    this.editEntry = this.editEntry.bind(this);
 	    this.closeModal = this.closeModal.bind(this);
-	    this.state = {
+	    this.updateEntry = this.updateEntry.bind(this);this.state = {
+	      id: '',
 	      tagMap: [],
 	      contributorMap: [],
-	      isModalOpen: false
+	      isModalOpen: false,
+	      date: '',
+	      cost: '',
+	      item: '',
+	      contributorId: '',
+	      tagId: ''
 	    };
 	  }
 
@@ -10451,10 +10476,16 @@
 	      });
 	    }
 	  }, {
-	    key: 'showModal',
-	    value: function showModal() {
+	    key: 'editEntry',
+	    value: function editEntry(e) {
 	      this.setState({
-	        isModalOpen: true
+	        isModalOpen: true,
+	        id: e.target.dataset.id,
+	        date: new Date(e.target.dataset.date),
+	        cost: e.target.dataset.cost,
+	        item: e.target.dataset.item,
+	        contributorId: e.target.dataset.contributor,
+	        tagId: e.target.dataset.tag
 	      });
 	    }
 	  }, {
@@ -10462,6 +10493,15 @@
 	    value: function closeModal() {
 	      this.setState({
 	        isModalOpen: false
+	      });
+	    }
+	  }, {
+	    key: 'updateEntry',
+	    value: function updateEntry(data) {
+	      var that = this;
+	      _servicesJsx2['default'].updateEntry(this.state.id, data, function (res) {
+	        that.closeModal();
+	        if (that.props.refresh) that.props.refresh();
 	      });
 	    }
 	  }, {
@@ -10474,12 +10514,23 @@
 	          expenses: this.props.expenses,
 	          contributorMap: this.state.contributorMap,
 	          tagMap: this.state.tagMap,
-	          editEntry: this.showModal,
+	          editEntry: this.editEntry,
 	          deleteEntry: this.deleteEntry }),
-	        _react2['default'].createElement(_ModalJsx2['default'], {
-	          title: 'Edit Expense',
-	          open: this.state.isModalOpen,
-	          closeModal: this.closeModal })
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Edit Expense',
+	            open: this.state.isModalOpen,
+	            closeModal: this.closeModal },
+	          _react2['default'].createElement(_NewEntryJsx2['default'], {
+	            item: this.state.item,
+	            date: this.state.date,
+	            cost: this.state.cost,
+	            contributorId: this.state.contributorId,
+	            tagId: this.state.tagId,
+	            updateEntry: this.updateEntry,
+	            edit: true })
+	        )
 	      );
 	    }
 	  }]);
@@ -11331,7 +11382,6 @@
 	      };
 	      var that = this;
 	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
-	        console.log(res);
 	        that.refresh();
 	        that.closeModal();
 	      });else this.setState({
@@ -11355,7 +11405,6 @@
 	      };
 	      var that = this;
 	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
-	        console.log(res);
 	        that.refresh();
 	        that.closeModal();
 	      });else this.setState({

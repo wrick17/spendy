@@ -164,7 +164,6 @@ export default class ContributorPage extends React.Component {
     var that = this;
     if (this.state.contributorName !== '')
       services.updateContributor(this.state.contributorId, data, function(res) {
-        console.log(res);
         that.refresh();
         that.closeModal();
       });
@@ -187,7 +186,6 @@ export default class ContributorPage extends React.Component {
     var that = this;
     if (this.state.contributorName !== '')
       services.updateContributor(this.state.contributorId, data, function(res) {
-        console.log(res);
         that.refresh();
         that.closeModal();
       });
