@@ -11064,6 +11064,10 @@
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
+	var _utilsJsx = __webpack_require__(316);
+
+	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
+
 	var _LoadingJsx = __webpack_require__(317);
 
 	var _LoadingJsx2 = _interopRequireDefault(_LoadingJsx);
@@ -11173,10 +11177,12 @@
 	      if (this.props.contributors === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
 	      if (this.props.contributors.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
-	      var contributors = this.props.contributors.map(function (contributor) {
+	      var contributors = _utilsJsx2['default'].sortByKey(this.props.contributors, 'active').map(function (contributor) {
+	        var classes = 'contributor';
+	        if (!contributor.active) classes += ' disabled';
 	        return _react2['default'].createElement(
 	          'li',
-	          { className: 'contributor', key: contributor._id },
+	          { className: classes, key: contributor._id },
 	          _react2['default'].createElement(
 	            'label',
 	            null,
@@ -11187,7 +11193,7 @@
 	            null,
 	            _react2['default'].createElement(
 	              'a',
-	              { onClick: that.props.editContributor, 'data-id': contributor._id, 'data-name': contributor.name },
+	              { onClick: that.props.editContributor, 'data-id': contributor._id, 'data-name': contributor.name, 'data-active': contributor.active },
 	              'Edit'
 	            ),
 	            _react2['default'].createElement(
@@ -11250,13 +11256,15 @@
 	    this.closeModal = this.closeModal.bind(this);
 	    this.onSaveContributor = this.onSaveContributor.bind(this);
 	    this.onChangeContributorName = this.onChangeContributorName.bind(this);
+	    this.changeContributorStatus = this.changeContributorStatus.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
 	      contributors: 'loading',
 	      isModalOpen: false,
 	      contributorName: '',
 	      contributorId: '',
-	      contributorError: false
+	      contributorError: false,
+	      contributorActive: true
 	    };
 	  }
 
@@ -11270,7 +11278,8 @@
 	    value: function getAllContributors() {
 	      var that = this;
 	      that.setState({
-	        contributors: 'loading'
+	        contributors: 'loading',
+	        contributorError: false
 	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
 	        that.setState({
@@ -11301,7 +11310,8 @@
 	      this.setState({
 	        isModalOpen: true,
 	        contributorName: e.target.dataset.name,
-	        contributorId: e.target.dataset.id
+	        contributorId: e.target.dataset.id,
+	        contributorActive: JSON.parse(e.target.dataset.active)
 	      });
 	    }
 	  }, {
@@ -11317,13 +11327,15 @@
 	      e.preventDefault();
 	      var data = {
 	        name: this.state.contributorName,
-	        active: true
+	        active: this.state.contributorActive
 	      };
 	      var that = this;
-	      _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
+	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
 	        console.log(res);
 	        that.refresh();
 	        that.closeModal();
+	      });else this.setState({
+	        contributorError: true
 	      });
 	    }
 	  }, {
@@ -11331,6 +11343,23 @@
 	    value: function closeModal() {
 	      this.setState({
 	        isModalOpen: false
+	      });
+	    }
+	  }, {
+	    key: 'changeContributorStatus',
+	    value: function changeContributorStatus(e) {
+	      e.preventDefault();
+	      var data = {
+	        name: this.state.contributorName,
+	        active: !this.state.contributorActive
+	      };
+	      var that = this;
+	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
+	        console.log(res);
+	        that.refresh();
+	        that.closeModal();
+	      });else this.setState({
+	        contributorError: true
 	      });
 	    }
 	  }, {
@@ -11371,8 +11400,15 @@
 	            ) : null,
 	            _react2['default'].createElement(
 	              'button',
-	              { className: 'button right' },
+	              { type: 'submit', className: 'button right' },
 	              'Save'
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { onClick: this.changeContributorStatus, className: 'button' },
+	              'Make ',
+	              this.state.contributorActive ? 'Inactive' : 'Active',
+	              ' '
 	            )
 	          )
 	        )

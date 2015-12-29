@@ -872,3 +872,8 @@ a:hover {
 .add-container .manage-contributor-container ul li div a {
   margin-left: 5px;
 }
+.add-container .manage-tag-container ul li.disabled label,
+.add-container .manage-contributor-container ul li.disabled label {
+  color: #BDBDBD;
+  text-decoration: line-through;
+}

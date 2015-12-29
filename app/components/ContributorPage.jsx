@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from './Container.jsx';
 import services from './../services.jsx';
+import utils from './../utils.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import Modal from './Modal.jsx';
@@ -61,12 +62,14 @@ class ManageContributorList extends React.Component {
     if (this.props.contributors === 'loading') return <Loading />;
     if (this.props.contributors.length < 1) return <NoRecords />;
     var that = this;
-    var contributors = this.props.contributors.map(function(contributor) {
+    var contributors = utils.sortByKey(this.props.contributors, 'active').map(function(contributor) {
+      var classes = 'contributor';
+      if (!contributor.active) classes += ' disabled';
       return (
-        <li className="contributor" key={contributor._id} >
+        <li className={classes}  key={contributor._id} >
           <label>{contributor.name}</label>
           <div>
-            <a onClick={that.props.editContributor} data-id={contributor._id} data-name={contributor.name} >Edit</a>
+            <a onClick={that.props.editContributor} data-id={contributor._id} data-name={contributor.name} data-active={contributor.active} >Edit</a>
             <a onClick={that.props.deleteContributor} data-id={contributor._id} >Delete</a>
           </div>
         </li>
@@ -100,13 +103,15 @@ export default class ContributorPage extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.onSaveContributor = this.onSaveContributor.bind(this);
     this.onChangeContributorName = this.onChangeContributorName.bind(this);
+    this.changeContributorStatus = this.changeContributorStatus.bind(this);
     this.refresh = this.refresh.bind(this);
     this.state = {
       contributors: 'loading',
       isModalOpen: false,
       contributorName: '',
       contributorId: '',
-      contributorError: false
+      contributorError: false,
+      contributorActive: true
     };
   }
   componentDidMount() {
@@ -115,7 +120,8 @@ export default class ContributorPage extends React.Component {
   getAllContributors() {
     var that = this;
     that.setState({
-      contributors: 'loading'
+      contributors: 'loading',
+      contributorError: false
     });
     services.getAllContributors(function(contributors) {
       that.setState({
@@ -140,7 +146,8 @@ export default class ContributorPage extends React.Component {
     this.setState({
       isModalOpen: true,
       contributorName: e.target.dataset.name,
-      contributorId: e.target.dataset.id
+      contributorId: e.target.dataset.id,
+      contributorActive: JSON.parse(e.target.dataset.active)
     });
   }
   onChangeContributorName(e) {
@@ -152,19 +159,43 @@ export default class ContributorPage extends React.Component {
     e.preventDefault();
     var data = {
       name: this.state.contributorName,
-      active: true
+      active: this.state.contributorActive
     }
     var that = this;
-    services.updateContributor(this.state.contributorId, data, function(res) {
-      console.log(res);
-      that.refresh();
-      that.closeModal();
-    });
+    if (this.state.contributorName !== '')
+      services.updateContributor(this.state.contributorId, data, function(res) {
+        console.log(res);
+        that.refresh();
+        that.closeModal();
+      });
+    else
+      this.setState({
+        contributorError: true
+      });
   }
   closeModal() {
     this.setState({
       isModalOpen: false
     });
+  }
+  changeContributorStatus(e) {
+    e.preventDefault();
+    var data = {
+      name: this.state.contributorName,
+      active: !this.state.contributorActive
+    }
+    var that = this;
+    if (this.state.contributorName !== '')
+      services.updateContributor(this.state.contributorId, data, function(res) {
+        console.log(res);
+        that.refresh();
+        that.closeModal();
+      });
+    else
+      this.setState({
+        contributorError: true
+      });
+
   }
   render() {
     return (
@@ -183,7 +214,8 @@ export default class ContributorPage extends React.Component {
               <input type="text" placeholder="Contributor Name..." value={this.state.contributorName} data-id={this.state.contributorId} onChange={this.onChangeContributorName} />
             </div>
             { this.state.contributorError ? <div className="error right">Don't be this lazy!</div> : null }
-            <button className="button right">Save</button>
+            <button type="submit" className="button right">Save</button>
+            <button onClick={this.changeContributorStatus} className="button">Make { this.state.contributorActive ? 'Inactive' : 'Active' } </button>
           </form>
         </Modal>
       </div>
