@@ -10823,7 +10823,7 @@
 	        _react2['default'].createElement(
 	          'h2',
 	          { className: 'box-header' },
-	          'Add new Tag'
+	          'Add New Tag'
 	        ),
 	        _react2['default'].createElement(
 	          'form',
@@ -11179,8 +11179,8 @@
 	        { className: 'add-contributor-container' },
 	        _react2['default'].createElement(
 	          'h2',
-	          { className: 'new-contributor-header' },
-	          'Add new Contributor'
+	          { className: 'box-header' },
+	          'Add New Contributor'
 	        ),
 	        _react2['default'].createElement(
 	          'form',

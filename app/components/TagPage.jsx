@@ -41,7 +41,7 @@ class AddTag extends React.Component {
   render() {
     return (
       <div className="add-tag-container">
-        <h2 className="box-header">Add new Tag</h2>
+        <h2 className="box-header">Add New Tag</h2>
         <form className="form" onSubmit={this.onAddTag} >
           <div className="form-group">
             <label>Tag Name:</label>

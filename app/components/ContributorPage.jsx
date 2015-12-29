@@ -43,7 +43,7 @@ class AddContributor extends React.Component {
   render() {
     return (
       <div className="add-contributor-container">
-        <h2 className="new-contributor-header">Add new Contributor</h2>
+        <h2 className="box-header">Add New Contributor</h2>
         <form className="form" onSubmit={this.onAddContributor} >
           <div className="form-group">
             <label>Contributor Name:</label>
