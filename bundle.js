@@ -9777,7 +9777,6 @@
 	  }, {
 	    key: 'setDate',
 	    value: function setDate(date) {
-	      console.log('new entry', date);
 	      this.setState({
 	        date: date
 	      });
@@ -9794,7 +9793,6 @@
 	        'contributorId': this.state.contributorId,
 	        'tagId': this.state.tagId
 	      };
-	      console.log(data);
 	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
 	        that.props.refresh();
 	        that.setState({
@@ -10713,7 +10711,7 @@
 	          { className: 'box-header' },
 	          'Manage Tags'
 	        ),
-	        _react2['default'].createElement(ManageTagList, { tags: this.props.tags })
+	        _react2['default'].createElement(ManageTagList, { tags: this.props.tags, deleteTag: this.props.deleteTag })
 	      );
 	    }
 	  }]);
@@ -10757,6 +10755,7 @@
 	  }, {
 	    key: 'deleteTag',
 	    value: function deleteTag(e) {
+	      e.preventDefault();
 	      var that = this;
 	      that.setState({
 	        tags: 'loading'
@@ -10980,7 +10979,7 @@
 	          { className: 'box-header' },
 	          'Manage contributors'
 	        ),
-	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors })
+	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors, deleteContributor: this.props.deleteContributor })
 	      );
 	    }
 	  }]);
@@ -11024,6 +11023,7 @@
 	  }, {
 	    key: 'deleteContributor',
 	    value: function deleteContributor(e) {
+	      e.preventDefault();
 	      var that = this;
 	      that.setState({
 	        contributors: 'loading'
@@ -11046,7 +11046,7 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deletecontributor: this.deleteContributor }),
+	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deleteContributor: this.deleteContributor }),
 	          _react2['default'].createElement(AddContributor, { refresh: this.refresh })
 	        )
 	      );

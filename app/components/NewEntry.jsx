@@ -70,7 +70,6 @@ export default class NewEntry extends React.Component {
     });
   }
   setDate(date) {
-    console.log('new entry', date);
     this.setState({
       date: date
     });
@@ -85,7 +84,6 @@ export default class NewEntry extends React.Component {
       'contributorId': this.state.contributorId,
       'tagId': this.state.tagId
     }
-    console.log(data);
     if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '' )
       services.createEntry(data, function(res) {
         that.props.refresh();
