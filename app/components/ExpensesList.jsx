@@ -26,7 +26,7 @@ class ExpenseGroup extends React.Component {
     return (
       <tbody>
         <tr className="month-header">
-          <td data-label="Month" colSpan="5">{this.props.expenseGroup.month}</td>
+          <td data-label="Month" colSpan="6">{this.props.expenseGroup.month}</td>
         </tr>
         {expenseGroup}
       </tbody>

@@ -5931,6 +5931,9 @@
 	    key: 'getExpenses',
 	    value: function getExpenses() {
 	      var that = this;
+	      that.setState({
+	        expenses: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllEntries(function (expenses) {
 	        that.setState({
 	          expenses: expenses
@@ -5943,6 +5946,9 @@
 	      var date = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
 	      var that = this;
+	      that.setState({
+	        contributors: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
 	        that.setState({
 	          contributors: contributors
@@ -10292,7 +10298,7 @@
 	          { className: 'month-header' },
 	          _react2['default'].createElement(
 	            'td',
-	            { 'data-label': 'Month', colSpan: '5' },
+	            { 'data-label': 'Month', colSpan: '6' },
 	            this.props.expenseGroup.month
 	          )
 	        ),

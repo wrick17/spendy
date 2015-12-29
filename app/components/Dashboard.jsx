@@ -27,6 +27,9 @@ export default class Dashboard extends React.Component {
   }
   getExpenses() {
     var that = this;
+    that.setState({
+      expenses: 'loading'
+    });
     services.getAllEntries(function(expenses) {
       that.setState({
         expenses: expenses
@@ -35,6 +38,9 @@ export default class Dashboard extends React.Component {
   }
   getOverview(date = null) {
     var that = this;
+    that.setState({
+      contributors: 'loading'
+    });
     services.getAllContributors(function(contributors) {
       that.setState({
         contributors: contributors
