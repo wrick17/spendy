@@ -11012,6 +11012,9 @@
 	    key: 'getAllContributors',
 	    value: function getAllContributors() {
 	      var that = this;
+	      that.setState({
+	        contributors: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
 	        that.setState({
 	          contributors: contributors
@@ -11022,6 +11025,9 @@
 	    key: 'deleteContributor',
 	    value: function deleteContributor(e) {
 	      var that = this;
+	      that.setState({
+	        contributors: 'loading'
+	      });
 	      _servicesJsx2['default'].deleteContributor(e.target.dataset.id, function (res) {
 	        that.getAllContributors();
 	      });

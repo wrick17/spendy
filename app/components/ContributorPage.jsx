@@ -104,6 +104,9 @@ export default class ContributorPage extends React.Component {
   }
   getAllContributors() {
     var that = this;
+    that.setState({
+      contributors: 'loading'
+    });
     services.getAllContributors(function(contributors) {
       that.setState({
         contributors: contributors
@@ -112,6 +115,9 @@ export default class ContributorPage extends React.Component {
   }
   deleteContributor(e) {
     var that = this;
+    that.setState({
+      contributors: 'loading'
+    });
     services.deleteContributor(e.target.dataset.id, function(res) {
       that.getAllContributors();
     });
