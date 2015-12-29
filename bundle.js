@@ -9986,6 +9986,13 @@
 	  });
 	};
 
+	services.updateContributor = function (id, data, callback) {
+	  _superagent2['default'].put(baseUrl + '/contributor/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
+	    if (err) return callback(err);
+	    return callback(res.body);
+	  });
+	};
+
 	//export
 	exports['default'] = services;
 	module.exports = exports['default'];
@@ -11065,6 +11072,10 @@
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
+	var _ModalJsx = __webpack_require__(325);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
 	var AddContributor = (function (_React$Component) {
 	  _inherits(AddContributor, _React$Component);
 
@@ -11176,6 +11187,11 @@
 	            null,
 	            _react2['default'].createElement(
 	              'a',
+	              { onClick: that.props.editContributor, 'data-id': contributor._id, 'data-name': contributor.name },
+	              'Edit'
+	            ),
+	            _react2['default'].createElement(
+	              'a',
 	              { onClick: that.props.deleteContributor, 'data-id': contributor._id },
 	              'Delete'
 	            )
@@ -11213,7 +11229,7 @@
 	          { className: 'box-header' },
 	          'Manage contributors'
 	        ),
-	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors, deleteContributor: this.props.deleteContributor })
+	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors, editContributor: this.props.editContributor, deleteContributor: this.props.deleteContributor })
 	      );
 	    }
 	  }]);
@@ -11230,9 +11246,17 @@
 	    _get(Object.getPrototypeOf(ContributorPage.prototype), 'constructor', this).call(this, props);
 	    this.deleteContributor = this.deleteContributor.bind(this);
 	    this.getAllContributors = this.getAllContributors.bind(this);
+	    this.editContributor = this.editContributor.bind(this);
+	    this.closeModal = this.closeModal.bind(this);
+	    this.onSaveContributor = this.onSaveContributor.bind(this);
+	    this.onChangeContributorName = this.onChangeContributorName.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      contributors: 'loading'
+	      contributors: 'loading',
+	      isModalOpen: false,
+	      contributorName: '',
+	      contributorId: '',
+	      contributorError: false
 	    };
 	  }
 
@@ -11272,6 +11296,44 @@
 	      this.getAllContributors();
 	    }
 	  }, {
+	    key: 'editContributor',
+	    value: function editContributor(e) {
+	      this.setState({
+	        isModalOpen: true,
+	        contributorName: e.target.dataset.name,
+	        contributorId: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'onChangeContributorName',
+	    value: function onChangeContributorName(e) {
+	      this.setState({
+	        contributorName: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'onSaveContributor',
+	    value: function onSaveContributor(e) {
+	      e.preventDefault();
+	      var data = {
+	        name: this.state.contributorName,
+	        active: true
+	      };
+	      var that = this;
+	      _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
+	        console.log(res);
+	        that.refresh();
+	        that.closeModal();
+	      });
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.setState({
+	        isModalOpen: false
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -11280,8 +11342,39 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deleteContributor: this.deleteContributor }),
+	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, editContributor: this.editContributor, deleteContributor: this.deleteContributor }),
 	          _react2['default'].createElement(AddContributor, { refresh: this.refresh })
+	        ),
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Edit Contributor',
+	            open: this.state.isModalOpen,
+	            closeModal: this.closeModal },
+	          _react2['default'].createElement(
+	            'form',
+	            { className: 'form', onSubmit: this.onSaveContributor },
+	            _react2['default'].createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2['default'].createElement(
+	                'label',
+	                null,
+	                'Contributor Name:'
+	              ),
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
+	            ),
+	            this.state.contributorError ? _react2['default'].createElement(
+	              'div',
+	              { className: 'error right' },
+	              'Don\'t be this lazy!'
+	            ) : null,
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button right' },
+	              'Save'
+	            )
+	          )
 	        )
 	      );
 	    }

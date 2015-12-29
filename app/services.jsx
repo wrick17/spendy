@@ -107,5 +107,16 @@ services.deleteContributor = function(id, callback) {
     });
 }
 
+services.updateContributor = function(id, data, callback) {
+  superagent
+    .put(baseUrl + '/contributor/' + id)
+    .set('Content-Type', 'application/json')
+    .send(data)
+    .end(function(err, res) {
+      if (err) return callback(err);
+      return callback(res.body);
+    });
+}
+
 //export
 export default services;
