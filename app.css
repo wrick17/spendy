@@ -584,6 +584,7 @@ a:hover {
 .dashboard-container .dashboard .overview .overview-header label {
   font-family: 'Roboto Condensed', sans-serif;
   flex: 1;
+  text-transform: capitalize;
 }
 .dashboard-container .dashboard .overview .overview-header .day-picker {
   flex: 0 0 150px;
@@ -879,6 +880,10 @@ a:hover {
 .add-container .manage-tag-container ul li:hover,
 .add-container .manage-contributor-container ul li:hover {
   background: #fcdddc;
+}
+.add-container .manage-tag-container ul li label,
+.add-container .manage-contributor-container ul li label {
+  text-transform: capitalize;
 }
 .add-container .manage-tag-container ul li div,
 .add-container .manage-contributor-container ul li div {
