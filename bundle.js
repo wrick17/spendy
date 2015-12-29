@@ -10823,7 +10823,7 @@
 	        _react2['default'].createElement(
 	          'h2',
 	          { className: 'box-header' },
-	          'Add new Tag'
+	          'Add New Tag'
 	        ),
 	        _react2['default'].createElement(
 	          'form',
@@ -11180,7 +11180,7 @@
 	        _react2['default'].createElement(
 	          'h2',
 	          { className: 'box-header' },
-	          'Add new Contributor'
+	          'Add New Contributor'
 	        ),
 	        _react2['default'].createElement(
 	          'form',
