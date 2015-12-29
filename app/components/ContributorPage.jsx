@@ -83,7 +83,7 @@ class ManageContributor extends React.Component {
     return (
       <div className="manage-contributor-container">
         <h2 className="box-header">Manage contributors</h2>
-        <ManageContributorList contributors={this.props.contributors} />
+        <ManageContributorList contributors={this.props.contributors} deleteContributor={this.props.deleteContributor} />
       </div>
     );
   }
@@ -104,6 +104,9 @@ export default class ContributorPage extends React.Component {
   }
   getAllContributors() {
     var that = this;
+    that.setState({
+      contributors: 'loading'
+    });
     services.getAllContributors(function(contributors) {
       that.setState({
         contributors: contributors
@@ -111,7 +114,11 @@ export default class ContributorPage extends React.Component {
     });
   }
   deleteContributor(e) {
+    e.preventDefault();
     var that = this;
+    that.setState({
+      contributors: 'loading'
+    });
     services.deleteContributor(e.target.dataset.id, function(res) {
       that.getAllContributors();
     });
@@ -123,7 +130,7 @@ export default class ContributorPage extends React.Component {
     return (
       <div className="add-container">
         <Container>
-          <ManageContributor contributors={this.state.contributors} deletecontributor={this.deleteContributor} />
+          <ManageContributor contributors={this.state.contributors} deleteContributor={this.deleteContributor} />
           <AddContributor refresh={this.refresh} />
         </Container>
       </div>

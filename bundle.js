@@ -5931,6 +5931,9 @@
 	    key: 'getExpenses',
 	    value: function getExpenses() {
 	      var that = this;
+	      that.setState({
+	        expenses: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllEntries(function (expenses) {
 	        that.setState({
 	          expenses: expenses
@@ -5943,6 +5946,9 @@
 	      var date = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
 	      var that = this;
+	      that.setState({
+	        contributors: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
 	        that.setState({
 	          contributors: contributors
@@ -9771,7 +9777,6 @@
 	  }, {
 	    key: 'setDate',
 	    value: function setDate(date) {
-	      console.log('new entry', date);
 	      this.setState({
 	        date: date
 	      });
@@ -9788,7 +9793,6 @@
 	        'contributorId': this.state.contributorId,
 	        'tagId': this.state.tagId
 	      };
-	      console.log(data);
 	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
 	        that.props.refresh();
 	        that.setState({
@@ -10292,7 +10296,7 @@
 	          { className: 'month-header' },
 	          _react2['default'].createElement(
 	            'td',
-	            { 'data-label': 'Month', colSpan: '5' },
+	            { 'data-label': 'Month', colSpan: '6' },
 	            this.props.expenseGroup.month
 	          )
 	        ),
@@ -10707,7 +10711,7 @@
 	          { className: 'box-header' },
 	          'Manage Tags'
 	        ),
-	        _react2['default'].createElement(ManageTagList, { tags: this.props.tags })
+	        _react2['default'].createElement(ManageTagList, { tags: this.props.tags, deleteTag: this.props.deleteTag })
 	      );
 	    }
 	  }]);
@@ -10739,6 +10743,9 @@
 	    key: 'getAllTags',
 	    value: function getAllTags() {
 	      var that = this;
+	      that.setState({
+	        tags: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllTags(function (tags) {
 	        that.setState({
 	          tags: tags
@@ -10748,7 +10755,11 @@
 	  }, {
 	    key: 'deleteTag',
 	    value: function deleteTag(e) {
+	      e.preventDefault();
 	      var that = this;
+	      that.setState({
+	        tags: 'loading'
+	      });
 	      _servicesJsx2['default'].deleteTag(e.target.dataset.id, function (res) {
 	        that.getAllTags();
 	      });
@@ -10968,7 +10979,7 @@
 	          { className: 'box-header' },
 	          'Manage contributors'
 	        ),
-	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors })
+	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors, deleteContributor: this.props.deleteContributor })
 	      );
 	    }
 	  }]);
@@ -11000,6 +11011,9 @@
 	    key: 'getAllContributors',
 	    value: function getAllContributors() {
 	      var that = this;
+	      that.setState({
+	        contributors: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
 	        that.setState({
 	          contributors: contributors
@@ -11009,7 +11023,11 @@
 	  }, {
 	    key: 'deleteContributor',
 	    value: function deleteContributor(e) {
+	      e.preventDefault();
 	      var that = this;
+	      that.setState({
+	        contributors: 'loading'
+	      });
 	      _servicesJsx2['default'].deleteContributor(e.target.dataset.id, function (res) {
 	        that.getAllContributors();
 	      });
@@ -11028,7 +11046,7 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deletecontributor: this.deleteContributor }),
+	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deleteContributor: this.deleteContributor }),
 	          _react2['default'].createElement(AddContributor, { refresh: this.refresh })
 	        )
 	      );

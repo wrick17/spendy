@@ -82,7 +82,7 @@ class ManageTag extends React.Component {
     return (
       <div className="manage-tag-container">
         <h2 className="box-header">Manage Tags</h2>
-        <ManageTagList tags={this.props.tags} />
+        <ManageTagList tags={this.props.tags} deleteTag={this.props.deleteTag} />
       </div>
     );
   }
@@ -103,6 +103,9 @@ export default class TagPage extends React.Component {
   }
   getAllTags() {
     var that = this;
+    that.setState({
+      tags: 'loading'
+    });
     services.getAllTags(function(tags) {
       that.setState({
         tags: tags
@@ -110,7 +113,11 @@ export default class TagPage extends React.Component {
     });
   }
   deleteTag(e) {
+    e.preventDefault();
     var that = this;
+    that.setState({
+      tags: 'loading'
+    });
     services.deleteTag(e.target.dataset.id, function(res) {
       that.getAllTags();
     });
