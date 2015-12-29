@@ -2,16 +2,17 @@ import React from 'react';
 import services from './../services.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
+import utils from './../utils.jsx';
 
-class ExpenseTable extends React.Component {
+class ExpenseGroup extends React.Component {
   render() {
-    if (this.props.expenses === 'loading') return <Loading />;
-    if (this.props.expenses.length < 1) return <NoRecords />;
     var that = this;
-    var expenses = this.props.expenses.map(function(expense) {
+    var expenseGroup = utils.sortByKey(this.props.expenseGroup.items.reverse(), 'date').map(function(expense) {
+      var date = new Date(expense.date);
+      var displayDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() ;
       return (
         <tr key={expense._id}>
-          <td data-label="Date">{expense.date.toString().slice(0, 10).split('-').reverse().join('/')}</td>
+          <td data-label="Date">{displayDate}</td>
           <td data-label="Cost">₹{expense.cost}</td>
           <td data-label="Item">{expense.item}</td>
           <td data-label="Contributor">{that.props.contributorMap[expense.contributorId] || 'Loading..'}</td>
@@ -21,6 +22,25 @@ class ExpenseTable extends React.Component {
           </td>
         </tr>
       );
+    });
+    return (
+      <tbody>
+        <tr className="month-header">
+          <td data-label="Month" colSpan="5">{this.props.expenseGroup.month}</td>
+        </tr>
+        {expenseGroup}
+      </tbody>
+    );
+  }
+}
+
+class ExpenseTable extends React.Component {
+  render() {
+    if (this.props.expenses === 'loading') return <Loading />;
+    if (this.props.expenses.length < 1) return <NoRecords />;
+    var that = this;
+    var expenseGroups = utils.groupByMonth(this.props.expenses).map(function(expenseGroup) {
+      return <ExpenseGroup key={expenseGroup.month} expenseGroup={expenseGroup} contributorMap={that.props.contributorMap} tagMap={that.props.tagMap} deleteEntry={that.props.deleteEntry} />
     });
     return (
       <table>
@@ -34,9 +54,7 @@ class ExpenseTable extends React.Component {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
-          {expenses}
-        </tbody>
+        {expenseGroups}
       </table>
     );
   }

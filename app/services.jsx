@@ -1,4 +1,5 @@
 import superagent from 'superagent';
+import utils from './utils.jsx'
 var baseUrl = 'https://spendyapi.herokuapp.com/api/v1';
 var services = {};
 
@@ -8,7 +9,7 @@ services.getAllEntries = function(callback) {
     .get(baseUrl + '/entry')
     .end(function(err, res) {
       if (err) return callback(err);
-      return callback(res.body.reverse());
+      return callback(res.body);
     });
 }
 
@@ -63,9 +64,13 @@ services.deleteTag = function(id, callback) {
 
 
 //contributor
-services.getAllContributors = function(callback) {
+services.getAllContributors = function(callback, date = null) {
+  var dateParams = '';
+  if (date) {
+    dateParams += '?fromDate=' + utils.firstDay(date) + '&toDate=' + utils.lastDay(date);
+  }
   superagent
-    .get(baseUrl + '/contributor')
+    .get(baseUrl + '/contributor/' + dateParams)
     .end(function(err, res) {
       if (err) return callback(err);
       return callback(res.body);
