@@ -62,6 +62,16 @@ services.deleteTag = function(id, callback) {
     });
 }
 
+services.updateTag = function(id, data, callback) {
+  superagent
+    .put(baseUrl + '/tag/' + id)
+    .set('Content-Type', 'application/json')
+    .send(data)
+    .end(function(err, res) {
+      if (err) return callback(err);
+      return callback(res.body);
+    });
+}
 
 //contributor
 services.getAllContributors = function(callback, date = null) {

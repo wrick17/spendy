@@ -1,5 +1,4 @@
 import React from 'react';
-import SkyLight from 'react-skylight';
 import Container from './Container.jsx';
 
 class ModalBody extends React.Component {
