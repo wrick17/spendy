@@ -11179,7 +11179,7 @@
 	        { className: 'add-contributor-container' },
 	        _react2['default'].createElement(
 	          'h2',
-	          { className: 'new-contributor-header' },
+	          { className: 'box-header' },
 	          'Add new Contributor'
 	        ),
 	        _react2['default'].createElement(
