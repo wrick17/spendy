@@ -458,6 +458,42 @@ a:hover {
     transform: rotate(360deg);
   }
 }
+.modal-wrapper {
+  height: 0;
+}
+.modal-wrapper .modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+.modal-wrapper .modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #FFFFFF;
+  height: auto;
+  max-height: 100vh;
+  overflow: auto;
+}
+.modal-wrapper .modal .container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-wrapper .modal .container .modal-title {
+  font-family: 'Roboto Condensed', sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.modal-wrapper .modal .container .close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 .day-picker {
   flex: 1 0 200px;
   position: relative;
@@ -656,8 +692,9 @@ a:hover {
   float: left;
 }
 .dashboard-container table tbody tr td.actions div {
+  display: inline-block;
   font-size: 12px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .dashboard-container table tbody tr td.actions div:hover {
   text-decoration: underline;
@@ -679,6 +716,13 @@ a:hover {
 }
 .dashboard-container table tbody tr.month-header:hover td {
   background: transparent;
+}
+.dashboard-container .form .form-group .day-picker .date-picker {
+  top: calc(105%);
+  bottom: auto;
+}
+.dashboard-container .modal-wrapper .modal .container {
+  padding-bottom: 50px;
 }
 @media screen and (min-width: 768px) {
   .dashboard-container table thead {
@@ -741,8 +785,9 @@ a:hover {
   float: left;
 }
 .expenses-page table tbody tr td.actions div {
+  display: inline-block;
   font-size: 12px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .expenses-page table tbody tr td.actions div:hover {
   text-decoration: underline;
@@ -764,6 +809,13 @@ a:hover {
 }
 .expenses-page table tbody tr.month-header:hover td {
   background: transparent;
+}
+.expenses-page .form .form-group .day-picker .date-picker {
+  top: calc(105%);
+  bottom: auto;
+}
+.expenses-page .modal-wrapper .modal .container {
+  padding-bottom: 50px;
 }
 @media screen and (min-width: 768px) {
   .expenses-page table thead {
@@ -835,4 +887,9 @@ a:hover {
 .add-container .manage-tag-container ul li div a,
 .add-container .manage-contributor-container ul li div a {
   margin-left: 5px;
+}
+.add-container .manage-tag-container ul li.disabled label,
+.add-container .manage-contributor-container ul li.disabled label {
+  color: #BDBDBD;
+  text-decoration: line-through;
 }

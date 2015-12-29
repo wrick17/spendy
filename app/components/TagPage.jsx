@@ -3,6 +3,7 @@ import Container from './Container.jsx';
 import services from './../services.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
+import Modal from './Modal.jsx';
 
 class AddTag extends React.Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class ManageTagList extends React.Component {
         <li className="tag" key={tag._id} >
           <label>{tag.name}</label>
           <div>
+            <a onClick={that.props.editTag} data-id={tag._id} data-name={tag.name} >Edit</a>
             <a onClick={that.props.deleteTag} data-id={tag._id} >Delete</a>
           </div>
         </li>
@@ -82,7 +84,7 @@ class ManageTag extends React.Component {
     return (
       <div className="manage-tag-container">
         <h2 className="box-header">Manage Tags</h2>
-        <ManageTagList tags={this.props.tags} deleteTag={this.props.deleteTag} />
+        <ManageTagList tags={this.props.tags} editTag={this.props.editTag} deleteTag={this.props.deleteTag} />
       </div>
     );
   }
@@ -94,8 +96,16 @@ export default class TagPage extends React.Component {
     this.deleteTag = this.deleteTag.bind(this);
     this.getAllTags = this.getAllTags.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.editTag = this.editTag.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.onSaveTag = this.onSaveTag.bind(this);
+    this.onChangeTagName = this.onChangeTagName.bind(this);
     this.state = {
-      tags: 'loading'
+      tags: 'loading',
+      isModalOpen: false,
+      tagName: '',
+      tagId: '',
+      tagError: false
     };
   }
   componentDidMount() {
@@ -125,13 +135,55 @@ export default class TagPage extends React.Component {
   refresh() {
     this.getAllTags();
   }
+  editTag(e) {
+    this.setState({
+      isModalOpen: true,
+      tagName: e.target.dataset.name,
+      tagId: e.target.dataset.id
+    });
+  }
+  onChangeTagName(e) {
+    this.setState({
+      tagName: e.target.value
+    })
+  }
+  onSaveTag(e) {
+    e.preventDefault();
+    var data = {
+      name: this.state.tagName
+    }
+    var that = this;
+    services.updateTag(this.state.tagId, data, function(res) {
+      console.log(res);
+      that.refresh();
+      that.closeModal();
+    });
+  }
+  closeModal() {
+    this.setState({
+      isModalOpen: false
+    });
+  }
   render() {
     return (
       <div className="add-container">
         <Container>
-          <ManageTag tags={this.state.tags} deleteTag={this.deleteTag} />
+          <ManageTag tags={this.state.tags} editTag={this.editTag} deleteTag={this.deleteTag} />
           <AddTag refresh={this.refresh} />
         </Container>
+        <Modal
+          title="Edit Tag"
+          open={this.state.isModalOpen}
+          closeModal={this.closeModal} >
+          <form className="form" onSubmit={this.onSaveTag} >
+            <div className="form-group">
+              <label>Tag Name:</label>
+              <input type="text" placeholder="Tag Name..." value={this.state.tagName} data-id={this.state.tagId} onChange={this.onChangeTagName} />
+            </div>
+            { this.state.tagError ? <div className="error right">Don't be this lazy!</div> : null }
+            <button className="button right">Save</button>
+          </form>
+        </Modal>
       </div>
     );
   }

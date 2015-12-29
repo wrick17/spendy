@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(325);
+	var _componentsExpensesJsx = __webpack_require__(326);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(326);
+	var _componentsTagPageJsx = __webpack_require__(327);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(327);
+	var _componentsContributorPageJsx = __webpack_require__(328);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -5989,7 +5989,7 @@
 	            { className: 'expenses-container' },
 	            _react2['default'].createElement(
 	              'h2',
-	              { className: 'expenses-header' },
+	              { className: 'expenses-header', onClick: this.showModal },
 	              _react2['default'].createElement(
 	                'label',
 	                null,
@@ -6204,7 +6204,7 @@
 	    this.showPicker = this.showPicker.bind(this);
 	    this.closePicker = this.closePicker.bind(this);
 	    this.state = {
-	      date: new Date(),
+	      date: this.props.date || new Date(),
 	      open: false
 	    };
 	  }
@@ -6212,7 +6212,6 @@
 	  _createClass(DatePicker, [{
 	    key: 'setDate',
 	    value: function setDate(e, day) {
-	      console.log('date ', day);
 	      this.setState({
 	        date: day._d
 	      });
@@ -6222,7 +6221,6 @@
 	  }, {
 	    key: 'setMonth',
 	    value: function setMonth(e, month) {
-	      console.log('date ', month);
 	      var month = month._d;
 	      this.setState({
 	        date: month
@@ -9683,6 +9681,7 @@
 	  _createClass(Select, [{
 	    key: 'render',
 	    value: function render() {
+	      var that = this;
 	      var optionList = this.props.options.map(function (option) {
 	        return _react2['default'].createElement(
 	          'option',
@@ -9692,7 +9691,7 @@
 	      });
 	      return _react2['default'].createElement(
 	        'select',
-	        { onChange: this.props.onChange },
+	        { value: this.props.selectedValue || null, onChange: this.props.onChange },
 	        _react2['default'].createElement(
 	          'option',
 	          { disabled: true },
@@ -9720,11 +9719,11 @@
 	    this.onChangeItemName = this.onChangeItemName.bind(this);
 	    this.setDate = this.setDate.bind(this);
 	    this.state = {
-	      tagId: '',
-	      contributorId: '',
-	      cost: '',
-	      item: '',
-	      date: '',
+	      tagId: this.props.tagId || '',
+	      contributorId: this.props.contributorId || '',
+	      cost: this.props.cost || '',
+	      item: this.props.item || '',
+	      date: this.props.date || '',
 	      tags: [],
 	      contributors: [],
 	      error: false
@@ -9793,6 +9792,7 @@
 	        'contributorId': this.state.contributorId,
 	        'tagId': this.state.tagId
 	      };
+	      if (this.props.edit) return this.props.updateEntry(data);
 	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
 	        that.props.refresh();
 	        that.setState({
@@ -9824,7 +9824,7 @@
 	              null,
 	              'Date:'
 	            ),
-	            _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDate })
+	            _react2['default'].createElement(_DatePickerJsx2['default'], { date: this.state.date, setDate: this.setDate })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9834,7 +9834,7 @@
 	              null,
 	              'Cost:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', onChange: this.onChangeCost })
+	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', value: this.state.cost, onChange: this.onChangeCost })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9844,7 +9844,7 @@
 	              null,
 	              'Item:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', onChange: this.onChangeItemName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', value: this.state.item, onChange: this.onChangeItemName })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9854,7 +9854,7 @@
 	              null,
 	              'Contributor:'
 	            ),
-	            _react2['default'].createElement(Select, { options: this.state.contributors, 'default': 'Choose Contributor', onChange: this.onChangeContributor })
+	            _react2['default'].createElement(Select, { options: this.state.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9864,7 +9864,7 @@
 	              null,
 	              'Tag:'
 	            ),
-	            _react2['default'].createElement(Select, { options: this.state.tags, 'default': 'Choose Tag', onChange: this.onChangeTag })
+	            _react2['default'].createElement(Select, { options: this.state.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -9874,7 +9874,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            'Add'
+	            this.props.edit ? 'Save' : 'Add'
 	          )
 	        )
 	      );
@@ -9931,6 +9931,13 @@
 	  });
 	};
 
+	services.updateEntry = function (id, data, callback) {
+	  _superagent2['default'].put(baseUrl + '/entry/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
+	    if (err) return callback(err);
+	    return callback(res.body);
+	  });
+	};
+
 	//tags
 	services.getAllTags = function (callback) {
 	  _superagent2['default'].get(baseUrl + '/tag').end(function (err, res) {
@@ -9948,6 +9955,13 @@
 
 	services.deleteTag = function (id, callback) {
 	  _superagent2['default']['delete'](baseUrl + '/tag/' + id).end(function (err, res) {
+	    if (err) return callback(err);
+	    return callback(res.body);
+	  });
+	};
+
+	services.updateTag = function (id, data, callback) {
+	  _superagent2['default'].put(baseUrl + '/tag/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback(err);
 	    return callback(res.body);
 	  });
@@ -9976,6 +9990,13 @@
 
 	services.deleteContributor = function (id, callback) {
 	  _superagent2['default']['delete'](baseUrl + '/contributor/' + id).end(function (err, res) {
+	    if (err) return callback(err);
+	    return callback(res.body);
+	  });
+	};
+
+	services.updateContributor = function (id, data, callback) {
+	  _superagent2['default'].put(baseUrl + '/contributor/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback(err);
 	    return callback(res.body);
 	  });
@@ -10232,6 +10253,14 @@
 
 	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
 
+	var _ModalJsx = __webpack_require__(325);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var _NewEntryJsx = __webpack_require__(319);
+
+	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
+
 	var ExpenseGroup = (function (_React$Component) {
 	  _inherits(ExpenseGroup, _React$Component);
 
@@ -10282,6 +10311,17 @@
 	            { 'data-label': 'Actions', className: 'actions' },
 	            _react2['default'].createElement(
 	              'div',
+	              { onClick: that.props.editEntry,
+	                'data-cost': expense.cost,
+	                'data-item': expense.item,
+	                'data-contributor': expense.contributorId,
+	                'data-tag': expense.tagId,
+	                'data-date': expense.date,
+	                'data-id': expense._id },
+	              'Edit'
+	            ),
+	            _react2['default'].createElement(
+	              'div',
 	              { onClick: that.props.deleteEntry, 'data-id': expense._id },
 	              'Delete'
 	            )
@@ -10324,7 +10364,13 @@
 	      if (this.props.expenses.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
 	      var expenseGroups = _utilsJsx2['default'].groupByMonth(this.props.expenses).map(function (expenseGroup) {
-	        return _react2['default'].createElement(ExpenseGroup, { key: expenseGroup.month, expenseGroup: expenseGroup, contributorMap: that.props.contributorMap, tagMap: that.props.tagMap, deleteEntry: that.props.deleteEntry });
+	        return _react2['default'].createElement(ExpenseGroup, {
+	          key: expenseGroup.month,
+	          expenseGroup: expenseGroup,
+	          contributorMap: that.props.contributorMap,
+	          tagMap: that.props.tagMap,
+	          editEntry: that.props.editEntry,
+	          deleteEntry: that.props.deleteEntry });
 	      });
 	      return _react2['default'].createElement(
 	        'table',
@@ -10383,9 +10429,18 @@
 
 	    _get(Object.getPrototypeOf(ExpensesList.prototype), 'constructor', this).call(this, props);
 	    this.deleteEntry = this.deleteEntry.bind(this);
-	    this.state = {
+	    this.editEntry = this.editEntry.bind(this);
+	    this.closeModal = this.closeModal.bind(this);
+	    this.updateEntry = this.updateEntry.bind(this);this.state = {
+	      id: '',
 	      tagMap: [],
-	      contributorMap: []
+	      contributorMap: [],
+	      isModalOpen: false,
+	      date: '',
+	      cost: '',
+	      item: '',
+	      contributorId: '',
+	      tagId: ''
 	    };
 	  }
 
@@ -10421,9 +10476,62 @@
 	      });
 	    }
 	  }, {
+	    key: 'editEntry',
+	    value: function editEntry(e) {
+	      this.setState({
+	        isModalOpen: true,
+	        id: e.target.dataset.id,
+	        date: new Date(e.target.dataset.date),
+	        cost: e.target.dataset.cost,
+	        item: e.target.dataset.item,
+	        contributorId: e.target.dataset.contributor,
+	        tagId: e.target.dataset.tag
+	      });
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.setState({
+	        isModalOpen: false
+	      });
+	    }
+	  }, {
+	    key: 'updateEntry',
+	    value: function updateEntry(data) {
+	      var that = this;
+	      _servicesJsx2['default'].updateEntry(this.state.id, data, function (res) {
+	        that.closeModal();
+	        if (that.props.refresh) that.props.refresh();
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement(ExpenseTable, { expenses: this.props.expenses, contributorMap: this.state.contributorMap, tagMap: this.state.tagMap, deleteEntry: this.deleteEntry });
+	      return _react2['default'].createElement(
+	        'div',
+	        null,
+	        _react2['default'].createElement(ExpenseTable, {
+	          expenses: this.props.expenses,
+	          contributorMap: this.state.contributorMap,
+	          tagMap: this.state.tagMap,
+	          editEntry: this.editEntry,
+	          deleteEntry: this.deleteEntry }),
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Edit Expense',
+	            open: this.state.isModalOpen,
+	            closeModal: this.closeModal },
+	          _react2['default'].createElement(_NewEntryJsx2['default'], {
+	            item: this.state.item,
+	            date: this.state.date,
+	            cost: this.state.cost,
+	            contributorId: this.state.contributorId,
+	            tagId: this.state.tagId,
+	            updateEntry: this.updateEntry,
+	            edit: true })
+	        )
+	      );
 	    }
 	  }]);
 
@@ -10435,6 +10543,105 @@
 
 /***/ },
 /* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ContainerJsx = __webpack_require__(209);
+
+	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
+
+	var ModalBody = (function (_React$Component) {
+	  _inherits(ModalBody, _React$Component);
+
+	  function ModalBody() {
+	    _classCallCheck(this, ModalBody);
+
+	    _get(Object.getPrototypeOf(ModalBody.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(ModalBody, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'modal' },
+	        _react2['default'].createElement(
+	          _ContainerJsx2['default'],
+	          null,
+	          _react2['default'].createElement(
+	            'h2',
+	            { className: 'modal-title' },
+	            this.props.title || null
+	          ),
+	          _react2['default'].createElement(
+	            'a',
+	            { onClick: this.props.closeModal, className: 'close-modal' },
+	            'close'
+	          ),
+	          this.props.content
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ModalBody;
+	})(_react2['default'].Component);
+
+	var Modal = (function (_React$Component2) {
+	  _inherits(Modal, _React$Component2);
+
+	  function Modal(props) {
+	    _classCallCheck(this, Modal);
+
+	    _get(Object.getPrototypeOf(Modal.prototype), 'constructor', this).call(this, props);
+	    this.closeModal = this.closeModal.bind(this);
+	  }
+
+	  _createClass(Modal, [{
+	    key: 'closeModal',
+	    value: function closeModal(e) {
+	      e.preventDefault();
+	      this.props.closeModal();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'modal-wrapper' },
+	        this.props.open ? _react2['default'].createElement('div', { className: 'modal-backdrop', onClick: this.closeModal }) : null,
+	        this.props.open ? _react2['default'].createElement(ModalBody, { closeModal: this.closeModal, title: this.props.title, content: this.props.children }) : null
+	      );
+	    }
+	  }]);
+
+	  return Modal;
+	})(_react2['default'].Component);
+
+	exports['default'] = Modal;
+	module.exports = exports['default'];
+
+/***/ },
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10525,7 +10732,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10563,6 +10770,10 @@
 	var _NoRecordsJsx = __webpack_require__(318);
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
+
+	var _ModalJsx = __webpack_require__(325);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
 	var AddTag = (function (_React$Component) {
 	  _inherits(AddTag, _React$Component);
@@ -10674,6 +10885,11 @@
 	            null,
 	            _react2['default'].createElement(
 	              'a',
+	              { onClick: that.props.editTag, 'data-id': tag._id, 'data-name': tag.name },
+	              'Edit'
+	            ),
+	            _react2['default'].createElement(
+	              'a',
 	              { onClick: that.props.deleteTag, 'data-id': tag._id },
 	              'Delete'
 	            )
@@ -10711,7 +10927,7 @@
 	          { className: 'box-header' },
 	          'Manage Tags'
 	        ),
-	        _react2['default'].createElement(ManageTagList, { tags: this.props.tags, deleteTag: this.props.deleteTag })
+	        _react2['default'].createElement(ManageTagList, { tags: this.props.tags, editTag: this.props.editTag, deleteTag: this.props.deleteTag })
 	      );
 	    }
 	  }]);
@@ -10729,8 +10945,16 @@
 	    this.deleteTag = this.deleteTag.bind(this);
 	    this.getAllTags = this.getAllTags.bind(this);
 	    this.refresh = this.refresh.bind(this);
+	    this.editTag = this.editTag.bind(this);
+	    this.closeModal = this.closeModal.bind(this);
+	    this.onSaveTag = this.onSaveTag.bind(this);
+	    this.onChangeTagName = this.onChangeTagName.bind(this);
 	    this.state = {
-	      tags: 'loading'
+	      tags: 'loading',
+	      isModalOpen: false,
+	      tagName: '',
+	      tagId: '',
+	      tagError: false
 	    };
 	  }
 
@@ -10770,6 +10994,43 @@
 	      this.getAllTags();
 	    }
 	  }, {
+	    key: 'editTag',
+	    value: function editTag(e) {
+	      this.setState({
+	        isModalOpen: true,
+	        tagName: e.target.dataset.name,
+	        tagId: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'onChangeTagName',
+	    value: function onChangeTagName(e) {
+	      this.setState({
+	        tagName: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'onSaveTag',
+	    value: function onSaveTag(e) {
+	      e.preventDefault();
+	      var data = {
+	        name: this.state.tagName
+	      };
+	      var that = this;
+	      _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
+	        console.log(res);
+	        that.refresh();
+	        that.closeModal();
+	      });
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.setState({
+	        isModalOpen: false
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -10778,8 +11039,39 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageTag, { tags: this.state.tags, deleteTag: this.deleteTag }),
+	          _react2['default'].createElement(ManageTag, { tags: this.state.tags, editTag: this.editTag, deleteTag: this.deleteTag }),
 	          _react2['default'].createElement(AddTag, { refresh: this.refresh })
+	        ),
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Edit Tag',
+	            open: this.state.isModalOpen,
+	            closeModal: this.closeModal },
+	          _react2['default'].createElement(
+	            'form',
+	            { className: 'form', onSubmit: this.onSaveTag },
+	            _react2['default'].createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2['default'].createElement(
+	                'label',
+	                null,
+	                'Tag Name:'
+	              ),
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', value: this.state.tagName, 'data-id': this.state.tagId, onChange: this.onChangeTagName })
+	            ),
+	            this.state.tagError ? _react2['default'].createElement(
+	              'div',
+	              { className: 'error right' },
+	              'Don\'t be this lazy!'
+	            ) : null,
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button right' },
+	              'Save'
+	            )
+	          )
 	        )
 	      );
 	    }
@@ -10792,7 +11084,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10823,6 +11115,10 @@
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
+	var _utilsJsx = __webpack_require__(316);
+
+	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
+
 	var _LoadingJsx = __webpack_require__(317);
 
 	var _LoadingJsx2 = _interopRequireDefault(_LoadingJsx);
@@ -10830,6 +11126,10 @@
 	var _NoRecordsJsx = __webpack_require__(318);
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
+
+	var _ModalJsx = __webpack_require__(325);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
 	var AddContributor = (function (_React$Component) {
 	  _inherits(AddContributor, _React$Component);
@@ -10928,10 +11228,12 @@
 	      if (this.props.contributors === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
 	      if (this.props.contributors.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
-	      var contributors = this.props.contributors.map(function (contributor) {
+	      var contributors = _utilsJsx2['default'].sortByKey(this.props.contributors, 'active').map(function (contributor) {
+	        var classes = 'contributor';
+	        if (!contributor.active) classes += ' disabled';
 	        return _react2['default'].createElement(
 	          'li',
-	          { className: 'contributor', key: contributor._id },
+	          { className: classes, key: contributor._id },
 	          _react2['default'].createElement(
 	            'label',
 	            null,
@@ -10940,6 +11242,11 @@
 	          _react2['default'].createElement(
 	            'div',
 	            null,
+	            _react2['default'].createElement(
+	              'a',
+	              { onClick: that.props.editContributor, 'data-id': contributor._id, 'data-name': contributor.name, 'data-active': contributor.active },
+	              'Edit'
+	            ),
 	            _react2['default'].createElement(
 	              'a',
 	              { onClick: that.props.deleteContributor, 'data-id': contributor._id },
@@ -10979,7 +11286,7 @@
 	          { className: 'box-header' },
 	          'Manage contributors'
 	        ),
-	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors, deleteContributor: this.props.deleteContributor })
+	        _react2['default'].createElement(ManageContributorList, { contributors: this.props.contributors, editContributor: this.props.editContributor, deleteContributor: this.props.deleteContributor })
 	      );
 	    }
 	  }]);
@@ -10996,9 +11303,19 @@
 	    _get(Object.getPrototypeOf(ContributorPage.prototype), 'constructor', this).call(this, props);
 	    this.deleteContributor = this.deleteContributor.bind(this);
 	    this.getAllContributors = this.getAllContributors.bind(this);
+	    this.editContributor = this.editContributor.bind(this);
+	    this.closeModal = this.closeModal.bind(this);
+	    this.onSaveContributor = this.onSaveContributor.bind(this);
+	    this.onChangeContributorName = this.onChangeContributorName.bind(this);
+	    this.changeContributorStatus = this.changeContributorStatus.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      contributors: 'loading'
+	      contributors: 'loading',
+	      isModalOpen: false,
+	      contributorName: '',
+	      contributorId: '',
+	      contributorError: false,
+	      contributorActive: true
 	    };
 	  }
 
@@ -11012,7 +11329,8 @@
 	    value: function getAllContributors() {
 	      var that = this;
 	      that.setState({
-	        contributors: 'loading'
+	        contributors: 'loading',
+	        contributorError: false
 	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
 	        that.setState({
@@ -11038,6 +11356,62 @@
 	      this.getAllContributors();
 	    }
 	  }, {
+	    key: 'editContributor',
+	    value: function editContributor(e) {
+	      this.setState({
+	        isModalOpen: true,
+	        contributorName: e.target.dataset.name,
+	        contributorId: e.target.dataset.id,
+	        contributorActive: JSON.parse(e.target.dataset.active)
+	      });
+	    }
+	  }, {
+	    key: 'onChangeContributorName',
+	    value: function onChangeContributorName(e) {
+	      this.setState({
+	        contributorName: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'onSaveContributor',
+	    value: function onSaveContributor(e) {
+	      e.preventDefault();
+	      var data = {
+	        name: this.state.contributorName,
+	        active: this.state.contributorActive
+	      };
+	      var that = this;
+	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
+	        that.refresh();
+	        that.closeModal();
+	      });else this.setState({
+	        contributorError: true
+	      });
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.setState({
+	        isModalOpen: false
+	      });
+	    }
+	  }, {
+	    key: 'changeContributorStatus',
+	    value: function changeContributorStatus(e) {
+	      e.preventDefault();
+	      var data = {
+	        name: this.state.contributorName,
+	        active: !this.state.contributorActive
+	      };
+	      var that = this;
+	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
+	        that.refresh();
+	        that.closeModal();
+	      });else this.setState({
+	        contributorError: true
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -11046,8 +11420,46 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, deleteContributor: this.deleteContributor }),
+	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, editContributor: this.editContributor, deleteContributor: this.deleteContributor }),
 	          _react2['default'].createElement(AddContributor, { refresh: this.refresh })
+	        ),
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Edit Contributor',
+	            open: this.state.isModalOpen,
+	            closeModal: this.closeModal },
+	          _react2['default'].createElement(
+	            'form',
+	            { className: 'form', onSubmit: this.onSaveContributor },
+	            _react2['default'].createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2['default'].createElement(
+	                'label',
+	                null,
+	                'Contributor Name:'
+	              ),
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
+	            ),
+	            this.state.contributorError ? _react2['default'].createElement(
+	              'div',
+	              { className: 'error right' },
+	              'Don\'t be this lazy!'
+	            ) : null,
+	            _react2['default'].createElement(
+	              'button',
+	              { type: 'submit', className: 'button right' },
+	              'Save'
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { onClick: this.changeContributorStatus, className: 'button' },
+	              'Make ',
+	              this.state.contributorActive ? 'Inactive' : 'Active',
+	              ' '
+	            )
+	          )
 	        )
 	      );
 	    }

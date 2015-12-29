@@ -3,6 +3,8 @@ import services from './../services.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import utils from './../utils.jsx';
+import Modal from './Modal.jsx';
+import NewEntry from './NewEntry.jsx'
 
 class ExpenseGroup extends React.Component {
   render() {
@@ -18,6 +20,13 @@ class ExpenseGroup extends React.Component {
           <td data-label="Contributor">{that.props.contributorMap[expense.contributorId] || 'Loading..'}</td>
           <td data-label="Tag">{that.props.tagMap[expense.tagId] || 'Loading..'}</td>
           <td data-label="Actions" className="actions">
+            <div onClick={that.props.editEntry}
+                data-cost={expense.cost}
+                data-item={expense.item}
+                data-contributor={expense.contributorId}
+                data-tag={expense.tagId}
+                data-date={expense.date}
+                data-id={expense._id} >Edit</div>
             <div onClick={that.props.deleteEntry} data-id={expense._id} >Delete</div>
           </td>
         </tr>
@@ -40,7 +49,13 @@ class ExpenseTable extends React.Component {
     if (this.props.expenses.length < 1) return <NoRecords />;
     var that = this;
     var expenseGroups = utils.groupByMonth(this.props.expenses).map(function(expenseGroup) {
-      return <ExpenseGroup key={expenseGroup.month} expenseGroup={expenseGroup} contributorMap={that.props.contributorMap} tagMap={that.props.tagMap} deleteEntry={that.props.deleteEntry} />
+      return <ExpenseGroup
+                key={expenseGroup.month}
+                expenseGroup={expenseGroup}
+                contributorMap={that.props.contributorMap}
+                tagMap={that.props.tagMap}
+                editEntry={that.props.editEntry}
+                deleteEntry={that.props.deleteEntry} />
     });
     return (
       <table>
@@ -64,9 +79,18 @@ export default class ExpensesList extends React.Component {
   constructor(props) {
     super(props);
     this.deleteEntry = this.deleteEntry.bind(this);
-    this.state = {
+    this.editEntry = this.editEntry.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.updateEntry = this.updateEntry.bind(this);    this.state = {
+      id: '',
       tagMap: [],
-      contributorMap: []
+      contributorMap: [],
+      isModalOpen: false,
+      date: '',
+      cost: '',
+      item: '',
+      contributorId: '',
+      tagId: ''
     };
   }
   componentDidMount() {
@@ -96,9 +120,52 @@ export default class ExpensesList extends React.Component {
       if (that.props.refresh) that.props.refresh();
     });
   }
+  editEntry(e) {
+    this.setState({
+      isModalOpen: true,
+      id: e.target.dataset.id,
+      date: new Date(e.target.dataset.date),
+      cost: e.target.dataset.cost,
+      item: e.target.dataset.item,
+      contributorId: e.target.dataset.contributor,
+      tagId: e.target.dataset.tag
+    });
+  }
+  closeModal() {
+    this.setState({
+      isModalOpen: false
+    });
+  }
+  updateEntry(data) {
+    var that = this;
+    services.updateEntry(this.state.id, data, function(res) {
+      that.closeModal();
+      if (that.props.refresh) that.props.refresh();
+    });
+  }
   render() {
     return (
-      <ExpenseTable expenses={this.props.expenses} contributorMap={this.state.contributorMap} tagMap={this.state.tagMap} deleteEntry={this.deleteEntry} />
+      <div>
+        <ExpenseTable
+          expenses={this.props.expenses}
+          contributorMap={this.state.contributorMap}
+          tagMap={this.state.tagMap}
+          editEntry={this.editEntry}
+          deleteEntry={this.deleteEntry} />
+        <Modal
+          title="Edit Expense"
+          open={this.state.isModalOpen}
+          closeModal={this.closeModal} >
+          <NewEntry
+            item={this.state.item}
+            date={this.state.date}
+            cost={this.state.cost}
+            contributorId={this.state.contributorId}
+            tagId={this.state.tagId}
+            updateEntry={this.updateEntry}
+            edit={true}/>
+        </Modal>
+      </div>
     );
   }
 }

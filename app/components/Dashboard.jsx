@@ -65,7 +65,7 @@ export default class Dashboard extends React.Component {
             <NewEntry refresh={this.refresh} />
           </div>
           <div className="expenses-container">
-            <h2 className="expenses-header">
+            <h2 className="expenses-header" onClick={this.showModal} >
               <label>Expenses for the month<Link to="/expenses">(see all)</Link></label>
               <DatePicker setDate={this.setDateExpenses} view="year" />
             </h2>

@@ -10,12 +10,11 @@ class DatePicker extends React.Component {
     this.showPicker = this.showPicker.bind(this);
     this.closePicker = this.closePicker.bind(this);
     this.state = {
-      date: new Date(),
+      date: this.props.date || new Date(),
       open: false
     };
   }
   setDate(e, day) {
-    console.log('date ', day);
     this.setState({
       date: day._d
     });
@@ -23,7 +22,6 @@ class DatePicker extends React.Component {
     if (this.props.setDate) this.props.setDate(day._d);
   }
   setMonth(e, month) {
-    console.log('date ', month);
     var month = month._d;
     this.setState({
       date: month
