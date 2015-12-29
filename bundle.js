@@ -10745,6 +10745,9 @@
 	    key: 'getAllTags',
 	    value: function getAllTags() {
 	      var that = this;
+	      that.setState({
+	        tags: 'loading'
+	      });
 	      _servicesJsx2['default'].getAllTags(function (tags) {
 	        that.setState({
 	          tags: tags
@@ -10755,6 +10758,9 @@
 	    key: 'deleteTag',
 	    value: function deleteTag(e) {
 	      var that = this;
+	      that.setState({
+	        tags: 'loading'
+	      });
 	      _servicesJsx2['default'].deleteTag(e.target.dataset.id, function (res) {
 	        that.getAllTags();
 	      });

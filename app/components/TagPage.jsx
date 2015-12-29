@@ -103,6 +103,9 @@ export default class TagPage extends React.Component {
   }
   getAllTags() {
     var that = this;
+    that.setState({
+      tags: 'loading'
+    });
     services.getAllTags(function(tags) {
       that.setState({
         tags: tags
@@ -111,6 +114,9 @@ export default class TagPage extends React.Component {
   }
   deleteTag(e) {
     var that = this;
+    that.setState({
+      tags: 'loading'
+    });
     services.deleteTag(e.target.dataset.id, function(res) {
       that.getAllTags();
     });
