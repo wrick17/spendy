@@ -6212,7 +6212,6 @@
 	  _createClass(DatePicker, [{
 	    key: 'setDate',
 	    value: function setDate(e, day) {
-	      console.log('date ', day);
 	      this.setState({
 	        date: day._d
 	      });
@@ -6222,7 +6221,6 @@
 	  }, {
 	    key: 'setMonth',
 	    value: function setMonth(e, month) {
-	      console.log('date ', month);
 	      var month = month._d;
 	      this.setState({
 	        date: month
