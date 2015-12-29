@@ -3,6 +3,7 @@ import services from './../services.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import utils from './../utils.jsx';
+import Modal from './Modal.jsx';
 
 class ExpenseGroup extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class ExpenseGroup extends React.Component {
           <td data-label="Contributor">{that.props.contributorMap[expense.contributorId] || 'Loading..'}</td>
           <td data-label="Tag">{that.props.tagMap[expense.tagId] || 'Loading..'}</td>
           <td data-label="Actions" className="actions">
+            <div onClick={that.props.editEntry} data-id={expense._id} >Edit</div>
             <div onClick={that.props.deleteEntry} data-id={expense._id} >Delete</div>
           </td>
         </tr>
@@ -40,7 +42,13 @@ class ExpenseTable extends React.Component {
     if (this.props.expenses.length < 1) return <NoRecords />;
     var that = this;
     var expenseGroups = utils.groupByMonth(this.props.expenses).map(function(expenseGroup) {
-      return <ExpenseGroup key={expenseGroup.month} expenseGroup={expenseGroup} contributorMap={that.props.contributorMap} tagMap={that.props.tagMap} deleteEntry={that.props.deleteEntry} />
+      return <ExpenseGroup
+                key={expenseGroup.month}
+                expenseGroup={expenseGroup}
+                contributorMap={that.props.contributorMap}
+                tagMap={that.props.tagMap}
+                editEntry={that.props.editEntry}
+                deleteEntry={that.props.deleteEntry} />
     });
     return (
       <table>
@@ -64,9 +72,12 @@ export default class ExpensesList extends React.Component {
   constructor(props) {
     super(props);
     this.deleteEntry = this.deleteEntry.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.state = {
       tagMap: [],
-      contributorMap: []
+      contributorMap: [],
+      isModalOpen: false
     };
   }
   componentDidMount() {
@@ -96,9 +107,32 @@ export default class ExpensesList extends React.Component {
       if (that.props.refresh) that.props.refresh();
     });
   }
+  showModal() {
+    this.setState({
+      isModalOpen: true
+    });
+  }
+  closeModal() {
+    this.setState({
+      isModalOpen: false
+    });
+  }
   render() {
     return (
-      <ExpenseTable expenses={this.props.expenses} contributorMap={this.state.contributorMap} tagMap={this.state.tagMap} deleteEntry={this.deleteEntry} />
+      <div>
+        <ExpenseTable
+          expenses={this.props.expenses}
+          contributorMap={this.state.contributorMap}
+          tagMap={this.state.tagMap}
+          editEntry={this.showModal}
+          deleteEntry={this.deleteEntry} />
+        <Modal
+          title="Edit Expense"
+          open={this.state.isModalOpen}
+          closeModal={this.closeModal} >
+
+        </Modal>
+      </div>
     );
   }
 }

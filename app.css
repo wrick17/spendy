@@ -458,6 +458,38 @@ a:hover {
     transform: rotate(360deg);
   }
 }
+.modal-wrapper {
+  height: 0;
+}
+.modal-wrapper .modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+.modal-wrapper .modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #FFFFFF;
+  height: auto;
+}
+.modal-wrapper .modal .container {
+  padding: 20px;
+}
+.modal-wrapper .modal .container .modal-title {
+  font-family: 'Roboto Condensed', sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.modal-wrapper .modal .container .close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 .day-picker {
   flex: 1 0 200px;
   position: relative;
@@ -656,8 +688,9 @@ a:hover {
   float: left;
 }
 .dashboard-container table tbody tr td.actions div {
+  display: inline-block;
   font-size: 12px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .dashboard-container table tbody tr td.actions div:hover {
   text-decoration: underline;
@@ -741,8 +774,9 @@ a:hover {
   float: left;
 }
 .expenses-page table tbody tr td.actions div {
+  display: inline-block;
   font-size: 12px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .expenses-page table tbody tr td.actions div:hover {
   text-decoration: underline;

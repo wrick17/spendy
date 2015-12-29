@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(325);
+	var _componentsExpensesJsx = __webpack_require__(332);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(326);
+	var _componentsTagPageJsx = __webpack_require__(333);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(327);
+	var _componentsContributorPageJsx = __webpack_require__(334);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -5989,7 +5989,7 @@
 	            { className: 'expenses-container' },
 	            _react2['default'].createElement(
 	              'h2',
-	              { className: 'expenses-header' },
+	              { className: 'expenses-header', onClick: this.showModal },
 	              _react2['default'].createElement(
 	                'label',
 	                null,
@@ -10230,6 +10230,10 @@
 
 	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
 
+	var _ModalJsx = __webpack_require__(325);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
 	var ExpenseGroup = (function (_React$Component) {
 	  _inherits(ExpenseGroup, _React$Component);
 
@@ -10280,6 +10284,11 @@
 	            { 'data-label': 'Actions', className: 'actions' },
 	            _react2['default'].createElement(
 	              'div',
+	              { onClick: that.props.editEntry, 'data-id': expense._id },
+	              'Edit'
+	            ),
+	            _react2['default'].createElement(
+	              'div',
 	              { onClick: that.props.deleteEntry, 'data-id': expense._id },
 	              'Delete'
 	            )
@@ -10322,7 +10331,13 @@
 	      if (this.props.expenses.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
 	      var expenseGroups = _utilsJsx2['default'].groupByMonth(this.props.expenses).map(function (expenseGroup) {
-	        return _react2['default'].createElement(ExpenseGroup, { key: expenseGroup.month, expenseGroup: expenseGroup, contributorMap: that.props.contributorMap, tagMap: that.props.tagMap, deleteEntry: that.props.deleteEntry });
+	        return _react2['default'].createElement(ExpenseGroup, {
+	          key: expenseGroup.month,
+	          expenseGroup: expenseGroup,
+	          contributorMap: that.props.contributorMap,
+	          tagMap: that.props.tagMap,
+	          editEntry: that.props.editEntry,
+	          deleteEntry: that.props.deleteEntry });
 	      });
 	      return _react2['default'].createElement(
 	        'table',
@@ -10381,9 +10396,12 @@
 
 	    _get(Object.getPrototypeOf(ExpensesList.prototype), 'constructor', this).call(this, props);
 	    this.deleteEntry = this.deleteEntry.bind(this);
+	    this.showModal = this.showModal.bind(this);
+	    this.closeModal = this.closeModal.bind(this);
 	    this.state = {
 	      tagMap: [],
-	      contributorMap: []
+	      contributorMap: [],
+	      isModalOpen: false
 	    };
 	  }
 
@@ -10419,9 +10437,36 @@
 	      });
 	    }
 	  }, {
+	    key: 'showModal',
+	    value: function showModal() {
+	      this.setState({
+	        isModalOpen: true
+	      });
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.setState({
+	        isModalOpen: false
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      return _react2['default'].createElement(ExpenseTable, { expenses: this.props.expenses, contributorMap: this.state.contributorMap, tagMap: this.state.tagMap, deleteEntry: this.deleteEntry });
+	      return _react2['default'].createElement(
+	        'div',
+	        null,
+	        _react2['default'].createElement(ExpenseTable, {
+	          expenses: this.props.expenses,
+	          contributorMap: this.state.contributorMap,
+	          tagMap: this.state.tagMap,
+	          editEntry: this.showModal,
+	          deleteEntry: this.deleteEntry }),
+	        _react2['default'].createElement(_ModalJsx2['default'], {
+	          title: 'Edit Expense',
+	          open: this.state.isModalOpen,
+	          closeModal: this.closeModal })
+	      );
 	    }
 	  }]);
 
@@ -10433,6 +10478,381 @@
 
 /***/ },
 /* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactSkylight = __webpack_require__(326);
+
+	var _reactSkylight2 = _interopRequireDefault(_reactSkylight);
+
+	var _ContainerJsx = __webpack_require__(209);
+
+	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
+
+	var ModalBody = (function (_React$Component) {
+	  _inherits(ModalBody, _React$Component);
+
+	  function ModalBody() {
+	    _classCallCheck(this, ModalBody);
+
+	    _get(Object.getPrototypeOf(ModalBody.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(ModalBody, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'modal' },
+	        _react2['default'].createElement(
+	          _ContainerJsx2['default'],
+	          null,
+	          _react2['default'].createElement(
+	            'h2',
+	            { className: 'modal-title' },
+	            this.props.title || null
+	          ),
+	          _react2['default'].createElement(
+	            'a',
+	            { onClick: this.props.closeModal, className: 'close-modal' },
+	            'close'
+	          ),
+	          this.props.content
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ModalBody;
+	})(_react2['default'].Component);
+
+	var Modal = (function (_React$Component2) {
+	  _inherits(Modal, _React$Component2);
+
+	  function Modal(props) {
+	    _classCallCheck(this, Modal);
+
+	    _get(Object.getPrototypeOf(Modal.prototype), 'constructor', this).call(this, props);
+	    this.closeModal = this.closeModal.bind(this);
+	  }
+
+	  _createClass(Modal, [{
+	    key: 'closeModal',
+	    value: function closeModal(e) {
+	      e.preventDefault();
+	      this.props.closeModal();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'modal-wrapper' },
+	        this.props.open ? _react2['default'].createElement('div', { className: 'modal-backdrop', onClick: this.closeModal }) : null,
+	        this.props.open ? _react2['default'].createElement(ModalBody, { closeModal: this.closeModal, title: this.props.title, content: this.props.children }) : null
+	      );
+	    }
+	  }]);
+
+	  return Modal;
+	})(_react2['default'].Component);
+
+	exports['default'] = Modal;
+	module.exports = exports['default'];
+
+/***/ },
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	module.exports = __webpack_require__(327);
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var styles = __webpack_require__(328);
+	var extend = __webpack_require__(329)._extend;
+
+	var SkyLight = React.createClass({
+	    displayName: 'SkyLight',
+
+	    propTypes: {
+	        title: React.PropTypes.string,
+	        showOverlay: React.PropTypes.bool,
+	        beforeOpen: React.PropTypes.func,
+	        afterOpen: React.PropTypes.func,
+	        beforeClose: React.PropTypes.func,
+	        afterClose: React.PropTypes.func,
+	        overlayStyles: React.PropTypes.object,
+	        dialogStyles: React.PropTypes.object,
+	        closeButtonStyle: React.PropTypes.object
+	    },
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            title: '',
+	            showOverlay: true,
+	            overlayStyles: styles.overlayStyles,
+	            dialogStyles: styles.dialogStyles,
+	            closeButtonStyle: styles.closeButtonStyle
+	        };
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            isVisible: false
+	        };
+	    },
+	    show: function show() {
+	        this.setState({ isVisible: true });
+	    },
+	    hide: function hide() {
+	        this.setState({ isVisible: false });
+	    },
+	    componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+	        if (nextState.isVisible && this.props.beforeOpen) {
+	            this.props.beforeOpen();
+	        }
+
+	        if (!nextState.isVisible && this.props.beforeClose) {
+	            this.props.beforeClose();
+	        }
+	    },
+	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	        if (!prevState.isVisible && this.props.afterOpen) {
+	            this.props.afterOpen();
+	        }
+
+	        if (prevState.isVisible && this.props.afterClose) {
+	            this.props.afterClose();
+	        }
+	    },
+	    render: function render() {
+
+	        var overlay;
+
+	        var dialogStyles = extend(styles.dialogStyles, this.props.dialogStyles);
+	        var overlayStyles = extend(styles.overlayStyles, this.props.overlayStyles);
+	        var closeButtonStyle = extend(styles.closeButtonStyle = this.props.closeButtonStyle);
+
+	        if (this.state.isVisible) {
+	            overlayStyles.display = 'block';
+	            dialogStyles.display = 'block';
+	        } else {
+	            overlayStyles.display = 'none';
+	            dialogStyles.display = 'none';
+	        }
+
+	        if (this.props.showOverlay) {
+	            overlay = React.createElement('div', { style: overlayStyles });
+	        }
+
+	        return React.createElement(
+	            'section',
+	            { className: 'skylight-wrapper' },
+	            overlay,
+	            React.createElement(
+	                'div',
+	                { style: dialogStyles },
+	                React.createElement(
+	                    'a',
+	                    { role: 'button', style: closeButtonStyle, onClick: this.hide },
+	                    '×'
+	                ),
+	                React.createElement(
+	                    'h2',
+	                    null,
+	                    this.props.title
+	                ),
+	                this.props.children
+	            )
+	        );
+	    }
+	});
+
+	module.exports = SkyLight;
+
+/***/ },
+/* 328 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = { overlayStyles: { position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 99, backgroundColor: "rgba(0,0,0,0.3)" }, dialogStyles: { width: "50%", height: "400px", position: "fixed", top: "50%", left: "50%", marginTop: "-200px", marginLeft: "-25%", backgroundColor: "#fff", borderRadius: "2px", zIndex: 100, padding: "10px", boxShadow: "0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28)" }, closeButtonStyle: { cursor: "pointer", "float": "right", fontSize: "1.6em", margin: "-15px 0" } };
+
+/***/ },
+/* 329 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process, global) {"use strict";
+
+	function inspect(e, r) {
+	  var t = { seen: [], stylize: stylizeNoColor };return arguments.length >= 3 && (t.depth = arguments[2]), arguments.length >= 4 && (t.colors = arguments[3]), isBoolean(r) ? t.showHidden = r : r && exports._extend(t, r), isUndefined(t.showHidden) && (t.showHidden = !1), isUndefined(t.depth) && (t.depth = 2), isUndefined(t.colors) && (t.colors = !1), isUndefined(t.customInspect) && (t.customInspect = !0), t.colors && (t.stylize = stylizeWithColor), formatValue(t, e, t.depth);
+	}function stylizeWithColor(e, r) {
+	  var t = inspect.styles[r];return t ? "[" + inspect.colors[t][0] + "m" + e + "[" + inspect.colors[t][1] + "m" : e;
+	}function stylizeNoColor(e, r) {
+	  return e;
+	}function arrayToHash(e) {
+	  var r = {};return e.forEach(function (e, t) {
+	    r[e] = !0;
+	  }), r;
+	}function formatValue(e, r, t) {
+	  if (e.customInspect && r && isFunction(r.inspect) && r.inspect !== exports.inspect && (!r.constructor || r.constructor.prototype !== r)) {
+	    var n = r.inspect(t, e);return isString(n) || (n = formatValue(e, n, t)), n;
+	  }var i = formatPrimitive(e, r);if (i) return i;var o = Object.keys(r),
+	      s = arrayToHash(o);if ((e.showHidden && (o = Object.getOwnPropertyNames(r)), isError(r) && (o.indexOf("message") >= 0 || o.indexOf("description") >= 0))) return formatError(r);if (0 === o.length) {
+	    if (isFunction(r)) {
+	      var u = r.name ? ": " + r.name : "";return e.stylize("[Function" + u + "]", "special");
+	    }if (isRegExp(r)) return e.stylize(RegExp.prototype.toString.call(r), "regexp");if (isDate(r)) return e.stylize(Date.prototype.toString.call(r), "date");if (isError(r)) return formatError(r);
+	  }var a = "",
+	      c = !1,
+	      l = ["{", "}"];if ((isArray(r) && (c = !0, l = ["[", "]"]), isFunction(r))) {
+	    var p = r.name ? ": " + r.name : "";a = " [Function" + p + "]";
+	  }if ((isRegExp(r) && (a = " " + RegExp.prototype.toString.call(r)), isDate(r) && (a = " " + Date.prototype.toUTCString.call(r)), isError(r) && (a = " " + formatError(r)), 0 === o.length && (!c || 0 == r.length))) return l[0] + a + l[1];if (0 > t) return isRegExp(r) ? e.stylize(RegExp.prototype.toString.call(r), "regexp") : e.stylize("[Object]", "special");e.seen.push(r);var f;return f = c ? formatArray(e, r, t, s, o) : o.map(function (n) {
+	    return formatProperty(e, r, t, s, n, c);
+	  }), e.seen.pop(), reduceToSingleString(f, a, l);
+	}function formatPrimitive(e, r) {
+	  if (isUndefined(r)) return e.stylize("undefined", "undefined");if (isString(r)) {
+	    var t = "'" + JSON.stringify(r).replace(/^"|"$/g, "").replace(/'/g, "\\'").replace(/\\"/g, '"') + "'";return e.stylize(t, "string");
+	  }return isNumber(r) ? e.stylize("" + r, "number") : isBoolean(r) ? e.stylize("" + r, "boolean") : isNull(r) ? e.stylize("null", "null") : void 0;
+	}function formatError(e) {
+	  return "[" + Error.prototype.toString.call(e) + "]";
+	}function formatArray(e, r, t, n, i) {
+	  for (var o = [], s = 0, u = r.length; u > s; ++s) hasOwnProperty(r, String(s)) ? o.push(formatProperty(e, r, t, n, String(s), !0)) : o.push("");return i.forEach(function (i) {
+	    i.match(/^\d+$/) || o.push(formatProperty(e, r, t, n, i, !0));
+	  }), o;
+	}function formatProperty(e, r, t, n, i, o) {
+	  var s, u, a;if ((a = Object.getOwnPropertyDescriptor(r, i) || { value: r[i] }, a.get ? u = a.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special") : a.set && (u = e.stylize("[Setter]", "special")), hasOwnProperty(n, i) || (s = "[" + i + "]"), u || (e.seen.indexOf(a.value) < 0 ? (u = isNull(t) ? formatValue(e, a.value, null) : formatValue(e, a.value, t - 1), u.indexOf("\n") > -1 && (u = o ? u.split("\n").map(function (e) {
+	    return "  " + e;
+	  }).join("\n").substr(2) : "\n" + u.split("\n").map(function (e) {
+	    return "   " + e;
+	  }).join("\n"))) : u = e.stylize("[Circular]", "special")), isUndefined(s))) {
+	    if (o && i.match(/^\d+$/)) return u;s = JSON.stringify("" + i), s.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/) ? (s = s.substr(1, s.length - 2), s = e.stylize(s, "name")) : (s = s.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'"), s = e.stylize(s, "string"));
+	  }return s + ": " + u;
+	}function reduceToSingleString(e, r, t) {
+	  var n = 0,
+	      i = e.reduce(function (e, r) {
+	    return n++, r.indexOf("\n") >= 0 && n++, e + r.replace(/\u001b\[\d\d?m/g, "").length + 1;
+	  }, 0);return i > 60 ? t[0] + ("" === r ? "" : r + "\n ") + " " + e.join(",\n  ") + " " + t[1] : t[0] + r + " " + e.join(", ") + " " + t[1];
+	}function isArray(e) {
+	  return Array.isArray(e);
+	}function isBoolean(e) {
+	  return "boolean" == typeof e;
+	}function isNull(e) {
+	  return null === e;
+	}function isNullOrUndefined(e) {
+	  return null == e;
+	}function isNumber(e) {
+	  return "number" == typeof e;
+	}function isString(e) {
+	  return "string" == typeof e;
+	}function isSymbol(e) {
+	  return "symbol" == typeof e;
+	}function isUndefined(e) {
+	  return void 0 === e;
+	}function isRegExp(e) {
+	  return isObject(e) && "[object RegExp]" === objectToString(e);
+	}function isObject(e) {
+	  return "object" == typeof e && null !== e;
+	}function isDate(e) {
+	  return isObject(e) && "[object Date]" === objectToString(e);
+	}function isError(e) {
+	  return isObject(e) && ("[object Error]" === objectToString(e) || e instanceof Error);
+	}function isFunction(e) {
+	  return "function" == typeof e;
+	}function isPrimitive(e) {
+	  return null === e || "boolean" == typeof e || "number" == typeof e || "string" == typeof e || "symbol" == typeof e || "undefined" == typeof e;
+	}function objectToString(e) {
+	  return Object.prototype.toString.call(e);
+	}function pad(e) {
+	  return 10 > e ? "0" + e.toString(10) : e.toString(10);
+	}function timestamp() {
+	  var e = new Date(),
+	      r = [pad(e.getHours()), pad(e.getMinutes()), pad(e.getSeconds())].join(":");return [e.getDate(), months[e.getMonth()], r].join(" ");
+	}function hasOwnProperty(e, r) {
+	  return Object.prototype.hasOwnProperty.call(e, r);
+	}var formatRegExp = /%[sdj%]/g;exports.format = function (e) {
+	  if (!isString(e)) {
+	    for (var r = [], t = 0; t < arguments.length; t++) r.push(inspect(arguments[t]));return r.join(" ");
+	  }for (var t = 1, n = arguments, i = n.length, o = String(e).replace(formatRegExp, function (e) {
+	    if ("%%" === e) return "%";if (t >= i) return e;switch (e) {case "%s":
+	        return String(n[t++]);case "%d":
+	        return Number(n[t++]);case "%j":
+	        try {
+	          return JSON.stringify(n[t++]);
+	        } catch (r) {
+	          return "[Circular]";
+	        }default:
+	        return e;}
+	  }), s = n[t]; i > t; s = n[++t]) o += isNull(s) || !isObject(s) ? " " + s : " " + inspect(s);return o;
+	}, exports.deprecate = function (e, r) {
+	  function t() {
+	    if (!n) {
+	      if (process.throwDeprecation) throw new Error(r);process.traceDeprecation ? console.trace(r) : console.error(r), n = !0;
+	    }return e.apply(this, arguments);
+	  }if (isUndefined(global.process)) return function () {
+	    return exports.deprecate(e, r).apply(this, arguments);
+	  };if (process.noDeprecation === !0) return e;var n = !1;return t;
+	};var debugs = {},
+	    debugEnviron;exports.debuglog = function (e) {
+	  if ((isUndefined(debugEnviron) && (debugEnviron = process.env.NODE_DEBUG || ""), e = e.toUpperCase(), !debugs[e])) if (new RegExp("\\b" + e + "\\b", "i").test(debugEnviron)) {
+	    var r = process.pid;debugs[e] = function () {
+	      var t = exports.format.apply(exports, arguments);console.error("%s %d: %s", e, r, t);
+	    };
+	  } else debugs[e] = function () {};return debugs[e];
+	}, exports.inspect = inspect, inspect.colors = { bold: [1, 22], italic: [3, 23], underline: [4, 24], inverse: [7, 27], white: [37, 39], grey: [90, 39], black: [30, 39], blue: [34, 39], cyan: [36, 39], green: [32, 39], magenta: [35, 39], red: [31, 39], yellow: [33, 39] }, inspect.styles = { special: "cyan", number: "yellow", "boolean": "yellow", undefined: "grey", "null": "bold", string: "green", date: "magenta", regexp: "red" }, exports.isArray = isArray, exports.isBoolean = isBoolean, exports.isNull = isNull, exports.isNullOrUndefined = isNullOrUndefined, exports.isNumber = isNumber, exports.isString = isString, exports.isSymbol = isSymbol, exports.isUndefined = isUndefined, exports.isRegExp = isRegExp, exports.isObject = isObject, exports.isDate = isDate, exports.isError = isError, exports.isFunction = isFunction, exports.isPrimitive = isPrimitive, exports.isBuffer = __webpack_require__(330);var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];exports.log = function () {
+	  console.log("%s - %s", timestamp(), exports.format.apply(exports, arguments));
+	}, exports.inherits = __webpack_require__(331), exports._extend = function (e, r) {
+	  if (!r || !isObject(r)) return e;for (var t = Object.keys(r), n = t.length; n--;) e[t[n]] = r[t[n]];return e;
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), (function() { return this; }())))
+
+/***/ },
+/* 330 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function (o) {
+	  return o && "object" == typeof o && "function" == typeof o.copy && "function" == typeof o.fill && "function" == typeof o.readUInt8;
+	};
+
+/***/ },
+/* 331 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	"function" == typeof Object.create ? module.exports = function (t, e) {
+	  t.super_ = e, t.prototype = Object.create(e.prototype, { constructor: { value: t, enumerable: !1, writable: !0, configurable: !0 } });
+	} : module.exports = function (t, e) {
+	  t.super_ = e;var o = function o() {};o.prototype = e.prototype, t.prototype = new o(), t.prototype.constructor = t;
+	};
+
+/***/ },
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10523,7 +10943,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 326 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10790,7 +11210,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 327 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
