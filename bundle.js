@@ -9808,7 +9808,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'new-entry' },
-	        _react2['default'].createElement(
+	        this.props.edit ? null : _react2['default'].createElement(
 	          'h2',
 	          { className: 'new-entry-header' },
 	          'New Entry'

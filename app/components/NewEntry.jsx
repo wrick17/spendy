@@ -101,7 +101,7 @@ export default class NewEntry extends React.Component {
   render() {
     return (
       <div className="new-entry">
-        <h2 className="new-entry-header">New Entry</h2>
+        { this.props.edit ? null : <h2 className="new-entry-header">New Entry</h2> }
         <form className="form" onSubmit={this.addEntry} >
           <div className="form-group">
             <label>Date:</label>
