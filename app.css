@@ -56,10 +56,6 @@
 .form .form-group .day-picker {
   max-width: 200px;
 }
-.form .form-group .day-picker .date-picker {
-  top: auto;
-  bottom: calc(100% + 5px);
-}
 .form .error {
   font-size: 14px;
   color: red;
@@ -67,6 +63,9 @@
   margin-bottom: 10px;
   display: block;
   width: 100%;
+}
+.form .button {
+  margin-top: 10px;
 }
 .no-records {
   padding: 20px 0;
@@ -617,12 +616,6 @@ a:hover {
   margin-bottom: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
-@media (min-width: 690px) {
-  .dashboard-container .dashboard .new-entry .form .form-group .day-picker .date-picker {
-    top: calc(100% + 5px);
-    bottom: auto;
-  }
-}
 .dashboard-container .expenses-container {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
@@ -718,12 +711,8 @@ a:hover {
 .dashboard-container table tbody tr.month-header:hover td {
   background: transparent;
 }
-.dashboard-container .form .form-group .day-picker .date-picker {
-  top: calc(105%);
-  bottom: auto;
-}
 .dashboard-container .modal-wrapper .modal .container {
-  padding-bottom: 50px;
+  padding-bottom: 40px;
 }
 @media screen and (min-width: 768px) {
   .dashboard-container table thead {
@@ -811,12 +800,8 @@ a:hover {
 .expenses-page table tbody tr.month-header:hover td {
   background: transparent;
 }
-.expenses-page .form .form-group .day-picker .date-picker {
-  top: calc(105%);
-  bottom: auto;
-}
 .expenses-page .modal-wrapper .modal .container {
-  padding-bottom: 50px;
+  padding-bottom: 40px;
 }
 @media screen and (min-width: 768px) {
   .expenses-page table thead {
