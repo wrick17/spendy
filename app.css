@@ -685,6 +685,7 @@ a:hover {
 .dashboard-container table tbody tr:last-child {
   border-bottom: none;
   padding-bottom: 0;
+  margin-bottom: 15px;
 }
 .dashboard-container table tbody tr td {
   display: block;
@@ -715,6 +716,9 @@ a:hover {
   font-weight: bold;
   margin-top: 10px;
   border-top: 1px solid #e3e3e3;
+}
+.dashboard-container table tbody tr.month-header:first-child {
+  margin-top: 0;
 }
 .dashboard-container table tbody tr.month-header:hover {
   background: transparent;
@@ -754,7 +758,7 @@ a:hover {
   overflow: auto;
 }
 .expenses-page .container {
-  padding: 10px;
+  padding: 0 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .expenses-page table {
@@ -782,6 +786,7 @@ a:hover {
 .expenses-page table tbody tr:last-child {
   border-bottom: none;
   padding-bottom: 0;
+  margin-bottom: 15px;
 }
 .expenses-page table tbody tr td {
   display: block;
@@ -812,6 +817,9 @@ a:hover {
   font-weight: bold;
   margin-top: 10px;
   border-top: 1px solid #e3e3e3;
+}
+.expenses-page table tbody tr.month-header:first-child {
+  margin-top: 0;
 }
 .expenses-page table tbody tr.month-header:hover {
   background: transparent;
