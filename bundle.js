@@ -6067,6 +6067,13 @@
 	  _createClass(Bounty, [{
 	    key: 'render',
 	    value: function render() {
+	      function getNumber(theNumber) {
+	        if (theNumber > 0) {
+	          return "+" + theNumber.toFixed(2);
+	        } else {
+	          return theNumber.toFixed(2).toString();
+	        }
+	      }
 	      return _react2['default'].createElement(
 	        'li',
 	        { className: 'bounty' },
@@ -6085,7 +6092,10 @@
 	          'span',
 	          null,
 	          '₹',
-	          this.props.bounty.toFixed(2)
+	          this.props.bounty.toFixed(2),
+	          ' (',
+	          getNumber(this.props.bounty - this.props.average),
+	          ')'
 	        )
 	      );
 	    }
@@ -6112,11 +6122,15 @@
 	          contributors = _utilsJsx2['default'].sortByKey(this.props.contributors, 'expenditure'),
 	          total = 0,
 	          average = 0;
-	      var bountyList = contributors.map(function (contributor) {
-	        total += parseInt(contributor.expenditure);
-	        return _react2['default'].createElement(Bounty, { key: contributor._id, rank: ++rank, name: contributor.name, bounty: contributor.expenditure });
+	      contributors.map(function (contributor) {
+	        rank++;
+	        return total += parseInt(contributor.expenditure);
 	      });
 	      average = total / rank;
+	      rank = 0;
+	      var bountyList = contributors.map(function (contributor) {
+	        return _react2['default'].createElement(Bounty, { key: contributor._id, average: average, rank: ++rank, name: contributor.name, bounty: contributor.expenditure });
+	      });
 	      return _react2['default'].createElement(
 	        'ul',
 	        { className: 'bounty-list' },
