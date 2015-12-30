@@ -6067,6 +6067,13 @@
 	  _createClass(Bounty, [{
 	    key: 'render',
 	    value: function render() {
+	      function getNumber(theNumber) {
+	        if (theNumber > 0) {
+	          return "+" + theNumber.toFixed(2);
+	        } else {
+	          return theNumber.toFixed(2).toString();
+	        }
+	      }
 	      return _react2['default'].createElement(
 	        'li',
 	        { className: 'bounty' },
@@ -6085,7 +6092,10 @@
 	          'span',
 	          null,
 	          '₹',
-	          this.props.bounty
+	          this.props.bounty.toFixed(2),
+	          ' (',
+	          getNumber(this.props.bounty - this.props.average),
+	          ')'
 	        )
 	      );
 	    }
@@ -6108,15 +6118,54 @@
 	    value: function render() {
 	      if (this.props.contributors === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
 	      if (this.props.contributors.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
-	      var rank = 1,
-	          contributors = _utilsJsx2['default'].sortByKey(this.props.contributors, 'expenditure');
+	      var rank = 0,
+	          contributors = _utilsJsx2['default'].sortByKey(this.props.contributors, 'expenditure'),
+	          total = 0,
+	          average = 0;
+	      contributors.map(function (contributor) {
+	        rank++;
+	        return total += parseInt(contributor.expenditure);
+	      });
+	      average = total / rank;
+	      rank = 0;
 	      var bountyList = contributors.map(function (contributor) {
-	        return _react2['default'].createElement(Bounty, { key: contributor._id, rank: rank++, name: contributor.name, bounty: contributor.expenditure });
+	        return _react2['default'].createElement(Bounty, { key: contributor._id, average: average, rank: ++rank, name: contributor.name, bounty: contributor.expenditure });
 	      });
 	      return _react2['default'].createElement(
 	        'ul',
 	        { className: 'bounty-list' },
-	        bountyList
+	        bountyList,
+	        _react2['default'].createElement('hr', null),
+	        _react2['default'].createElement(
+	          'li',
+	          { className: 'bounty' },
+	          _react2['default'].createElement(
+	            'label',
+	            null,
+	            'Total'
+	          ),
+	          _react2['default'].createElement(
+	            'span',
+	            null,
+	            '₹',
+	            total.toFixed(2)
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'li',
+	          { className: 'bounty' },
+	          _react2['default'].createElement(
+	            'label',
+	            null,
+	            'Average'
+	          ),
+	          _react2['default'].createElement(
+	            'span',
+	            null,
+	            '₹',
+	            average.toFixed(2)
+	          )
+	        )
 	      );
 	    }
 	  }]);
