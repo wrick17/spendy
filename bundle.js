@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(326);
+	var _componentsExpensesJsx = __webpack_require__(327);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(327);
+	var _componentsTagPageJsx = __webpack_require__(328);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(328);
+	var _componentsContributorPageJsx = __webpack_require__(329);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -10310,6 +10310,10 @@
 
 	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
 
+	var _DeleteModalJsx = __webpack_require__(326);
+
+	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
+
 	var ExpenseGroup = (function (_React$Component) {
 	  _inherits(ExpenseGroup, _React$Component);
 
@@ -10481,11 +10485,16 @@
 	    this.deleteEntry = this.deleteEntry.bind(this);
 	    this.editEntry = this.editEntry.bind(this);
 	    this.closeModal = this.closeModal.bind(this);
-	    this.updateEntry = this.updateEntry.bind(this);this.state = {
+	    this.updateEntry = this.updateEntry.bind(this);
+	    this.confirmDelete = this.confirmDelete.bind(this);
+	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+	    this.showDeleteModal = this.showDeleteModal.bind(this);
+	    this.state = {
 	      id: '',
 	      tagMap: [],
 	      contributorMap: [],
 	      isModalOpen: false,
+	      isDeleteModalOpen: false,
 	      date: '',
 	      cost: '',
 	      item: '',
@@ -10519,9 +10528,9 @@
 	    }
 	  }, {
 	    key: 'deleteEntry',
-	    value: function deleteEntry(e) {
+	    value: function deleteEntry() {
 	      var that = this;
-	      _servicesJsx2['default'].deleteEntry(e.target.dataset.id, function (res) {
+	      _servicesJsx2['default'].deleteEntry(this.state.id, function (res) {
 	        if (that.props.refresh) that.props.refresh();
 	      });
 	    }
@@ -10555,6 +10564,27 @@
 	      });
 	    }
 	  }, {
+	    key: 'showDeleteModal',
+	    value: function showDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: true,
+	        id: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'confirmDelete',
+	    value: function confirmDelete() {
+	      this.deleteEntry();
+	      this.closeDeleteModal();
+	    }
+	  }, {
+	    key: 'closeDeleteModal',
+	    value: function closeDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: false
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -10566,7 +10596,7 @@
 	          tagMap: this.state.tagMap,
 	          editEntry: this.editEntry,
 	          minimal: this.props.minimal,
-	          deleteEntry: this.deleteEntry }),
+	          deleteEntry: this.showDeleteModal }),
 	        _react2['default'].createElement(
 	          _ModalJsx2['default'],
 	          {
@@ -10581,7 +10611,13 @@
 	            tagId: this.state.tagId,
 	            updateEntry: this.updateEntry,
 	            edit: true })
-	        )
+	        ),
+	        _react2['default'].createElement(_DeleteModalJsx2['default'], {
+	          open: this.state.isDeleteModalOpen,
+	          closeModal: this.closeDeleteModal,
+	          confirmDelete: this.confirmDelete,
+	          closeDeleteModal: this.closeDeleteModal,
+	          item: 'expense' })
 	      );
 	    }
 	  }]);
@@ -10646,7 +10682,7 @@
 	          _react2['default'].createElement(
 	            'a',
 	            { onClick: this.props.closeModal, className: 'close-modal' },
-	            'close'
+	            '✕'
 	          ),
 	          this.props.content
 	        )
@@ -10693,6 +10729,83 @@
 
 /***/ },
 /* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ModalJsx = __webpack_require__(325);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var DeleteModal = (function (_React$Component) {
+	  _inherits(DeleteModal, _React$Component);
+
+	  function DeleteModal() {
+	    _classCallCheck(this, DeleteModal);
+
+	    _get(Object.getPrototypeOf(DeleteModal.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(DeleteModal, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        _ModalJsx2['default'],
+	        {
+	          title: 'Confirm Delete',
+	          open: this.props.open,
+	          closeModal: this.props.closeDeleteModal },
+	        _react2['default'].createElement(
+	          'label',
+	          { className: 'message' },
+	          'Are you sure you want to delete this ',
+	          this.props.item,
+	          '?'
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          null,
+	          _react2['default'].createElement(
+	            'button',
+	            { className: 'button right', onClick: this.props.confirmDelete },
+	            'Delete'
+	          ),
+	          _react2['default'].createElement(
+	            'button',
+	            { className: 'button', onClick: this.props.closeDeleteModal },
+	            'Cancel'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DeleteModal;
+	})(_react2['default'].Component);
+
+	exports['default'] = DeleteModal;
+	module.exports = exports['default'];
+
+/***/ },
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10783,7 +10896,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10825,6 +10938,10 @@
 	var _ModalJsx = __webpack_require__(325);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var _DeleteModalJsx = __webpack_require__(326);
+
+	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
 
 	var AddTag = (function (_React$Component) {
 	  _inherits(AddTag, _React$Component);
@@ -11000,9 +11117,13 @@
 	    this.closeModal = this.closeModal.bind(this);
 	    this.onSaveTag = this.onSaveTag.bind(this);
 	    this.onChangeTagName = this.onChangeTagName.bind(this);
+	    this.confirmDelete = this.confirmDelete.bind(this);
+	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+	    this.showDeleteModal = this.showDeleteModal.bind(this);
 	    this.state = {
 	      tags: 'loading',
-	      isModalOpen: false,
+	      isEditModalOpen: false,
+	      isDeleteModalOpen: false,
 	      tagName: '',
 	      tagId: '',
 	      tagError: false
@@ -11029,13 +11150,12 @@
 	    }
 	  }, {
 	    key: 'deleteTag',
-	    value: function deleteTag(e) {
-	      e.preventDefault();
+	    value: function deleteTag() {
 	      var that = this;
 	      that.setState({
 	        tags: 'loading'
 	      });
-	      _servicesJsx2['default'].deleteTag(e.target.dataset.id, function (res) {
+	      _servicesJsx2['default'].deleteTag(this.state.tagId, function (res) {
 	        that.getAllTags();
 	      });
 	    }
@@ -11048,7 +11168,7 @@
 	    key: 'editTag',
 	    value: function editTag(e) {
 	      this.setState({
-	        isModalOpen: true,
+	        isEditModalOpen: true,
 	        tagName: e.target.dataset.name,
 	        tagId: e.target.dataset.id
 	      });
@@ -11078,7 +11198,28 @@
 	    key: 'closeModal',
 	    value: function closeModal() {
 	      this.setState({
-	        isModalOpen: false
+	        isEditModalOpen: false
+	      });
+	    }
+	  }, {
+	    key: 'showDeleteModal',
+	    value: function showDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: true,
+	        tagId: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'confirmDelete',
+	    value: function confirmDelete() {
+	      this.deleteTag();
+	      this.closeDeleteModal();
+	    }
+	  }, {
+	    key: 'closeDeleteModal',
+	    value: function closeDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: false
 	      });
 	    }
 	  }, {
@@ -11090,14 +11231,14 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageTag, { tags: this.state.tags, editTag: this.editTag, deleteTag: this.deleteTag }),
+	          _react2['default'].createElement(ManageTag, { tags: this.state.tags, editTag: this.editTag, deleteTag: this.showDeleteModal }),
 	          _react2['default'].createElement(AddTag, { refresh: this.refresh })
 	        ),
 	        _react2['default'].createElement(
 	          _ModalJsx2['default'],
 	          {
 	            title: 'Edit Tag',
-	            open: this.state.isModalOpen,
+	            open: this.state.isEditModalOpen,
 	            closeModal: this.closeModal },
 	          _react2['default'].createElement(
 	            'form',
@@ -11123,7 +11264,13 @@
 	              'Save'
 	            )
 	          )
-	        )
+	        ),
+	        _react2['default'].createElement(_DeleteModalJsx2['default'], {
+	          open: this.state.isDeleteModalOpen,
+	          closeModal: this.closeDeleteModal,
+	          confirmDelete: this.confirmDelete,
+	          closeDeleteModal: this.closeDeleteModal,
+	          item: 'tag' })
 	      );
 	    }
 	  }]);
@@ -11135,7 +11282,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11181,6 +11328,10 @@
 	var _ModalJsx = __webpack_require__(325);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var _DeleteModalJsx = __webpack_require__(326);
+
+	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
 
 	var AddContributor = (function (_React$Component) {
 	  _inherits(AddContributor, _React$Component);
@@ -11359,10 +11510,14 @@
 	    this.onSaveContributor = this.onSaveContributor.bind(this);
 	    this.onChangeContributorName = this.onChangeContributorName.bind(this);
 	    this.changeContributorStatus = this.changeContributorStatus.bind(this);
+	    this.confirmDelete = this.confirmDelete.bind(this);
+	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+	    this.showDeleteModal = this.showDeleteModal.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
 	      contributors: 'loading',
 	      isModalOpen: false,
+	      isDeleteModalOpen: false,
 	      contributorName: '',
 	      contributorId: '',
 	      contributorError: false,
@@ -11391,13 +11546,12 @@
 	    }
 	  }, {
 	    key: 'deleteContributor',
-	    value: function deleteContributor(e) {
-	      e.preventDefault();
+	    value: function deleteContributor() {
 	      var that = this;
 	      that.setState({
 	        contributors: 'loading'
 	      });
-	      _servicesJsx2['default'].deleteContributor(e.target.dataset.id, function (res) {
+	      _servicesJsx2['default'].deleteContributor(this.state.contributorId, function (res) {
 	        that.getAllContributors();
 	      });
 	    }
@@ -11463,6 +11617,27 @@
 	      });
 	    }
 	  }, {
+	    key: 'showDeleteModal',
+	    value: function showDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: true,
+	        contributorId: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'confirmDelete',
+	    value: function confirmDelete() {
+	      this.deleteContributor();
+	      this.closeDeleteModal();
+	    }
+	  }, {
+	    key: 'closeDeleteModal',
+	    value: function closeDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: false
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -11471,7 +11646,7 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, editContributor: this.editContributor, deleteContributor: this.deleteContributor }),
+	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, editContributor: this.editContributor, deleteContributor: this.showDeleteModal }),
 	          _react2['default'].createElement(AddContributor, { refresh: this.refresh })
 	        ),
 	        _react2['default'].createElement(
@@ -11511,7 +11686,13 @@
 	              ' '
 	            )
 	          )
-	        )
+	        ),
+	        _react2['default'].createElement(_DeleteModalJsx2['default'], {
+	          open: this.state.isDeleteModalOpen,
+	          closeModal: this.closeDeleteModal,
+	          confirmDelete: this.confirmDelete,
+	          closeDeleteModal: this.closeDeleteModal,
+	          item: 'contributor' })
 	      );
 	    }
 	  }]);

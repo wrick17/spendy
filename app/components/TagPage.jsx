@@ -4,6 +4,7 @@ import services from './../services.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import Modal from './Modal.jsx';
+import DeleteModal from './DeleteModal.jsx';
 
 class AddTag extends React.Component {
   constructor(props) {
@@ -100,9 +101,13 @@ export default class TagPage extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.onSaveTag = this.onSaveTag.bind(this);
     this.onChangeTagName = this.onChangeTagName.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
     this.state = {
       tags: 'loading',
-      isModalOpen: false,
+      isEditModalOpen: false,
+      isDeleteModalOpen: false,
       tagName: '',
       tagId: '',
       tagError: false
@@ -122,13 +127,12 @@ export default class TagPage extends React.Component {
       });
     });
   }
-  deleteTag(e) {
-    e.preventDefault();
+  deleteTag() {
     var that = this;
     that.setState({
       tags: 'loading'
     });
-    services.deleteTag(e.target.dataset.id, function(res) {
+    services.deleteTag(this.state.tagId, function(res) {
       that.getAllTags();
     });
   }
@@ -137,7 +141,7 @@ export default class TagPage extends React.Component {
   }
   editTag(e) {
     this.setState({
-      isModalOpen: true,
+      isEditModalOpen: true,
       tagName: e.target.dataset.name,
       tagId: e.target.dataset.id
     });
@@ -161,19 +165,34 @@ export default class TagPage extends React.Component {
   }
   closeModal() {
     this.setState({
-      isModalOpen: false
+      isEditModalOpen: false
+    });
+  }
+  showDeleteModal(e) {
+    this.setState({
+      isDeleteModalOpen: true,
+      tagId: e.target.dataset.id
+    });
+  }
+  confirmDelete() {
+    this.deleteTag();
+    this.closeDeleteModal();
+  }
+  closeDeleteModal(e) {
+    this.setState({
+      isDeleteModalOpen: false
     });
   }
   render() {
     return (
       <div className="add-container">
         <Container>
-          <ManageTag tags={this.state.tags} editTag={this.editTag} deleteTag={this.deleteTag} />
+          <ManageTag tags={this.state.tags} editTag={this.editTag} deleteTag={this.showDeleteModal} />
           <AddTag refresh={this.refresh} />
         </Container>
         <Modal
           title="Edit Tag"
-          open={this.state.isModalOpen}
+          open={this.state.isEditModalOpen}
           closeModal={this.closeModal} >
           <form className="form" onSubmit={this.onSaveTag} >
             <div className="form-group">
@@ -184,6 +203,12 @@ export default class TagPage extends React.Component {
             <button className="button right">Save</button>
           </form>
         </Modal>
+        <DeleteModal
+          open={this.state.isDeleteModalOpen}
+          closeModal={this.closeDeleteModal}
+          confirmDelete={this.confirmDelete}
+          closeDeleteModal={this.closeDeleteModal}
+          item="tag" />
       </div>
     );
   }

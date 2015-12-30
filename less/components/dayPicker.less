@@ -10,7 +10,7 @@
   .date-picker {
     overflow: auto;
     top: calc(~"100% + 5px");
-    right: 0;
+    left: 0;
     width: auto;
     position: absolute;
     background: white;
@@ -25,5 +25,12 @@
 
   &.squishy {
     max-width: @input-width/2;
+  }
+}
+
+@media(min-width: 370px) {
+  .day-picker .date-picker {
+    right: 0;
+    left: auto;
   }
 }
