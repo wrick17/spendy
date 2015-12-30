@@ -7,7 +7,7 @@ class ModalBody extends React.Component {
       <div className="modal">
         <Container>
           <h2 className="modal-title">{this.props.title || null}</h2>
-          <a onClick={this.props.closeModal} className="close-modal">close</a>
+          <a onClick={this.props.closeModal} className="close-modal">✕</a>
           {this.props.content}
         </Container>
       </div>

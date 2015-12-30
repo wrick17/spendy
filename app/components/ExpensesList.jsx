@@ -4,7 +4,8 @@ import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import utils from './../utils.jsx';
 import Modal from './Modal.jsx';
-import NewEntry from './NewEntry.jsx'
+import NewEntry from './NewEntry.jsx';
+import DeleteModal from './DeleteModal.jsx';
 
 class ExpenseGroup extends React.Component {
   render() {
@@ -187,16 +188,12 @@ export default class ExpensesList extends React.Component {
             updateEntry={this.updateEntry}
             edit={true}/>
         </Modal>
-        <Modal
-          title="Confirm Delete"
+        <DeleteModal
           open={this.state.isDeleteModalOpen}
-          closeModal={this.closeDeleteModal}>
-          <h4>Are you sure you want to delete this entry?</h4>
-          <div>
-            <button className="button right" onClick={this.confirmDelete} >Delete</button>
-            <button className="button" onClick={this.closeDeleteModal} >Cancel</button>
-          </div>
-         </Modal>
+          closeModal={this.closeDeleteModal}
+          confirmDelete={this.confirmDelete}
+          closeDeleteModal={this.closeDeleteModal}
+          item="expense" />
       </div>
     );
   }

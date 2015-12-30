@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(326);
+	var _componentsExpensesJsx = __webpack_require__(327);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(327);
+	var _componentsTagPageJsx = __webpack_require__(328);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(328);
+	var _componentsContributorPageJsx = __webpack_require__(329);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -10310,6 +10310,10 @@
 
 	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
 
+	var _DeleteModalJsx = __webpack_require__(326);
+
+	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
+
 	var ExpenseGroup = (function (_React$Component) {
 	  _inherits(ExpenseGroup, _React$Component);
 
@@ -10608,32 +10612,12 @@
 	            updateEntry: this.updateEntry,
 	            edit: true })
 	        ),
-	        _react2['default'].createElement(
-	          _ModalJsx2['default'],
-	          {
-	            title: 'Confirm Delete',
-	            open: this.state.isDeleteModalOpen,
-	            closeModal: this.closeDeleteModal },
-	          _react2['default'].createElement(
-	            'h4',
-	            null,
-	            'Are you sure you want to delete this entry?'
-	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            null,
-	            _react2['default'].createElement(
-	              'button',
-	              { className: 'button right', onClick: this.confirmDelete },
-	              'Delete'
-	            ),
-	            _react2['default'].createElement(
-	              'button',
-	              { className: 'button', onClick: this.closeDeleteModal },
-	              'Cancel'
-	            )
-	          )
-	        )
+	        _react2['default'].createElement(_DeleteModalJsx2['default'], {
+	          open: this.state.isDeleteModalOpen,
+	          closeModal: this.closeDeleteModal,
+	          confirmDelete: this.confirmDelete,
+	          closeDeleteModal: this.closeDeleteModal,
+	          item: 'expense' })
 	      );
 	    }
 	  }]);
@@ -10698,7 +10682,7 @@
 	          _react2['default'].createElement(
 	            'a',
 	            { onClick: this.props.closeModal, className: 'close-modal' },
-	            'close'
+	            '✕'
 	          ),
 	          this.props.content
 	        )
@@ -10745,6 +10729,83 @@
 
 /***/ },
 /* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ModalJsx = __webpack_require__(325);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var DeleteModal = (function (_React$Component) {
+	  _inherits(DeleteModal, _React$Component);
+
+	  function DeleteModal() {
+	    _classCallCheck(this, DeleteModal);
+
+	    _get(Object.getPrototypeOf(DeleteModal.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(DeleteModal, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        _ModalJsx2['default'],
+	        {
+	          title: 'Confirm Delete',
+	          open: this.props.open,
+	          closeModal: this.props.closeDeleteModal },
+	        _react2['default'].createElement(
+	          'label',
+	          { className: 'message' },
+	          'Are you sure you want to delete this ',
+	          this.props.item,
+	          '?'
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          null,
+	          _react2['default'].createElement(
+	            'button',
+	            { className: 'button right', onClick: this.props.confirmDelete },
+	            'Delete'
+	          ),
+	          _react2['default'].createElement(
+	            'button',
+	            { className: 'button', onClick: this.props.closeDeleteModal },
+	            'Cancel'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return DeleteModal;
+	})(_react2['default'].Component);
+
+	exports['default'] = DeleteModal;
+	module.exports = exports['default'];
+
+/***/ },
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10835,7 +10896,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10877,6 +10938,10 @@
 	var _ModalJsx = __webpack_require__(325);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var _DeleteModalJsx = __webpack_require__(326);
+
+	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
 
 	var AddTag = (function (_React$Component) {
 	  _inherits(AddTag, _React$Component);
@@ -11200,32 +11265,12 @@
 	            )
 	          )
 	        ),
-	        _react2['default'].createElement(
-	          _ModalJsx2['default'],
-	          {
-	            title: 'Confirm Delete',
-	            open: this.state.isDeleteModalOpen,
-	            closeModal: this.closeDeleteModal },
-	          _react2['default'].createElement(
-	            'h4',
-	            null,
-	            'Are you sure you want to delete this tag?'
-	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            null,
-	            _react2['default'].createElement(
-	              'button',
-	              { className: 'button right', onClick: this.confirmDelete },
-	              'Delete'
-	            ),
-	            _react2['default'].createElement(
-	              'button',
-	              { className: 'button', onClick: this.closeDeleteModal },
-	              'Cancel'
-	            )
-	          )
-	        )
+	        _react2['default'].createElement(_DeleteModalJsx2['default'], {
+	          open: this.state.isDeleteModalOpen,
+	          closeModal: this.closeDeleteModal,
+	          confirmDelete: this.confirmDelete,
+	          closeDeleteModal: this.closeDeleteModal,
+	          item: 'tag' })
 	      );
 	    }
 	  }]);
@@ -11237,7 +11282,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11283,6 +11328,10 @@
 	var _ModalJsx = __webpack_require__(325);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var _DeleteModalJsx = __webpack_require__(326);
+
+	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
 
 	var AddContributor = (function (_React$Component) {
 	  _inherits(AddContributor, _React$Component);
@@ -11638,32 +11687,12 @@
 	            )
 	          )
 	        ),
-	        _react2['default'].createElement(
-	          _ModalJsx2['default'],
-	          {
-	            title: 'Confirm Delete',
-	            open: this.state.isDeleteModalOpen,
-	            closeModal: this.closeDeleteModal },
-	          _react2['default'].createElement(
-	            'h4',
-	            null,
-	            'Are you sure you want to delete this contributor?'
-	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            null,
-	            _react2['default'].createElement(
-	              'button',
-	              { className: 'button right', onClick: this.confirmDelete },
-	              'Delete'
-	            ),
-	            _react2['default'].createElement(
-	              'button',
-	              { className: 'button', onClick: this.closeDeleteModal },
-	              'Cancel'
-	            )
-	          )
-	        )
+	        _react2['default'].createElement(_DeleteModalJsx2['default'], {
+	          open: this.state.isDeleteModalOpen,
+	          closeModal: this.closeDeleteModal,
+	          confirmDelete: this.confirmDelete,
+	          closeDeleteModal: this.closeDeleteModal,
+	          item: 'contributor' })
 	      );
 	    }
 	  }]);

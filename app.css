@@ -37,24 +37,25 @@
   justify-content: space-between;
   padding-bottom: 10px;
   position: relative;
+  flex-wrap: wrap;
 }
 .form .form-group label {
-  flex: 0 1 200px;
+  flex: 0 1 150px;
 }
 .form .form-group input,
 .form .form-group select {
   apperance: none;
   -webkit-appearance: none;
-  max-width: 200px;
+  max-width: 170px;
   border-radius: 0;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #FFFFFF;
-  flex: 0 0 200px;
+  flex: 0 0 170px;
   padding: 5px 10px;
   font-size: 14px;
 }
 .form .form-group .day-picker {
-  max-width: 200px;
+  max-width: 170px;
 }
 .form .error {
   font-size: 14px;
@@ -493,8 +494,11 @@ a:hover {
   top: 20px;
   right: 20px;
 }
+.modal-wrapper .modal .container .message {
+  margin-bottom: 15px;
+}
 .day-picker {
-  flex: 1 0 200px;
+  flex: 1 0 170px;
   position: relative;
   display: flex;
   align-items: center;
@@ -506,7 +510,7 @@ a:hover {
 .day-picker .date-picker {
   overflow: auto;
   top: calc(100% + 5px);
-  right: 0;
+  left: 0;
   width: auto;
   position: absolute;
   background: white;
@@ -519,7 +523,13 @@ a:hover {
   padding: 3px 6px;
 }
 .day-picker.squishy {
-  max-width: 100px;
+  max-width: 85px;
+}
+@media (min-width: 370px) {
+  .day-picker .date-picker {
+    right: 0;
+    left: auto;
+  }
 }
 .header {
   height: 60px;
@@ -603,7 +613,7 @@ a:hover {
   margin-right: 8px;
 }
 .dashboard-container .dashboard .new-entry {
-  flex: 1 0 350px;
+  flex: 1 0 300px;
   padding: 10px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
@@ -639,9 +649,10 @@ a:hover {
   font-size: 14px;
   font-family: sans-serif;
   margin-left: 10px;
+  white-space: nowrap;
 }
 .dashboard-container .expenses-container .expenses-header .day-picker {
-  flex: 0 0 200px;
+  flex: 0 0 170px;
   font-weight: normal;
 }
 .dashboard-container .expenses-container .expenses-header .day-picker input {

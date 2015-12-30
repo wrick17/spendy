@@ -5,6 +5,7 @@ import utils from './../utils.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import Modal from './Modal.jsx';
+import DeleteModal from './DeleteModal.jsx';
 
 class AddContributor extends React.Component {
   constructor(props) {
@@ -234,16 +235,12 @@ export default class ContributorPage extends React.Component {
             <button onClick={this.changeContributorStatus} className="button">Make { this.state.contributorActive ? 'Inactive' : 'Active' } </button>
           </form>
         </Modal>
-        <Modal
-          title="Confirm Delete"
+        <DeleteModal
           open={this.state.isDeleteModalOpen}
-          closeModal={this.closeDeleteModal}>
-          <h4>Are you sure you want to delete this contributor?</h4>
-          <div>
-            <button className="button right" onClick={this.confirmDelete} >Delete</button>
-            <button className="button" onClick={this.closeDeleteModal} >Cancel</button>
-          </div>
-         </Modal>
+          closeModal={this.closeDeleteModal}
+          confirmDelete={this.confirmDelete}
+          closeDeleteModal={this.closeDeleteModal}
+          item="contributor" />
       </div>
     );
   }
