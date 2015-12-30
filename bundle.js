@@ -11000,9 +11000,13 @@
 	    this.closeModal = this.closeModal.bind(this);
 	    this.onSaveTag = this.onSaveTag.bind(this);
 	    this.onChangeTagName = this.onChangeTagName.bind(this);
+	    this.confirmDelete = this.confirmDelete.bind(this);
+	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+	    this.showDeleteModal = this.showDeleteModal.bind(this);
 	    this.state = {
 	      tags: 'loading',
-	      isModalOpen: false,
+	      isEditModalOpen: false,
+	      isDeleteModalOpen: false,
 	      tagName: '',
 	      tagId: '',
 	      tagError: false
@@ -11029,13 +11033,12 @@
 	    }
 	  }, {
 	    key: 'deleteTag',
-	    value: function deleteTag(e) {
-	      e.preventDefault();
+	    value: function deleteTag() {
 	      var that = this;
 	      that.setState({
 	        tags: 'loading'
 	      });
-	      _servicesJsx2['default'].deleteTag(e.target.dataset.id, function (res) {
+	      _servicesJsx2['default'].deleteTag(this.state.tagId, function (res) {
 	        that.getAllTags();
 	      });
 	    }
@@ -11048,7 +11051,7 @@
 	    key: 'editTag',
 	    value: function editTag(e) {
 	      this.setState({
-	        isModalOpen: true,
+	        isEditModalOpen: true,
 	        tagName: e.target.dataset.name,
 	        tagId: e.target.dataset.id
 	      });
@@ -11078,7 +11081,28 @@
 	    key: 'closeModal',
 	    value: function closeModal() {
 	      this.setState({
-	        isModalOpen: false
+	        isEditModalOpen: false
+	      });
+	    }
+	  }, {
+	    key: 'showDeleteModal',
+	    value: function showDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: true,
+	        tagId: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'confirmDelete',
+	    value: function confirmDelete() {
+	      this.deleteTag();
+	      this.closeDeleteModal();
+	    }
+	  }, {
+	    key: 'closeDeleteModal',
+	    value: function closeDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: false
 	      });
 	    }
 	  }, {
@@ -11090,14 +11114,14 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageTag, { tags: this.state.tags, editTag: this.editTag, deleteTag: this.deleteTag }),
+	          _react2['default'].createElement(ManageTag, { tags: this.state.tags, editTag: this.editTag, deleteTag: this.showDeleteModal }),
 	          _react2['default'].createElement(AddTag, { refresh: this.refresh })
 	        ),
 	        _react2['default'].createElement(
 	          _ModalJsx2['default'],
 	          {
 	            title: 'Edit Tag',
-	            open: this.state.isModalOpen,
+	            open: this.state.isEditModalOpen,
 	            closeModal: this.closeModal },
 	          _react2['default'].createElement(
 	            'form',
@@ -11121,6 +11145,32 @@
 	              'button',
 	              { className: 'button right' },
 	              'Save'
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Confirm Delete',
+	            open: this.state.isDeleteModalOpen,
+	            closeModal: this.closeDeleteModal },
+	          _react2['default'].createElement(
+	            'h4',
+	            null,
+	            'Are you sure you want to delete this tag?'
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            null,
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button right', onClick: this.confirmDelete },
+	              'Delete'
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button', onClick: this.closeDeleteModal },
+	              'Cancel'
 	            )
 	          )
 	        )
