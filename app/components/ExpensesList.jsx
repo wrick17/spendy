@@ -34,9 +34,9 @@ class ExpenseGroup extends React.Component {
     });
     return (
       <tbody>
-        <tr className="month-header">
-          <td data-label="Month" colSpan="6">{this.props.expenseGroup.month}</td>
-        </tr>
+        { that.props.minimal ? null : <tr className="month-header">
+                  <td data-label="Month" colSpan="6">{this.props.expenseGroup.month}</td>
+                </tr> }
         {expenseGroup}
       </tbody>
     );
@@ -50,6 +50,7 @@ class ExpenseTable extends React.Component {
     var that = this;
     var expenseGroups = utils.groupByMonth(this.props.expenses).map(function(expenseGroup) {
       return <ExpenseGroup
+                minimal={that.props.minimal}
                 key={expenseGroup.month}
                 expenseGroup={expenseGroup}
                 contributorMap={that.props.contributorMap}
@@ -151,6 +152,7 @@ export default class ExpensesList extends React.Component {
           contributorMap={this.state.contributorMap}
           tagMap={this.state.tagMap}
           editEntry={this.editEntry}
+          minimal={this.props.minimal}
           deleteEntry={this.deleteEntry} />
         <Modal
           title="Edit Expense"

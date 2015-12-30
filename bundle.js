@@ -6002,7 +6002,7 @@
 	              ),
 	              _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDateExpenses, view: 'year' })
 	            ),
-	            _react2['default'].createElement(_ExpensesListJsx2['default'], { expenses: this.state.expenses, refresh: this.refresh })
+	            _react2['default'].createElement(_ExpensesListJsx2['default'], { minimal: true, expenses: this.state.expenses, refresh: this.refresh })
 	          )
 	        )
 	      );
@@ -9808,7 +9808,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'new-entry' },
-	        _react2['default'].createElement(
+	        this.props.edit ? null : _react2['default'].createElement(
 	          'h2',
 	          { className: 'new-entry-header' },
 	          'New Entry'
@@ -10331,7 +10331,7 @@
 	      return _react2['default'].createElement(
 	        'tbody',
 	        null,
-	        _react2['default'].createElement(
+	        that.props.minimal ? null : _react2['default'].createElement(
 	          'tr',
 	          { className: 'month-header' },
 	          _react2['default'].createElement(
@@ -10365,6 +10365,7 @@
 	      var that = this;
 	      var expenseGroups = _utilsJsx2['default'].groupByMonth(this.props.expenses).map(function (expenseGroup) {
 	        return _react2['default'].createElement(ExpenseGroup, {
+	          minimal: that.props.minimal,
 	          key: expenseGroup.month,
 	          expenseGroup: expenseGroup,
 	          contributorMap: that.props.contributorMap,
@@ -10515,6 +10516,7 @@
 	          contributorMap: this.state.contributorMap,
 	          tagMap: this.state.tagMap,
 	          editEntry: this.editEntry,
+	          minimal: this.props.minimal,
 	          deleteEntry: this.deleteEntry }),
 	        _react2['default'].createElement(
 	          _ModalJsx2['default'],

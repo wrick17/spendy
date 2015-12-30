@@ -69,7 +69,7 @@ export default class Dashboard extends React.Component {
               <label>Expenses for the month<Link to="/expenses">(see all)</Link></label>
               <DatePicker setDate={this.setDateExpenses} view="year" />
             </h2>
-            <ExpensesList expenses={this.state.expenses} refresh={this.refresh} />
+            <ExpensesList minimal={true} expenses={this.state.expenses} refresh={this.refresh} />
           </div>
         </Container>
       </div>
