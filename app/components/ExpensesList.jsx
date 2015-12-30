@@ -35,7 +35,7 @@ class ExpenseGroup extends React.Component {
     });
     return (
       <tbody>
-        { that.props.minimal ? null : <tr className="month-header">
+        { that.props.minimal ? <tr className="hidden"></tr> : <tr className="month-header">
                   <td data-label="Month" colSpan="6">{this.props.expenseGroup.month}</td>
                 </tr> }
         {expenseGroup}

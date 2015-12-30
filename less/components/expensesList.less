@@ -22,10 +22,12 @@ table {
       padding: 10px 0;
       width: 100%;
       border-bottom: 1px solid @light-gray;
+      .shadow;
+      margin-bottom: 10px;
       &:last-child {
         border-bottom: none;
         padding-bottom: 0;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
       }
       td {
         display: block;
@@ -58,9 +60,6 @@ table {
         font-weight: bold;
         margin-top: 10px;
         border-top: 1px solid @light-gray;
-        &:first-child {
-          margin-top: 0;
-        }
         &:hover {
           background: transparent;
           td {
@@ -80,9 +79,13 @@ table {
   table {
     tbody {
       tr {
-        width: 50%;
+        width: calc(~"50% - 5px");
+        &:nth-child(odd) {
+          margin-left: 10px;
+        }
         &.month-header {
           width: 100%;
+          margin-left: 0;
         }
       }
     }
@@ -97,6 +100,9 @@ table {
     tbody {
       tr {
         display: table-row;
+        &:last-child {
+          border-bottom: 1px solid @light-gray;
+        }
         td {
           display: table-cell;
           text-align: left;
