@@ -72,6 +72,19 @@ table {
   padding-bottom: 40px;
 }
 
+@media screen and (min-width: 480px) {
+  table {
+    tbody {
+      tr {
+        width: 50%;
+        &.month-header {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 768px) {
   table {
     thead {

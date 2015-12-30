@@ -725,6 +725,14 @@ a:hover {
 .dashboard-container .modal-wrapper .modal .container {
   padding-bottom: 40px;
 }
+@media screen and (min-width: 480px) {
+  .dashboard-container table tbody tr {
+    width: 50%;
+  }
+  .dashboard-container table tbody tr.month-header {
+    width: 100%;
+  }
+}
 @media screen and (min-width: 768px) {
   .dashboard-container table thead {
     display: table-header-group;
@@ -813,6 +821,14 @@ a:hover {
 }
 .expenses-page .modal-wrapper .modal .container {
   padding-bottom: 40px;
+}
+@media screen and (min-width: 480px) {
+  .expenses-page table tbody tr {
+    width: 50%;
+  }
+  .expenses-page table tbody tr.month-header {
+    width: 100%;
+  }
 }
 @media screen and (min-width: 768px) {
   .expenses-page table thead {
