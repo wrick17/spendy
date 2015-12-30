@@ -82,11 +82,16 @@ export default class ExpensesList extends React.Component {
     this.deleteEntry = this.deleteEntry.bind(this);
     this.editEntry = this.editEntry.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.updateEntry = this.updateEntry.bind(this);    this.state = {
+    this.updateEntry = this.updateEntry.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
+    this.state = {
       id: '',
       tagMap: [],
       contributorMap: [],
       isModalOpen: false,
+      isDeleteModalOpen: false,
       date: '',
       cost: '',
       item: '',
@@ -115,9 +120,9 @@ export default class ExpensesList extends React.Component {
       });
     });
   }
-  deleteEntry(e) {
+  deleteEntry() {
     var that = this;
-    services.deleteEntry(e.target.dataset.id, function(res) {
+    services.deleteEntry(this.state.id, function(res) {
       if (that.props.refresh) that.props.refresh();
     });
   }
@@ -144,6 +149,21 @@ export default class ExpensesList extends React.Component {
       if (that.props.refresh) that.props.refresh();
     });
   }
+  showDeleteModal(e) {
+    this.setState({
+      isDeleteModalOpen: true,
+      id: e.target.dataset.id
+    });
+  }
+  confirmDelete() {
+    this.deleteEntry();
+    this.closeDeleteModal();
+  }
+  closeDeleteModal(e) {
+    this.setState({
+      isDeleteModalOpen: false
+    });
+  }
   render() {
     return (
       <div>
@@ -153,7 +173,7 @@ export default class ExpensesList extends React.Component {
           tagMap={this.state.tagMap}
           editEntry={this.editEntry}
           minimal={this.props.minimal}
-          deleteEntry={this.deleteEntry} />
+          deleteEntry={this.showDeleteModal} />
         <Modal
           title="Edit Expense"
           open={this.state.isModalOpen}
@@ -167,6 +187,16 @@ export default class ExpensesList extends React.Component {
             updateEntry={this.updateEntry}
             edit={true}/>
         </Modal>
+        <Modal
+          title="Confirm Delete"
+          open={this.state.isDeleteModalOpen}
+          closeModal={this.closeDeleteModal}>
+          <h4>Are you sure you want to delete this entry?</h4>
+          <div>
+            <button className="button right" onClick={this.confirmDelete} >Delete</button>
+            <button className="button" onClick={this.closeDeleteModal} >Cancel</button>
+          </div>
+         </Modal>
       </div>
     );
   }

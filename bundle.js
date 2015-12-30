@@ -10481,11 +10481,16 @@
 	    this.deleteEntry = this.deleteEntry.bind(this);
 	    this.editEntry = this.editEntry.bind(this);
 	    this.closeModal = this.closeModal.bind(this);
-	    this.updateEntry = this.updateEntry.bind(this);this.state = {
+	    this.updateEntry = this.updateEntry.bind(this);
+	    this.confirmDelete = this.confirmDelete.bind(this);
+	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+	    this.showDeleteModal = this.showDeleteModal.bind(this);
+	    this.state = {
 	      id: '',
 	      tagMap: [],
 	      contributorMap: [],
 	      isModalOpen: false,
+	      isDeleteModalOpen: false,
 	      date: '',
 	      cost: '',
 	      item: '',
@@ -10519,9 +10524,9 @@
 	    }
 	  }, {
 	    key: 'deleteEntry',
-	    value: function deleteEntry(e) {
+	    value: function deleteEntry() {
 	      var that = this;
-	      _servicesJsx2['default'].deleteEntry(e.target.dataset.id, function (res) {
+	      _servicesJsx2['default'].deleteEntry(this.state.id, function (res) {
 	        if (that.props.refresh) that.props.refresh();
 	      });
 	    }
@@ -10555,6 +10560,27 @@
 	      });
 	    }
 	  }, {
+	    key: 'showDeleteModal',
+	    value: function showDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: true,
+	        id: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'confirmDelete',
+	    value: function confirmDelete() {
+	      this.deleteEntry();
+	      this.closeDeleteModal();
+	    }
+	  }, {
+	    key: 'closeDeleteModal',
+	    value: function closeDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: false
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -10566,7 +10592,7 @@
 	          tagMap: this.state.tagMap,
 	          editEntry: this.editEntry,
 	          minimal: this.props.minimal,
-	          deleteEntry: this.deleteEntry }),
+	          deleteEntry: this.showDeleteModal }),
 	        _react2['default'].createElement(
 	          _ModalJsx2['default'],
 	          {
@@ -10581,6 +10607,32 @@
 	            tagId: this.state.tagId,
 	            updateEntry: this.updateEntry,
 	            edit: true })
+	        ),
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Confirm Delete',
+	            open: this.state.isDeleteModalOpen,
+	            closeModal: this.closeDeleteModal },
+	          _react2['default'].createElement(
+	            'h4',
+	            null,
+	            'Are you sure you want to delete this entry?'
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            null,
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button right', onClick: this.confirmDelete },
+	              'Delete'
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button', onClick: this.closeDeleteModal },
+	              'Cancel'
+	            )
+	          )
 	        )
 	      );
 	    }
