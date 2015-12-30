@@ -690,7 +690,6 @@ a:hover {
 }
 .dashboard-container table tbody tr:last-child {
   border-bottom: none;
-  padding-bottom: 0;
   margin-bottom: 10px;
 }
 .dashboard-container table tbody tr td {
@@ -798,7 +797,6 @@ a:hover {
 }
 .expenses-page table tbody tr:last-child {
   border-bottom: none;
-  padding-bottom: 0;
   margin-bottom: 10px;
 }
 .expenses-page table tbody tr td {
