@@ -10384,7 +10384,7 @@
 	      return _react2['default'].createElement(
 	        'tbody',
 	        null,
-	        that.props.minimal ? null : _react2['default'].createElement(
+	        that.props.minimal ? _react2['default'].createElement('tr', { className: 'hidden' }) : _react2['default'].createElement(
 	          'tr',
 	          { className: 'month-header' },
 	          _react2['default'].createElement(
