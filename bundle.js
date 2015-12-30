@@ -11409,10 +11409,14 @@
 	    this.onSaveContributor = this.onSaveContributor.bind(this);
 	    this.onChangeContributorName = this.onChangeContributorName.bind(this);
 	    this.changeContributorStatus = this.changeContributorStatus.bind(this);
+	    this.confirmDelete = this.confirmDelete.bind(this);
+	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+	    this.showDeleteModal = this.showDeleteModal.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
 	      contributors: 'loading',
 	      isModalOpen: false,
+	      isDeleteModalOpen: false,
 	      contributorName: '',
 	      contributorId: '',
 	      contributorError: false,
@@ -11441,13 +11445,12 @@
 	    }
 	  }, {
 	    key: 'deleteContributor',
-	    value: function deleteContributor(e) {
-	      e.preventDefault();
+	    value: function deleteContributor() {
 	      var that = this;
 	      that.setState({
 	        contributors: 'loading'
 	      });
-	      _servicesJsx2['default'].deleteContributor(e.target.dataset.id, function (res) {
+	      _servicesJsx2['default'].deleteContributor(this.state.contributorId, function (res) {
 	        that.getAllContributors();
 	      });
 	    }
@@ -11513,6 +11516,27 @@
 	      });
 	    }
 	  }, {
+	    key: 'showDeleteModal',
+	    value: function showDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: true,
+	        contributorId: e.target.dataset.id
+	      });
+	    }
+	  }, {
+	    key: 'confirmDelete',
+	    value: function confirmDelete() {
+	      this.deleteContributor();
+	      this.closeDeleteModal();
+	    }
+	  }, {
+	    key: 'closeDeleteModal',
+	    value: function closeDeleteModal(e) {
+	      this.setState({
+	        isDeleteModalOpen: false
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -11521,7 +11545,7 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, editContributor: this.editContributor, deleteContributor: this.deleteContributor }),
+	          _react2['default'].createElement(ManageContributor, { contributors: this.state.contributors, editContributor: this.editContributor, deleteContributor: this.showDeleteModal }),
 	          _react2['default'].createElement(AddContributor, { refresh: this.refresh })
 	        ),
 	        _react2['default'].createElement(
@@ -11559,6 +11583,32 @@
 	              'Make ',
 	              this.state.contributorActive ? 'Inactive' : 'Active',
 	              ' '
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          _ModalJsx2['default'],
+	          {
+	            title: 'Confirm Delete',
+	            open: this.state.isDeleteModalOpen,
+	            closeModal: this.closeDeleteModal },
+	          _react2['default'].createElement(
+	            'h4',
+	            null,
+	            'Are you sure you want to delete this contributor?'
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            null,
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button right', onClick: this.confirmDelete },
+	              'Delete'
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { className: 'button', onClick: this.closeDeleteModal },
+	              'Cancel'
 	            )
 	          )
 	        )

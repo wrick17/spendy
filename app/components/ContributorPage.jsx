@@ -104,10 +104,14 @@ export default class ContributorPage extends React.Component {
     this.onSaveContributor = this.onSaveContributor.bind(this);
     this.onChangeContributorName = this.onChangeContributorName.bind(this);
     this.changeContributorStatus = this.changeContributorStatus.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
     this.refresh = this.refresh.bind(this);
     this.state = {
       contributors: 'loading',
       isModalOpen: false,
+      isDeleteModalOpen: false,
       contributorName: '',
       contributorId: '',
       contributorError: false,
@@ -129,13 +133,12 @@ export default class ContributorPage extends React.Component {
       });
     });
   }
-  deleteContributor(e) {
-    e.preventDefault();
+  deleteContributor() {
     var that = this;
     that.setState({
       contributors: 'loading'
     });
-    services.deleteContributor(e.target.dataset.id, function(res) {
+    services.deleteContributor(this.state.contributorId, function(res) {
       that.getAllContributors();
     });
   }
@@ -195,11 +198,26 @@ export default class ContributorPage extends React.Component {
       });
 
   }
+  showDeleteModal(e) {
+    this.setState({
+      isDeleteModalOpen: true,
+      contributorId: e.target.dataset.id
+    });
+  }
+  confirmDelete() {
+    this.deleteContributor();
+    this.closeDeleteModal();
+  }
+  closeDeleteModal(e) {
+    this.setState({
+      isDeleteModalOpen: false
+    });
+  }
   render() {
     return (
       <div className="add-container">
         <Container>
-          <ManageContributor contributors={this.state.contributors} editContributor={this.editContributor} deleteContributor={this.deleteContributor} />
+          <ManageContributor contributors={this.state.contributors} editContributor={this.editContributor} deleteContributor={this.showDeleteModal} />
           <AddContributor refresh={this.refresh} />
         </Container>
         <Modal
@@ -216,6 +234,16 @@ export default class ContributorPage extends React.Component {
             <button onClick={this.changeContributorStatus} className="button">Make { this.state.contributorActive ? 'Inactive' : 'Active' } </button>
           </form>
         </Modal>
+        <Modal
+          title="Confirm Delete"
+          open={this.state.isDeleteModalOpen}
+          closeModal={this.closeDeleteModal}>
+          <h4>Are you sure you want to delete this contributor?</h4>
+          <div>
+            <button className="button right" onClick={this.confirmDelete} >Delete</button>
+            <button className="button" onClick={this.closeDeleteModal} >Cancel</button>
+          </div>
+         </Modal>
       </div>
     );
   }
