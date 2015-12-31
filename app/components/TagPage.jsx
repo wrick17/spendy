@@ -13,7 +13,8 @@ class AddTag extends React.Component {
     this.onAddTag = this.onAddTag.bind(this);
     this.state = {
       error: false,
-      newTagName: ''
+      newTagName: '',
+      submiting: false
     };
   }
   onChangeTagName(e) {
@@ -27,17 +28,23 @@ class AddTag extends React.Component {
     var data = {
       'name': this.state.newTagName
     }
-    if (this.state.newTagName !== '')
+    if (this.state.newTagName !== '') {
+      this.setState({
+        submiting: true
+      });
       services.createTag(data, function(data, res) {
         that.props.refresh();
         that.refs.name.value = '';
         that.setState({
-          error: false
+          error: false,
+          submiting: false
         });
       });
+    }
     else
       this.setState({
-        error: true
+        error: true,
+        submiting: false
       });
   }
   render() {
@@ -50,7 +57,7 @@ class AddTag extends React.Component {
             <input type="text" placeholder="Tag Name..." ref="name" onChange={this.onChangeTagName} />
           </div>
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
-          <button className="button right">Add</button>
+          <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
         </form>
       </div>
     );
@@ -111,7 +118,8 @@ export default class TagPage extends React.Component {
       isDeleteModalOpen: false,
       tagName: '',
       tagId: '',
-      tagError: false
+      tagError: false,
+      submiting: false
     };
   }
   componentDidMount() {
@@ -158,8 +166,13 @@ export default class TagPage extends React.Component {
       name: this.state.tagName
     }
     var that = this;
+    this.setState({
+      submiting: true
+    });
     services.updateTag(this.state.tagId, data, function(res) {
-      console.log(res);
+      that.setState({
+        submiting: false
+      });
       that.refresh();
       that.closeModal();
     });
@@ -201,7 +214,7 @@ export default class TagPage extends React.Component {
               <input type="text" placeholder="Tag Name..." value={this.state.tagName} data-id={this.state.tagId} onChange={this.onChangeTagName} />
             </div>
             { this.state.tagError ? <div className="error right">Don't be this lazy!</div> : null }
-            <button className="button right">Save</button>
+            <button className="button right">{this.state.submiting ? 'Saving...' : 'Save'}</button>
           </form>
         </Modal>
         <DeleteModal

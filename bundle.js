@@ -9775,7 +9775,8 @@
 	      date: this.props.date || '',
 	      tags: [],
 	      contributors: [],
-	      error: false
+	      error: false,
+	      submiting: false
 	    };
 	  }
 
@@ -9842,17 +9843,24 @@
 	        'tagId': this.state.tagId
 	      };
 	      if (this.props.edit) return this.props.updateEntry(data);
-	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
-	        that.props.refresh();
-	        that.setState({
-	          error: false,
-	          tagId: 'default',
-	          contributorId: 'default',
-	          cost: '',
-	          item: '',
-	          date: ''
+	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') {
+	        this.setState({
+	          submiting: true
 	        });
-	      });else that.setState({
+	        _servicesJsx2['default'].createEntry(data, function (res) {
+	          that.props.refresh();
+	          that.setState({
+	            error: false,
+	            tagId: 'default',
+	            contributorId: 'default',
+	            cost: '',
+	            item: '',
+	            date: '',
+	            submiting: false
+	          });
+	        });
+	      } else that.setState({
+	        submiting: false,
 	        error: true
 	      });
 	    }
@@ -9928,7 +9936,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            this.props.edit ? 'Save' : 'Add'
+	            this.props.edit ? this.state.submiting ? 'Saving...' : 'Save' : this.state.submiting ? 'Adding...' : 'Add'
 	          )
 	        )
 	      );
@@ -10959,7 +10967,8 @@
 	    this.onAddTag = this.onAddTag.bind(this);
 	    this.state = {
 	      error: false,
-	      newTagName: ''
+	      newTagName: '',
+	      submiting: false
 	    };
 	  }
 
@@ -10978,14 +10987,21 @@
 	      var data = {
 	        'name': this.state.newTagName
 	      };
-	      if (this.state.newTagName !== '') _servicesJsx2['default'].createTag(data, function (data, res) {
-	        that.props.refresh();
-	        that.refs.name.value = '';
-	        that.setState({
-	          error: false
+	      if (this.state.newTagName !== '') {
+	        this.setState({
+	          submiting: true
 	        });
-	      });else this.setState({
-	        error: true
+	        _servicesJsx2['default'].createTag(data, function (data, res) {
+	          that.props.refresh();
+	          that.refs.name.value = '';
+	          that.setState({
+	            error: false,
+	            submiting: false
+	          });
+	        });
+	      } else this.setState({
+	        error: true,
+	        submiting: false
 	      });
 	    }
 	  }, {
@@ -11020,7 +11036,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            'Add'
+	            this.state.submiting ? 'Adding...' : 'Add'
 	          )
 	        )
 	      );
@@ -11132,7 +11148,8 @@
 	      isDeleteModalOpen: false,
 	      tagName: '',
 	      tagId: '',
-	      tagError: false
+	      tagError: false,
+	      submiting: false
 	    };
 	  }
 
@@ -11194,8 +11211,13 @@
 	        name: this.state.tagName
 	      };
 	      var that = this;
+	      this.setState({
+	        submiting: true
+	      });
 	      _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
-	        console.log(res);
+	        that.setState({
+	          submiting: false
+	        });
 	        that.refresh();
 	        that.closeModal();
 	      });
@@ -11267,7 +11289,7 @@
 	            _react2['default'].createElement(
 	              'button',
 	              { className: 'button right' },
-	              'Save'
+	              this.state.submiting ? 'Saving...' : 'Save'
 	            )
 	          )
 	        ),
@@ -11350,7 +11372,8 @@
 	    this.onAddContributor = this.onAddContributor.bind(this);
 	    this.state = {
 	      error: false,
-	      newContributorName: ''
+	      newContributorName: '',
+	      submiting: false
 	    };
 	  }
 
@@ -11370,14 +11393,21 @@
 	        'name': this.state.newContributorName,
 	        'active': true
 	      };
-	      if (this.state.newContributorName !== '') _servicesJsx2['default'].createContributor(data, function (data, res) {
-	        that.props.refresh();
-	        that.refs.name.value = '';
-	        that.setState({
-	          error: false
+	      if (this.state.newContributorName !== '') {
+	        this.setState({
+	          submiting: true
 	        });
-	      });else this.setState({
-	        error: true
+	        _servicesJsx2['default'].createContributor(data, function (data, res) {
+	          that.props.refresh();
+	          that.refs.name.value = '';
+	          that.setState({
+	            error: false,
+	            submiting: false
+	          });
+	        });
+	      } else this.setState({
+	        error: true,
+	        submiting: false
 	      });
 	    }
 	  }, {
@@ -11412,7 +11442,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            'Add'
+	            this.state.submiting ? 'Adding...' : 'Add'
 	          )
 	        )
 	      );
@@ -11528,7 +11558,9 @@
 	      contributorName: '',
 	      contributorId: '',
 	      contributorError: false,
-	      contributorActive: true
+	      contributorActive: true,
+	      submiting: false,
+	      statusChanging: false
 	    };
 	  }
 
@@ -11593,8 +11625,14 @@
 	        active: this.state.contributorActive
 	      };
 	      var that = this;
+	      that.setState({
+	        submiting: true
+	      });
 	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
 	        that.refresh();
+	        that.setState({
+	          submiting: false
+	        });
 	        that.closeModal();
 	      });else this.setState({
 	        contributorError: true
@@ -11616,10 +11654,18 @@
 	        active: !this.state.contributorActive
 	      };
 	      var that = this;
-	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
-	        that.refresh();
-	        that.closeModal();
-	      });else this.setState({
+	      if (this.state.contributorName !== '') {
+	        that.setState({
+	          statusChanging: true
+	        });
+	        _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
+	          that.refresh();
+	          that.setState({
+	            statusChanging: false
+	          });
+	          that.closeModal();
+	        });
+	      } else this.setState({
 	        contributorError: true
 	      });
 	    }
@@ -11682,15 +11728,17 @@
 	            ) : null,
 	            _react2['default'].createElement(
 	              'button',
-	              { type: 'submit', className: 'button right' },
-	              'Save'
+	              { className: 'button right' },
+	              this.state.submiting ? 'Saving...' : 'Save'
 	            ),
 	            _react2['default'].createElement(
 	              'button',
 	              { onClick: this.changeContributorStatus, className: 'button' },
-	              'Make ',
+	              this.state.statusChanging ? 'Making' : 'Make',
+	              ' ',
 	              this.state.contributorActive ? 'Inactive' : 'Active',
-	              ' '
+	              ' ',
+	              this.state.statusChanging ? '...' : null
 	            )
 	          )
 	        ),

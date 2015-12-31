@@ -40,7 +40,7 @@
   flex-wrap: wrap;
 }
 .form .form-group label {
-  flex: 0 1 150px;
+  flex: 1 1 150px;
 }
 .form .form-group input,
 .form .form-group select {
@@ -570,6 +570,9 @@ a:hover {
 .header .container .links li {
   margin-left: 15px;
 }
+.header .container .links li:first-child {
+  margin-left: 0;
+}
 .dashboard-container {
   height: calc(100vh -  60px);
   overflow-y: auto;
@@ -885,6 +888,7 @@ a:hover {
 .add-container .add-tag-container,
 .add-container .add-contributor-container {
   flex: 1 0 350px;
+  max-width: calc(100% - 20px);
   padding: 10px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);

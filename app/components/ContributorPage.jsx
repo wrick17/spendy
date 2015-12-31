@@ -14,7 +14,8 @@ class AddContributor extends React.Component {
     this.onAddContributor = this.onAddContributor.bind(this);
     this.state = {
       error: false,
-      newContributorName: ''
+      newContributorName: '',
+      submiting: false
     };
   }
   onChangeContributorName(e) {
@@ -29,17 +30,23 @@ class AddContributor extends React.Component {
       'name': this.state.newContributorName,
       'active': true
     }
-    if (this.state.newContributorName !== '')
+    if (this.state.newContributorName !== '') {
+      this.setState({
+        submiting: true
+      });
       services.createContributor(data, function(data, res) {
         that.props.refresh();
         that.refs.name.value = '';
         that.setState({
-          error: false
+          error: false,
+          submiting: false
         });
       });
+    }
     else
       this.setState({
-        error: true
+        error: true,
+        submiting: false
       });
   }
   render() {
@@ -52,7 +59,7 @@ class AddContributor extends React.Component {
             <input type="text" placeholder="Contributor Name..." ref="name" onChange={this.onChangeContributorName} />
           </div>
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
-          <button className="button right">Add</button>
+          <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
         </form>
       </div>
     );
@@ -117,7 +124,9 @@ export default class ContributorPage extends React.Component {
       contributorName: '',
       contributorId: '',
       contributorError: false,
-      contributorActive: true
+      contributorActive: true,
+      submiting: false,
+      statusChanging: false
     };
   }
   componentDidMount() {
@@ -167,9 +176,15 @@ export default class ContributorPage extends React.Component {
       active: this.state.contributorActive
     }
     var that = this;
+    that.setState({
+      submiting: true
+    });
     if (this.state.contributorName !== '')
       services.updateContributor(this.state.contributorId, data, function(res) {
         that.refresh();
+        that.setState({
+          submiting: false
+        });
         that.closeModal();
       });
     else
@@ -189,11 +204,18 @@ export default class ContributorPage extends React.Component {
       active: !this.state.contributorActive
     }
     var that = this;
-    if (this.state.contributorName !== '')
+    if (this.state.contributorName !== '') {
+      that.setState({
+        statusChanging: true
+      });
       services.updateContributor(this.state.contributorId, data, function(res) {
         that.refresh();
+        that.setState({
+          statusChanging: false
+        });
         that.closeModal();
       });
+    }
     else
       this.setState({
         contributorError: true
@@ -232,8 +254,8 @@ export default class ContributorPage extends React.Component {
               <input type="text" placeholder="Contributor Name..." value={this.state.contributorName} data-id={this.state.contributorId} onChange={this.onChangeContributorName} />
             </div>
             { this.state.contributorError ? <div className="error right">Don't be this lazy!</div> : null }
-            <button type="submit" className="button right">Save</button>
-            <button onClick={this.changeContributorStatus} className="button">Make { this.state.contributorActive ? 'Inactive' : 'Active' } </button>
+            <button className="button right">{this.state.submiting ? 'Saving...' : 'Save'}</button>
+            <button onClick={this.changeContributorStatus} className="button">{this.state.statusChanging ? 'Making' : 'Make'} { this.state.contributorActive ? 'Inactive' : 'Active' } {this.state.statusChanging ? '...' : null}</button>
           </form>
         </Modal>
         <DeleteModal
