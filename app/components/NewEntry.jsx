@@ -34,7 +34,8 @@ export default class NewEntry extends React.Component {
       date: this.props.date || '',
       tags: [],
       contributors: [],
-      error: false
+      error: false,
+      submiting: false
     };
   }
   componentDidMount() {
@@ -85,6 +86,9 @@ export default class NewEntry extends React.Component {
       'contributorId': this.state.contributorId,
       'tagId': this.state.tagId
     };
+    this.setState({
+      submiting: true
+    });
     if (this.props.edit) return this.props.updateEntry(data);
     if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '' )
       services.createEntry(data, function(res) {
@@ -95,11 +99,13 @@ export default class NewEntry extends React.Component {
           contributorId: 'default',
           cost: '',
           item: '',
-          date: ''
+          date: '',
+          submiting: false
         });
       });
     else
       that.setState({
+        submiting: false,
         error: true
       });
   }
@@ -129,7 +135,7 @@ export default class NewEntry extends React.Component {
             <Select options={this.state.tags} default="Choose Tag" selectedValue={this.state.tagId} onChange={this.onChangeTag} />
           </div>
           { this.state.error ? <div className="error right">Please fill out all the details above</div> : null }
-          <button className="button right">{this.props.edit ? 'Save' : 'Add'}</button>
+          <button className="button right">{this.props.edit ? (this.state.submiting ? 'Saving...' : 'Save') : (this.state.submiting ? 'Adding...' : 'Add')}</button>
         </form>
       </div>
     );

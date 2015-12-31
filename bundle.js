@@ -9775,7 +9775,8 @@
 	      date: this.props.date || '',
 	      tags: [],
 	      contributors: [],
-	      error: false
+	      error: false,
+	      submiting: false
 	    };
 	  }
 
@@ -9841,6 +9842,9 @@
 	        'contributorId': this.state.contributorId,
 	        'tagId': this.state.tagId
 	      };
+	      this.setState({
+	        submiting: true
+	      });
 	      if (this.props.edit) return this.props.updateEntry(data);
 	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
 	        that.props.refresh();
@@ -9850,9 +9854,11 @@
 	          contributorId: 'default',
 	          cost: '',
 	          item: '',
-	          date: ''
+	          date: '',
+	          submiting: false
 	        });
 	      });else that.setState({
+	        submiting: false,
 	        error: true
 	      });
 	    }
@@ -9928,7 +9934,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            this.props.edit ? 'Save' : 'Add'
+	            this.props.edit ? this.state.submiting ? 'Saving...' : 'Save' : this.state.submiting ? 'Adding...' : 'Add'
 	          )
 	        )
 	      );
