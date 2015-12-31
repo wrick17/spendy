@@ -10,7 +10,7 @@
   .date-picker {
     overflow: auto;
     top: calc(~"100% + 5px");
-    left: 0;
+    right: 0;
     width: auto;
     position: absolute;
     background: white;
@@ -28,9 +28,9 @@
   }
 }
 
-@media(min-width: 370px) {
-  .day-picker .date-picker {
-    right: 0;
-    left: auto;
+@media(max-width: 359px) {
+  .form .day-picker .date-picker {
+    right: auto;
+    left: 0;
   }
 }

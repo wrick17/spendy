@@ -30,6 +30,7 @@ class AddTag extends React.Component {
     if (this.state.newTagName !== '')
       services.createTag(data, function(data, res) {
         that.props.refresh();
+        that.refs.name.value = '';
         that.setState({
           error: false
         });
@@ -46,7 +47,7 @@ class AddTag extends React.Component {
         <form className="form" onSubmit={this.onAddTag} >
           <div className="form-group">
             <label>Tag Name:</label>
-            <input type="text" placeholder="Tag Name..." onChange={this.onChangeTagName} />
+            <input type="text" placeholder="Tag Name..." ref="name" onChange={this.onChangeTagName} />
           </div>
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
           <button className="button right">Add</button>

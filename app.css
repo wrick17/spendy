@@ -513,7 +513,7 @@ a:hover {
 .day-picker .date-picker {
   overflow: auto;
   top: calc(100% + 5px);
-  left: 0;
+  right: 0;
   width: auto;
   position: absolute;
   background: white;
@@ -528,10 +528,10 @@ a:hover {
 .day-picker.squishy {
   max-width: 85px;
 }
-@media (min-width: 370px) {
-  .day-picker .date-picker {
-    right: 0;
-    left: auto;
+@media (max-width: 359px) {
+  .form .day-picker .date-picker {
+    right: auto;
+    left: 0;
   }
 }
 .header {

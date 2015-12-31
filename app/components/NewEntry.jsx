@@ -10,7 +10,7 @@ class Select extends React.Component {
     });
     return (
       <select value={this.props.selectedValue || null} onChange={this.props.onChange}>
-        <option disabled>{this.props.default || 'Choose Option...'}</option>
+        <option value="default" disabled>{this.props.default || 'Choose Option...'}</option>
         {optionList}
       </select>
     );
@@ -27,8 +27,8 @@ export default class NewEntry extends React.Component {
     this.onChangeItemName = this.onChangeItemName.bind(this);
     this.setDate = this.setDate.bind(this);
     this.state = {
-      tagId: this.props.tagId || '',
-      contributorId: this.props.contributorId || '',
+      tagId: this.props.tagId || 'default',
+      contributorId: this.props.contributorId || 'default',
       cost: this.props.cost || '',
       item: this.props.item || '',
       date: this.props.date || '',
@@ -90,7 +90,12 @@ export default class NewEntry extends React.Component {
       services.createEntry(data, function(res) {
         that.props.refresh();
         that.setState({
-          error: false
+          error: false,
+          tagId: 'default',
+          contributorId: 'default',
+          cost: '',
+          item: '',
+          date: ''
         });
       });
     else
