@@ -14,7 +14,8 @@ class AddContributor extends React.Component {
     this.onAddContributor = this.onAddContributor.bind(this);
     this.state = {
       error: false,
-      newContributorName: ''
+      newContributorName: '',
+      submiting: false
     };
   }
   onChangeContributorName(e) {
@@ -29,17 +30,23 @@ class AddContributor extends React.Component {
       'name': this.state.newContributorName,
       'active': true
     }
-    if (this.state.newContributorName !== '')
+    if (this.state.newContributorName !== '') {
+      this.setState({
+        submiting: true
+      });
       services.createContributor(data, function(data, res) {
         that.props.refresh();
         that.refs.name.value = '';
         that.setState({
-          error: false
+          error: false,
+          submiting: false
         });
       });
+    }
     else
       this.setState({
-        error: true
+        error: true,
+        submiting: false
       });
   }
   render() {
@@ -52,7 +59,7 @@ class AddContributor extends React.Component {
             <input type="text" placeholder="Contributor Name..." ref="name" onChange={this.onChangeContributorName} />
           </div>
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
-          <button className="button right">Add</button>
+          <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
         </form>
       </div>
     );

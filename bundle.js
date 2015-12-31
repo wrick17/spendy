@@ -11366,7 +11366,8 @@
 	    this.onAddContributor = this.onAddContributor.bind(this);
 	    this.state = {
 	      error: false,
-	      newContributorName: ''
+	      newContributorName: '',
+	      submiting: false
 	    };
 	  }
 
@@ -11386,14 +11387,21 @@
 	        'name': this.state.newContributorName,
 	        'active': true
 	      };
-	      if (this.state.newContributorName !== '') _servicesJsx2['default'].createContributor(data, function (data, res) {
-	        that.props.refresh();
-	        that.refs.name.value = '';
-	        that.setState({
-	          error: false
+	      if (this.state.newContributorName !== '') {
+	        this.setState({
+	          submiting: true
 	        });
-	      });else this.setState({
-	        error: true
+	        _servicesJsx2['default'].createContributor(data, function (data, res) {
+	          that.props.refresh();
+	          that.refs.name.value = '';
+	          that.setState({
+	            error: false,
+	            submiting: false
+	          });
+	        });
+	      } else this.setState({
+	        error: true,
+	        submiting: false
 	      });
 	    }
 	  }, {
@@ -11428,7 +11436,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            'Add'
+	            this.state.submiting ? 'Adding...' : 'Add'
 	          )
 	        )
 	      );
