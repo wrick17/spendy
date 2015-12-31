@@ -9842,22 +9842,24 @@
 	        'contributorId': this.state.contributorId,
 	        'tagId': this.state.tagId
 	      };
-	      this.setState({
-	        submiting: true
-	      });
 	      if (this.props.edit) return this.props.updateEntry(data);
-	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
-	        that.props.refresh();
-	        that.setState({
-	          error: false,
-	          tagId: 'default',
-	          contributorId: 'default',
-	          cost: '',
-	          item: '',
-	          date: '',
-	          submiting: false
+	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') {
+	        this.setState({
+	          submiting: true
 	        });
-	      });else that.setState({
+	        _servicesJsx2['default'].createEntry(data, function (res) {
+	          that.props.refresh();
+	          that.setState({
+	            error: false,
+	            tagId: 'default',
+	            contributorId: 'default',
+	            cost: '',
+	            item: '',
+	            date: '',
+	            submiting: false
+	          });
+	        });
+	      } else that.setState({
 	        submiting: false,
 	        error: true
 	      });

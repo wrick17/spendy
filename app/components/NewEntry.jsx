@@ -86,11 +86,11 @@ export default class NewEntry extends React.Component {
       'contributorId': this.state.contributorId,
       'tagId': this.state.tagId
     };
-    this.setState({
-      submiting: true
-    });
     if (this.props.edit) return this.props.updateEntry(data);
-    if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '' )
+    if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '' ) {
+      this.setState({
+        submiting: true
+      });
       services.createEntry(data, function(res) {
         that.props.refresh();
         that.setState({
@@ -103,6 +103,7 @@ export default class NewEntry extends React.Component {
           submiting: false
         });
       });
+    }
     else
       that.setState({
         submiting: false,
