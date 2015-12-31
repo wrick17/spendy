@@ -10967,7 +10967,8 @@
 	    this.onAddTag = this.onAddTag.bind(this);
 	    this.state = {
 	      error: false,
-	      newTagName: ''
+	      newTagName: '',
+	      submiting: false
 	    };
 	  }
 
@@ -10986,14 +10987,21 @@
 	      var data = {
 	        'name': this.state.newTagName
 	      };
-	      if (this.state.newTagName !== '') _servicesJsx2['default'].createTag(data, function (data, res) {
-	        that.props.refresh();
-	        that.refs.name.value = '';
-	        that.setState({
-	          error: false
+	      if (this.state.newTagName !== '') {
+	        this.setState({
+	          submiting: true
 	        });
-	      });else this.setState({
-	        error: true
+	        _servicesJsx2['default'].createTag(data, function (data, res) {
+	          that.props.refresh();
+	          that.refs.name.value = '';
+	          that.setState({
+	            error: false,
+	            submiting: false
+	          });
+	        });
+	      } else this.setState({
+	        error: true,
+	        submiting: false
 	      });
 	    }
 	  }, {
@@ -11028,7 +11036,7 @@
 	          _react2['default'].createElement(
 	            'button',
 	            { className: 'button right' },
-	            'Add'
+	            this.state.submiting ? 'Adding...' : 'Add'
 	          )
 	        )
 	      );

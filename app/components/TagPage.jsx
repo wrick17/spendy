@@ -13,7 +13,8 @@ class AddTag extends React.Component {
     this.onAddTag = this.onAddTag.bind(this);
     this.state = {
       error: false,
-      newTagName: ''
+      newTagName: '',
+      submiting: false
     };
   }
   onChangeTagName(e) {
@@ -27,17 +28,23 @@ class AddTag extends React.Component {
     var data = {
       'name': this.state.newTagName
     }
-    if (this.state.newTagName !== '')
+    if (this.state.newTagName !== '') {
+      this.setState({
+        submiting: true
+      });
       services.createTag(data, function(data, res) {
         that.props.refresh();
         that.refs.name.value = '';
         that.setState({
-          error: false
+          error: false,
+          submiting: false
         });
       });
+    }
     else
       this.setState({
-        error: true
+        error: true,
+        submiting: false
       });
   }
   render() {
@@ -50,7 +57,7 @@ class AddTag extends React.Component {
             <input type="text" placeholder="Tag Name..." ref="name" onChange={this.onChangeTagName} />
           </div>
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
-          <button className="button right">Add</button>
+          <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
         </form>
       </div>
     );
