@@ -170,7 +170,6 @@ export default class TagPage extends React.Component {
       submiting: true
     });
     services.updateTag(this.state.tagId, data, function(res) {
-      console.log(res);
       that.setState({
         submiting: false
       });

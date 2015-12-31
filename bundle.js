@@ -11215,7 +11215,6 @@
 	        submiting: true
 	      });
 	      _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
-	        console.log(res);
 	        that.setState({
 	          submiting: false
 	        });
@@ -11559,7 +11558,8 @@
 	      contributorName: '',
 	      contributorId: '',
 	      contributorError: false,
-	      contributorActive: true
+	      contributorActive: true,
+	      submiting: false
 	    };
 	  }
 
@@ -11624,8 +11624,14 @@
 	        active: this.state.contributorActive
 	      };
 	      var that = this;
+	      that.setState({
+	        submiting: true
+	      });
 	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
 	        that.refresh();
+	        that.setState({
+	          submiting: false
+	        });
 	        that.closeModal();
 	      });else this.setState({
 	        contributorError: true
@@ -11713,8 +11719,8 @@
 	            ) : null,
 	            _react2['default'].createElement(
 	              'button',
-	              { type: 'submit', className: 'button right' },
-	              'Save'
+	              { className: 'button right' },
+	              this.state.submiting ? 'Saving...' : 'Save'
 	            ),
 	            _react2['default'].createElement(
 	              'button',
