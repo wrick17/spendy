@@ -118,7 +118,8 @@ export default class TagPage extends React.Component {
       isDeleteModalOpen: false,
       tagName: '',
       tagId: '',
-      tagError: false
+      tagError: false,
+      submiting: false
     };
   }
   componentDidMount() {
@@ -165,8 +166,14 @@ export default class TagPage extends React.Component {
       name: this.state.tagName
     }
     var that = this;
+    this.setState({
+      submiting: true
+    });
     services.updateTag(this.state.tagId, data, function(res) {
       console.log(res);
+      that.setState({
+        submiting: false
+      });
       that.refresh();
       that.closeModal();
     });
@@ -208,7 +215,7 @@ export default class TagPage extends React.Component {
               <input type="text" placeholder="Tag Name..." value={this.state.tagName} data-id={this.state.tagId} onChange={this.onChangeTagName} />
             </div>
             { this.state.tagError ? <div className="error right">Don't be this lazy!</div> : null }
-            <button className="button right">Save</button>
+            <button className="button right">{this.state.submiting ? 'Saving...' : 'Save'}</button>
           </form>
         </Modal>
         <DeleteModal

@@ -11148,7 +11148,8 @@
 	      isDeleteModalOpen: false,
 	      tagName: '',
 	      tagId: '',
-	      tagError: false
+	      tagError: false,
+	      submiting: false
 	    };
 	  }
 
@@ -11210,8 +11211,14 @@
 	        name: this.state.tagName
 	      };
 	      var that = this;
+	      this.setState({
+	        submiting: true
+	      });
 	      _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
 	        console.log(res);
+	        that.setState({
+	          submiting: false
+	        });
 	        that.refresh();
 	        that.closeModal();
 	      });
@@ -11283,7 +11290,7 @@
 	            _react2['default'].createElement(
 	              'button',
 	              { className: 'button right' },
-	              'Save'
+	              this.state.submiting ? 'Saving...' : 'Save'
 	            )
 	          )
 	        ),
