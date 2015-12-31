@@ -9730,6 +9730,7 @@
 	  _createClass(Select, [{
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props.selectedValue);
 	      var that = this;
 	      var optionList = this.props.options.map(function (option) {
 	        return _react2['default'].createElement(
@@ -9743,7 +9744,7 @@
 	        { value: this.props.selectedValue || null, onChange: this.props.onChange },
 	        _react2['default'].createElement(
 	          'option',
-	          { disabled: true },
+	          { value: 'default', disabled: true },
 	          this.props['default'] || 'Choose Option...'
 	        ),
 	        optionList
@@ -9768,8 +9769,8 @@
 	    this.onChangeItemName = this.onChangeItemName.bind(this);
 	    this.setDate = this.setDate.bind(this);
 	    this.state = {
-	      tagId: this.props.tagId || '',
-	      contributorId: this.props.contributorId || '',
+	      tagId: this.props.tagId || 'default',
+	      contributorId: this.props.contributorId || 'default',
 	      cost: this.props.cost || '',
 	      item: this.props.item || '',
 	      date: this.props.date || '',
@@ -9845,7 +9846,12 @@
 	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') _servicesJsx2['default'].createEntry(data, function (res) {
 	        that.props.refresh();
 	        that.setState({
-	          error: false
+	          error: false,
+	          tagId: 'default',
+	          contributorId: 'default',
+	          cost: '',
+	          item: '',
+	          date: ''
 	        });
 	      });else that.setState({
 	        error: true
