@@ -9730,7 +9730,6 @@
 	  _createClass(Select, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.selectedValue);
 	      var that = this;
 	      var optionList = this.props.options.map(function (option) {
 	        return _react2['default'].createElement(
@@ -10981,6 +10980,7 @@
 	      };
 	      if (this.state.newTagName !== '') _servicesJsx2['default'].createTag(data, function (data, res) {
 	        that.props.refresh();
+	        that.refs.name.value = '';
 	        that.setState({
 	          error: false
 	        });
@@ -11010,7 +11010,7 @@
 	              null,
 	              'Tag Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', onChange: this.onChangeTagName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', ref: 'name', onChange: this.onChangeTagName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -11372,6 +11372,7 @@
 	      };
 	      if (this.state.newContributorName !== '') _servicesJsx2['default'].createContributor(data, function (data, res) {
 	        that.props.refresh();
+	        that.refs.name.value = '';
 	        that.setState({
 	          error: false
 	        });
@@ -11401,7 +11402,7 @@
 	              null,
 	              'Contributor Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', onChange: this.onChangeContributorName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', ref: 'name', onChange: this.onChangeContributorName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',

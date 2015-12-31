@@ -4,7 +4,6 @@ import services from './../services.jsx';
 
 class Select extends React.Component {
   render() {
-    console.log(this.props.selectedValue);
     var that = this;
     var optionList = this.props.options.map(function(option) {
       return (<option key={option._id} value={option._id} >{option.name}</option>);
