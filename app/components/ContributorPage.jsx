@@ -125,7 +125,8 @@ export default class ContributorPage extends React.Component {
       contributorId: '',
       contributorError: false,
       contributorActive: true,
-      submiting: false
+      submiting: false,
+      statusChanging: false
     };
   }
   componentDidMount() {
@@ -203,11 +204,18 @@ export default class ContributorPage extends React.Component {
       active: !this.state.contributorActive
     }
     var that = this;
-    if (this.state.contributorName !== '')
+    if (this.state.contributorName !== '') {
+      that.setState({
+        statusChanging: true
+      });
       services.updateContributor(this.state.contributorId, data, function(res) {
         that.refresh();
+        that.setState({
+          statusChanging: false
+        });
         that.closeModal();
       });
+    }
     else
       this.setState({
         contributorError: true
@@ -247,7 +255,7 @@ export default class ContributorPage extends React.Component {
             </div>
             { this.state.contributorError ? <div className="error right">Don't be this lazy!</div> : null }
             <button className="button right">{this.state.submiting ? 'Saving...' : 'Save'}</button>
-            <button onClick={this.changeContributorStatus} className="button">Make { this.state.contributorActive ? 'Inactive' : 'Active' } </button>
+            <button onClick={this.changeContributorStatus} className="button">{this.state.statusChanging ? 'Making' : 'Make'} { this.state.contributorActive ? 'Inactive' : 'Active' } {this.state.statusChanging ? '...' : null}</button>
           </form>
         </Modal>
         <DeleteModal

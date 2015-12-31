@@ -11559,7 +11559,8 @@
 	      contributorId: '',
 	      contributorError: false,
 	      contributorActive: true,
-	      submiting: false
+	      submiting: false,
+	      statusChanging: false
 	    };
 	  }
 
@@ -11653,10 +11654,18 @@
 	        active: !this.state.contributorActive
 	      };
 	      var that = this;
-	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
-	        that.refresh();
-	        that.closeModal();
-	      });else this.setState({
+	      if (this.state.contributorName !== '') {
+	        that.setState({
+	          statusChanging: true
+	        });
+	        _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
+	          that.refresh();
+	          that.setState({
+	            statusChanging: false
+	          });
+	          that.closeModal();
+	        });
+	      } else this.setState({
 	        contributorError: true
 	      });
 	    }
@@ -11725,9 +11734,11 @@
 	            _react2['default'].createElement(
 	              'button',
 	              { onClick: this.changeContributorStatus, className: 'button' },
-	              'Make ',
+	              this.state.statusChanging ? 'Making' : 'Make',
+	              ' ',
 	              this.state.contributorActive ? 'Inactive' : 'Active',
-	              ' '
+	              ' ',
+	              this.state.statusChanging ? '...' : null
 	            )
 	          )
 	        ),
