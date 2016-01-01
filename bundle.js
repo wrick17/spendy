@@ -5922,8 +5922,8 @@
 	  }
 
 	  _createClass(Dashboard, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      this.getExpenses();
 	      this.getOverview();
 	    }
@@ -6123,12 +6123,14 @@
 	          total = 0,
 	          average = 0;
 	      contributors.map(function (contributor) {
+	        if (!contributor.active) return null;
 	        rank++;
 	        return total += parseInt(contributor.expenditure);
 	      });
 	      average = total / rank;
 	      rank = 0;
 	      var bountyList = contributors.map(function (contributor) {
+	        if (!contributor.active) return null;
 	        return _react2['default'].createElement(Bounty, { key: contributor._id, average: average, rank: ++rank, name: contributor.name, bounty: contributor.expenditure });
 	      });
 	      return _react2['default'].createElement(
@@ -9540,10 +9542,14 @@
 	  return new Date(new Date(new Date(date.setDate(1)).setMonth(date.getMonth() + 1)).setDate(0));
 	};
 
+	utils.zeroPadding = function (number) {
+	  if (number < 10) return '0' + number;
+	  return number;
+	};
+
 	utils.groupByMonth = function (items) {
 	  var group = [],
 	      months = [];
-
 	  items.map(function (item) {
 	    var month = new Date(item.date).toString().slice(4, 7) + ' ' + new Date(item.date).toString().slice(11, 15);
 	    if (months.indexOf(month) === -1) {
@@ -9732,7 +9738,7 @@
 	    value: function render() {
 	      var that = this;
 	      var optionList = this.props.options.map(function (option) {
-	        if (!option.active) return null;
+	        if (option.hasOwnProperty('active') && !option.active) return null;
 	        return _react2['default'].createElement(
 	          'option',
 	          { key: option._id, value: option._id },
@@ -9977,7 +9983,7 @@
 	services.getAllEntries = function (callback) {
 	  _superagent2['default'].get(baseUrl + '/entry').end(function (err, res) {
 	    if (err) return callback(err);
-	    return callback(res.body);
+	    return callback(res.body.reverse());
 	  });
 	};
 
@@ -10341,9 +10347,9 @@
 	    key: 'render',
 	    value: function render() {
 	      var that = this;
-	      var expenseGroup = _utilsJsx2['default'].sortByKey(this.props.expenseGroup.items.reverse(), 'date').map(function (expense) {
+	      var expenseGroup = _utilsJsx2['default'].sortByKey(this.props.expenseGroup.items, 'date').map(function (expense) {
 	        var date = new Date(expense.date);
-	        var displayDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
+	        var displayDate = _utilsJsx2['default'].zeroPadding(date.getDate()) + '-' + _utilsJsx2['default'].zeroPadding(date.getMonth() + 1) + '-' + date.getFullYear();
 	        return _react2['default'].createElement(
 	          'tr',
 	          { key: expense._id },

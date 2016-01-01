@@ -21,7 +21,7 @@ export default class Dashboard extends React.Component {
       contributors: 'loading'
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     this.getExpenses();
     this.getOverview();
   }
