@@ -9732,6 +9732,7 @@
 	    value: function render() {
 	      var that = this;
 	      var optionList = this.props.options.map(function (option) {
+	        if (!option.active) return null;
 	        return _react2['default'].createElement(
 	          'option',
 	          { key: option._id, value: option._id },
