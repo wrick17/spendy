@@ -15,9 +15,13 @@ utils.lastDay = function(date) {
   return new Date((new Date((new Date(date.setDate(1))).setMonth(date.getMonth() + 1))).setDate(0));
 }
 
+utils.zeroPadding = function(number) {
+  if (number < 10) return '0' + number;
+  return number;
+}
+
 utils.groupByMonth = function(items) {
   var group = [], months = [];
-
   items.map(function(item) {
     var month = new Date(item.date).toString().slice(4,7) + ' ' + new Date(item.date).toString().slice(11,15);
     if (months.indexOf(month) === -1) {

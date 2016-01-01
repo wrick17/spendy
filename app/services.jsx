@@ -9,7 +9,7 @@ services.getAllEntries = function(callback) {
     .get(baseUrl + '/entry')
     .end(function(err, res) {
       if (err) return callback(err);
-      return callback(res.body);
+      return callback(res.body.reverse());
     });
 }
 

@@ -10,9 +10,9 @@ import DeleteModal from './DeleteModal.jsx';
 class ExpenseGroup extends React.Component {
   render() {
     var that = this;
-    var expenseGroup = utils.sortByKey(this.props.expenseGroup.items.reverse(), 'date').map(function(expense) {
+    var expenseGroup = utils.sortByKey(this.props.expenseGroup.items, 'date').map(function(expense) {
       var date = new Date(expense.date);
-      var displayDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear() ;
+      var displayDate = utils.zeroPadding(date.getDate()) + '-' + utils.zeroPadding(date.getMonth() + 1) + '-' + date.getFullYear() ;
       return (
         <tr key={expense._id}>
           <td data-label="Date">{displayDate}</td>
