@@ -6123,12 +6123,14 @@
 	          total = 0,
 	          average = 0;
 	      contributors.map(function (contributor) {
+	        if (!contributor.active) return null;
 	        rank++;
 	        return total += parseInt(contributor.expenditure);
 	      });
 	      average = total / rank;
 	      rank = 0;
 	      var bountyList = contributors.map(function (contributor) {
+	        if (!contributor.active) return null;
 	        return _react2['default'].createElement(Bounty, { key: contributor._id, average: average, rank: ++rank, name: contributor.name, bounty: contributor.expenditure });
 	      });
 	      return _react2['default'].createElement(

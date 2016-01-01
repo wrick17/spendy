@@ -29,12 +29,14 @@ class BountyList extends React.Component {
     if (this.props.contributors.length < 1) return <NoRecords />;
     var rank = 0, contributors = utils.sortByKey(this.props.contributors, 'expenditure'), total = 0, average = 0;
     contributors.map(function(contributor) {
+      if (!contributor.active) return null;
       rank++;
       return total += parseInt(contributor.expenditure);
     });
     average = total/rank;
     rank = 0;
     var bountyList = contributors.map(function(contributor) {
+      if (!contributor.active) return null;
       return (<Bounty key={contributor._id} average={average} rank={++rank} name={contributor.name} bounty={contributor.expenditure} />);
     });
     return (
