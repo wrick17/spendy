@@ -5924,14 +5924,12 @@
 	  _createClass(Dashboard, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      console.log('componentDidMount');
 	      this.getExpenses();
 	      this.getOverview();
 	    }
 	  }, {
 	    key: 'getExpenses',
 	    value: function getExpenses() {
-	      console.log('getExpenses');
 	      var that = this;
 	      that.setState({
 	        expenses: 'loading'
@@ -5948,7 +5946,6 @@
 	      var date = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
 	      var that = this;
-	      console.log('getOverview', date);
 	      that.setState({
 	        contributors: 'loading'
 	      });
@@ -5961,14 +5958,12 @@
 	  }, {
 	    key: 'refresh',
 	    value: function refresh() {
-	      console.log('refresh');
 	      this.getExpenses();
 	      this.getOverview();
 	    }
 	  }, {
 	    key: 'setDateBounty',
 	    value: function setDateBounty(date) {
-	      console.log('setDateBounty');
 	      this.getOverview(date);
 	    }
 	  }, {
