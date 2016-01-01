@@ -21,11 +21,13 @@ export default class Dashboard extends React.Component {
       contributors: 'loading'
     };
   }
-  componentDidMount() {
+  componentWillMount() {
+    console.log('componentDidMount');
     this.getExpenses();
     this.getOverview();
   }
   getExpenses() {
+    console.log('getExpenses');
     var that = this;
     that.setState({
       expenses: 'loading'
@@ -38,6 +40,7 @@ export default class Dashboard extends React.Component {
   }
   getOverview(date = null) {
     var that = this;
+    console.log('getOverview', date);
     that.setState({
       contributors: 'loading'
     });
@@ -48,10 +51,12 @@ export default class Dashboard extends React.Component {
     }, date);
   }
   refresh() {
+    console.log('refresh');
     this.getExpenses();
     this.getOverview();
   }
   setDateBounty(date) {
+    console.log('setDateBounty');
     this.getOverview(date);
   }
   setDateExpenses(date) {
