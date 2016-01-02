@@ -6,6 +6,7 @@ import utils from './../utils.jsx';
 import Modal from './Modal.jsx';
 import NewEntry from './NewEntry.jsx';
 import DeleteModal from './DeleteModal.jsx';
+import Select from './Select.jsx';
 
 class ExpenseGroup extends React.Component {
   render() {
@@ -77,6 +78,29 @@ class ExpenseTable extends React.Component {
   }
 }
 
+class FilterBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onChangeContributor = this.onChangeContributor.bind(this);
+    this.state = {
+      contributorId: 'default'
+    }
+  }
+  onChangeContributor(e) {
+    this.props.filterByContributor(e.target.value);
+  }
+  render() {
+    return (
+      <div className="filter-bar">
+        <div className="filter-group">
+          <label>Show results for:</label>
+          <Select default="All" noDisabled options={this.props.contributors} onChange={this.onChangeContributor} />
+        </div>
+      </div>
+    );
+  }
+}
+
 export default class ExpensesList extends React.Component {
   constructor(props) {
     super(props);
@@ -87,17 +111,21 @@ export default class ExpensesList extends React.Component {
     this.confirmDelete = this.confirmDelete.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.showDeleteModal = this.showDeleteModal.bind(this);
+    this.filterByContributor = this.filterByContributor.bind(this);
     this.state = {
       id: '',
       tagMap: [],
       contributorMap: [],
+      contributors: [],
+      tags: [],
       isModalOpen: false,
       isDeleteModalOpen: false,
       date: '',
       cost: '',
       item: '',
       contributorId: '',
-      tagId: ''
+      tagId: '',
+      expenses: this.props.expenses
     };
   }
   componentDidMount() {
@@ -109,7 +137,8 @@ export default class ExpensesList extends React.Component {
         tagMap[tag._id] = tag.name;
       });
       that.setState({
-        tagMap: tagMap
+        tagMap: tagMap,
+        tags: tags
       });
     });
     services.getAllContributors(function(contributors) {
@@ -117,8 +146,14 @@ export default class ExpensesList extends React.Component {
         contributorMap[contributor._id] = contributor.name;
       });
       that.setState({
-        contributorMap: contributorMap
+        contributorMap: contributorMap,
+        contributors: contributors
       });
+    });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      expenses: nextProps.expenses
     });
   }
   deleteEntry() {
@@ -165,11 +200,27 @@ export default class ExpensesList extends React.Component {
       isDeleteModalOpen: false
     });
   }
+  filterByContributor(contributorId) {
+    if (contributorId === 'default') return this.setState({
+      expenses: this.props.expenses
+    });
+    var expenses = this.props.expenses.filter(function(expense) {
+      return expense.contributorId === contributorId;
+    });
+    console.log(contributorId, expenses);
+    this.setState({
+      expenses: expenses
+    });
+  }
   render() {
     return (
       <div>
+        <FilterBar
+          contributors={this.state.contributors}
+          contributorMap={this.state.contributorMap}
+          filterByContributor={this.filterByContributor} />
         <ExpenseTable
-          expenses={this.props.expenses}
+          expenses={this.state.expenses}
           contributorMap={this.state.contributorMap}
           tagMap={this.state.tagMap}
           editEntry={this.editEntry}

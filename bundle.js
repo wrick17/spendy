@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(327);
+	var _componentsExpensesJsx = __webpack_require__(328);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(328);
+	var _componentsTagPageJsx = __webpack_require__(329);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(329);
+	var _componentsContributorPageJsx = __webpack_require__(330);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -5885,7 +5885,7 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(324);
+	var _ExpensesListJsx = __webpack_require__(325);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
@@ -9724,45 +9724,12 @@
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
-	var Select = (function (_React$Component) {
-	  _inherits(Select, _React$Component);
+	var _SelectJsx = __webpack_require__(324);
 
-	  function Select() {
-	    _classCallCheck(this, Select);
+	var _SelectJsx2 = _interopRequireDefault(_SelectJsx);
 
-	    _get(Object.getPrototypeOf(Select.prototype), 'constructor', this).apply(this, arguments);
-	  }
-
-	  _createClass(Select, [{
-	    key: 'render',
-	    value: function render() {
-	      var that = this;
-	      var optionList = this.props.options.map(function (option) {
-	        if (option.hasOwnProperty('active') && !option.active) return null;
-	        return _react2['default'].createElement(
-	          'option',
-	          { key: option._id, value: option._id },
-	          option.name
-	        );
-	      });
-	      return _react2['default'].createElement(
-	        'select',
-	        { value: this.props.selectedValue || null, onChange: this.props.onChange },
-	        _react2['default'].createElement(
-	          'option',
-	          { value: 'default', disabled: true },
-	          this.props['default'] || 'Choose Option...'
-	        ),
-	        optionList
-	      );
-	    }
-	  }]);
-
-	  return Select;
-	})(_react2['default'].Component);
-
-	var NewEntry = (function (_React$Component2) {
-	  _inherits(NewEntry, _React$Component2);
+	var NewEntry = (function (_React$Component) {
+	  _inherits(NewEntry, _React$Component);
 
 	  function NewEntry(props) {
 	    _classCallCheck(this, NewEntry);
@@ -9923,7 +9890,7 @@
 	              null,
 	              'Contributor:'
 	            ),
-	            _react2['default'].createElement(Select, { options: this.state.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
+	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.state.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9933,7 +9900,7 @@
 	              null,
 	              'Tag:'
 	            ),
-	            _react2['default'].createElement(Select, { options: this.state.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
+	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.state.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -10306,6 +10273,70 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var Select = (function (_React$Component) {
+	  _inherits(Select, _React$Component);
+
+	  function Select() {
+	    _classCallCheck(this, Select);
+
+	    _get(Object.getPrototypeOf(Select.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(Select, [{
+	    key: 'render',
+	    value: function render() {
+	      var that = this;
+	      var optionList = this.props.options.map(function (option) {
+	        if (option.hasOwnProperty('active') && !option.active) return null;
+	        return _react2['default'].createElement(
+	          'option',
+	          { key: option._id, value: option._id },
+	          option.name
+	        );
+	      });
+	      return _react2['default'].createElement(
+	        'select',
+	        { value: this.props.selectedValue || null, onChange: this.props.onChange },
+	        _react2['default'].createElement(
+	          'option',
+	          { value: 'default', disabled: !this.props.noDisabled },
+	          this.props['default'] || 'Choose Option...'
+	        ),
+	        optionList
+	      );
+	    }
+	  }]);
+
+	  return Select;
+	})(_react2['default'].Component);
+
+	exports['default'] = Select;
+	module.exports = exports['default'];
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
@@ -10322,7 +10353,7 @@
 
 	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
 
-	var _ModalJsx = __webpack_require__(325);
+	var _ModalJsx = __webpack_require__(326);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
@@ -10330,9 +10361,13 @@
 
 	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
 
-	var _DeleteModalJsx = __webpack_require__(326);
+	var _DeleteModalJsx = __webpack_require__(327);
 
 	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
+
+	var _SelectJsx = __webpack_require__(324);
+
+	var _SelectJsx2 = _interopRequireDefault(_SelectJsx);
 
 	var ExpenseGroup = (function (_React$Component) {
 	  _inherits(ExpenseGroup, _React$Component);
@@ -10495,8 +10530,49 @@
 	  return ExpenseTable;
 	})(_react2['default'].Component);
 
-	var ExpensesList = (function (_React$Component3) {
-	  _inherits(ExpensesList, _React$Component3);
+	var FilterBar = (function (_React$Component3) {
+	  _inherits(FilterBar, _React$Component3);
+
+	  function FilterBar(props) {
+	    _classCallCheck(this, FilterBar);
+
+	    _get(Object.getPrototypeOf(FilterBar.prototype), 'constructor', this).call(this, props);
+	    this.onChangeContributor = this.onChangeContributor.bind(this);
+	    this.state = {
+	      contributorId: 'default'
+	    };
+	  }
+
+	  _createClass(FilterBar, [{
+	    key: 'onChangeContributor',
+	    value: function onChangeContributor(e) {
+	      this.props.filterByContributor(e.target.value);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'filter-bar' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'filter-group' },
+	          _react2['default'].createElement(
+	            'label',
+	            null,
+	            'Show results for:'
+	          ),
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.contributors, onChange: this.onChangeContributor })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return FilterBar;
+	})(_react2['default'].Component);
+
+	var ExpensesList = (function (_React$Component4) {
+	  _inherits(ExpensesList, _React$Component4);
 
 	  function ExpensesList(props) {
 	    _classCallCheck(this, ExpensesList);
@@ -10509,17 +10585,21 @@
 	    this.confirmDelete = this.confirmDelete.bind(this);
 	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
 	    this.showDeleteModal = this.showDeleteModal.bind(this);
+	    this.filterByContributor = this.filterByContributor.bind(this);
 	    this.state = {
 	      id: '',
 	      tagMap: [],
 	      contributorMap: [],
+	      contributors: [],
+	      tags: [],
 	      isModalOpen: false,
 	      isDeleteModalOpen: false,
 	      date: '',
 	      cost: '',
 	      item: '',
 	      contributorId: '',
-	      tagId: ''
+	      tagId: '',
+	      expenses: this.props.expenses
 	    };
 	  }
 
@@ -10534,7 +10614,8 @@
 	          tagMap[tag._id] = tag.name;
 	        });
 	        that.setState({
-	          tagMap: tagMap
+	          tagMap: tagMap,
+	          tags: tags
 	        });
 	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
@@ -10542,8 +10623,16 @@
 	          contributorMap[contributor._id] = contributor.name;
 	        });
 	        that.setState({
-	          contributorMap: contributorMap
+	          contributorMap: contributorMap,
+	          contributors: contributors
 	        });
+	      });
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({
+	        expenses: nextProps.expenses
 	      });
 	    }
 	  }, {
@@ -10605,13 +10694,31 @@
 	      });
 	    }
 	  }, {
+	    key: 'filterByContributor',
+	    value: function filterByContributor(contributorId) {
+	      if (contributorId === 'default') return this.setState({
+	        expenses: this.props.expenses
+	      });
+	      var expenses = this.props.expenses.filter(function (expense) {
+	        return expense.contributorId === contributorId;
+	      });
+	      console.log(contributorId, expenses);
+	      this.setState({
+	        expenses: expenses
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
 	        'div',
 	        null,
+	        _react2['default'].createElement(FilterBar, {
+	          contributors: this.state.contributors,
+	          contributorMap: this.state.contributorMap,
+	          filterByContributor: this.filterByContributor }),
 	        _react2['default'].createElement(ExpenseTable, {
-	          expenses: this.props.expenses,
+	          expenses: this.state.expenses,
 	          contributorMap: this.state.contributorMap,
 	          tagMap: this.state.tagMap,
 	          editEntry: this.editEntry,
@@ -10649,7 +10756,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10748,7 +10855,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10771,7 +10878,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _ModalJsx = __webpack_require__(325);
+	var _ModalJsx = __webpack_require__(326);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
@@ -10825,7 +10932,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10852,7 +10959,7 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(324);
+	var _ExpensesListJsx = __webpack_require__(325);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
@@ -10916,7 +11023,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10955,11 +11062,11 @@
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
-	var _ModalJsx = __webpack_require__(325);
+	var _ModalJsx = __webpack_require__(326);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
-	var _DeleteModalJsx = __webpack_require__(326);
+	var _DeleteModalJsx = __webpack_require__(327);
 
 	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
 
@@ -11317,7 +11424,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11360,11 +11467,11 @@
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
-	var _ModalJsx = __webpack_require__(325);
+	var _ModalJsx = __webpack_require__(326);
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
-	var _DeleteModalJsx = __webpack_require__(326);
+	var _DeleteModalJsx = __webpack_require__(327);
 
 	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
 
