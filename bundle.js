@@ -10538,15 +10538,18 @@
 
 	    _get(Object.getPrototypeOf(FilterBar.prototype), 'constructor', this).call(this, props);
 	    this.onChangeContributor = this.onChangeContributor.bind(this);
-	    this.state = {
-	      contributorId: 'default'
-	    };
+	    this.onChangeTag = this.onChangeTag.bind(this);
 	  }
 
 	  _createClass(FilterBar, [{
 	    key: 'onChangeContributor',
 	    value: function onChangeContributor(e) {
 	      this.props.filterByContributor(e.target.value);
+	    }
+	  }, {
+	    key: 'onChangeTag',
+	    value: function onChangeTag(e) {
+	      this.props.filterByTag(e.target.value);
 	    }
 	  }, {
 	    key: 'render',
@@ -10560,9 +10563,19 @@
 	          _react2['default'].createElement(
 	            'label',
 	            null,
-	            'Show results for:'
+	            'Show all expenses by'
 	          ),
 	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.contributors, onChange: this.onChangeContributor })
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'filter-group' },
+	          _react2['default'].createElement(
+	            'label',
+	            null,
+	            'for'
+	          ),
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.tags, onChange: this.onChangeTag })
 	        )
 	      );
 	    }
@@ -10586,6 +10599,8 @@
 	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
 	    this.showDeleteModal = this.showDeleteModal.bind(this);
 	    this.filterByContributor = this.filterByContributor.bind(this);
+	    this.filterByTag = this.filterByTag.bind(this);
+	    this.filterExpenses = this.filterExpenses.bind(this);
 	    this.state = {
 	      id: '',
 	      tagMap: [],
@@ -10694,18 +10709,55 @@
 	      });
 	    }
 	  }, {
-	    key: 'filterByContributor',
-	    value: function filterByContributor(contributorId) {
-	      if (contributorId === 'default') return this.setState({
-	        expenses: this.props.expenses
+	    key: 'filterExpenses',
+	    value: function filterExpenses(contributorId, tagId) {
+	      function contributorDefault(contributorId) {
+	        return contributorId === 'default' || contributorId === '' ? true : false;
+	      }
+	      function tagDefault(tagId) {
+	        return tagId === 'default' || tagId === '' ? true : false;
+	      }
+	      console.log(this.state.contributorMap[contributorId], this.state.tagMap[tagId]);
+	      var expenses = this.props.expenses,
+	          expensesFiltered = expenses,
+	          that = this;
+	      if (contributorDefault(contributorId) && tagDefault(tagId)) return this.setState({
+	        expenses: expenses
 	      });
-	      var expenses = this.props.expenses.filter(function (expense) {
-	        return expense.contributorId === contributorId;
-	      });
-	      console.log(contributorId, expenses);
+	      console.log('one or more not default');
+	      if (!contributorDefault(contributorId)) {
+	        expensesFiltered = expenses.filter(function (expense) {
+	          return expense.contributorId === contributorId;
+	        });
+	        expenses = expensesFiltered;
+	        console.log('contributor filter', expenses);
+	      }
+	      if (!tagDefault(tagId)) {
+	        expensesFiltered = expenses.filter(function (expense) {
+	          return expense.tagId === tagId;
+	        });
+	        expenses = expensesFiltered;
+	        console.log('tag filter', expenses);
+	      }
 	      this.setState({
 	        expenses: expenses
 	      });
+	    }
+	  }, {
+	    key: 'filterByContributor',
+	    value: function filterByContributor(contributorId) {
+	      this.setState({
+	        contributorId: contributorId
+	      });
+	      this.filterExpenses(contributorId, this.state.tagId);
+	    }
+	  }, {
+	    key: 'filterByTag',
+	    value: function filterByTag(tagId) {
+	      this.setState({
+	        tagId: tagId
+	      });
+	      this.filterExpenses(this.state.contributorId, tagId);
 	    }
 	  }, {
 	    key: 'render',
@@ -10715,7 +10767,8 @@
 	        null,
 	        _react2['default'].createElement(FilterBar, {
 	          contributors: this.state.contributors,
-	          contributorMap: this.state.contributorMap,
+	          tags: this.state.tags,
+	          filterByTag: this.filterByTag,
 	          filterByContributor: this.filterByContributor }),
 	        _react2['default'].createElement(ExpenseTable, {
 	          expenses: this.state.expenses,
