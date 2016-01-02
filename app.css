@@ -667,11 +667,11 @@ a:hover {
   font-size: 16px;
 }
 .dashboard-container .filter-bar {
-  display: flex;
   font-size: 14px;
   padding: 15px;
 }
 .dashboard-container .filter-bar .filter-group {
+  display: inline;
   margin-right: 10px;
 }
 .dashboard-container .filter-bar .filter-group select {
@@ -789,11 +789,11 @@ a:hover {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .expenses-page .filter-bar {
-  display: flex;
   font-size: 14px;
   padding: 15px;
 }
 .expenses-page .filter-bar .filter-group {
+  display: inline;
   margin-right: 10px;
 }
 .expenses-page .filter-bar .filter-group select {
