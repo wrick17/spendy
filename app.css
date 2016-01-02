@@ -666,6 +666,22 @@ a:hover {
   border: none;
   font-size: 16px;
 }
+.dashboard-container .filter-bar {
+  display: flex;
+  font-size: 14px;
+  padding: 15px;
+}
+.dashboard-container .filter-bar .filter-group {
+  margin-right: 10px;
+}
+.dashboard-container .filter-bar .filter-group select {
+  background: #FFFFFF;
+  margin-left: 10px;
+  border: 1px solid #e3e3e3;
+  font-size: 14px;
+  text-align: left;
+  padding: 5px 10px;
+}
 .dashboard-container table {
   width: 100%;
   margin: 0;
@@ -771,6 +787,22 @@ a:hover {
 .expenses-page .container {
   padding: 0 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.expenses-page .filter-bar {
+  display: flex;
+  font-size: 14px;
+  padding: 15px;
+}
+.expenses-page .filter-bar .filter-group {
+  margin-right: 10px;
+}
+.expenses-page .filter-bar .filter-group select {
+  background: #FFFFFF;
+  margin-left: 10px;
+  border: 1px solid #e3e3e3;
+  font-size: 14px;
+  text-align: left;
+  padding: 5px 10px;
 }
 .expenses-page table {
   width: 100%;
