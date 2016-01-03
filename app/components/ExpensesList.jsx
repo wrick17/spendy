@@ -95,11 +95,11 @@ class FilterBar extends React.Component {
       <div className="filter-bar">
         <div className="filter-group">
           <label>Show all expenses by</label>
-          <Select default="All" noDisabled options={this.props.contributors} onChange={this.onChangeContributor} />
+          <Select default="All" noDisabled options={this.props.contributors} selectedValue={this.props.selectedValueContributor} onChange={this.onChangeContributor} />
         </div>
         <div className="filter-group">
           <label>for</label>
-          <Select default="All" noDisabled options={this.props.tags} onChange={this.onChangeTag} />
+          <Select default="All" noDisabled options={this.props.tags} selectedValue={this.props.selectedValueTag} onChange={this.onChangeTag} />
         </div>
       </div>
     );
@@ -160,7 +160,9 @@ export default class ExpensesList extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      expenses: nextProps.expenses
+      expenses: nextProps.expenses,
+      contributorId: 'default',
+      tagId: 'default'
     });
   }
   deleteEntry() {
@@ -214,25 +216,21 @@ export default class ExpensesList extends React.Component {
     function tagDefault(tagId) {
       return (tagId === 'default' || tagId === '') ? true : false;
     }
-    console.log(this.state.contributorMap[contributorId], this.state.tagMap[tagId]);
     var expenses = this.props.expenses, expensesFiltered = expenses, that = this;
     if (contributorDefault(contributorId) && tagDefault(tagId)) return this.setState({
       expenses: expenses
     });
-    console.log('one or more not default');
     if (!contributorDefault(contributorId)) {
       expensesFiltered = expenses.filter(function(expense) {
         return expense.contributorId === contributorId;
       });
       expenses = expensesFiltered;
-      console.log('contributor filter', expenses);
     }
     if (!tagDefault(tagId)) {
       expensesFiltered = expenses.filter(function(expense) {
         return expense.tagId === tagId;
       });
       expenses = expensesFiltered;
-      console.log('tag filter', expenses);
     }
     this.setState({
       expenses: expenses
@@ -257,6 +255,8 @@ export default class ExpensesList extends React.Component {
           contributors={this.state.contributors}
           tags={this.state.tags}
           filterByTag={this.filterByTag}
+          selectedValueContributor={this.state.contributorId}
+          selectedValueTag={this.state.tagId}
           filterByContributor={this.filterByContributor} />
         <ExpenseTable
           expenses={this.state.expenses}

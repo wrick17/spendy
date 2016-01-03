@@ -6,7 +6,7 @@ class ModalBody extends React.Component {
     return (
       <div className="modal">
         <Container>
-          <h2 className="modal-title">{this.props.title || null}</h2>
+          { this.props.title ? <h2 className="modal-title">{this.props.title}</h2> : null }
           <a onClick={this.props.closeModal} className="close-modal">✕</a>
           {this.props.content}
         </Container>
@@ -22,7 +22,7 @@ export default class Modal extends React.Component {
   }
   closeModal(e) {
     e.preventDefault();
-    this.props.closeModal();
+    if (this.props.closeModal) this.props.closeModal();
   }
   render() {
     return (

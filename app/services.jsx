@@ -4,9 +4,13 @@ var baseUrl = 'https://spendyapi.herokuapp.com/api/v1';
 var services = {};
 
 // entries
-services.getAllEntries = function(callback) {
+services.getAllEntries = function(callback, date = null) {
+  var dateParams = '';
+  if (date) {
+    dateParams += '?fromDate=' + utils.firstDay(date) + '&toDate=' + utils.lastDay(date);
+  }
   superagent
-    .get(baseUrl + '/entry')
+    .get(baseUrl + '/entry/' + dateParams)
     .end(function(err, res) {
       if (err) return callback(err);
       return callback(res.body.reverse());
