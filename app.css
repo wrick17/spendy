@@ -668,15 +668,17 @@ a:hover {
 }
 .dashboard-container .filter-bar {
   font-size: 14px;
-  padding: 15px;
+  padding: 5px;
 }
 .dashboard-container .filter-bar .filter-group {
   display: inline;
   margin-right: 10px;
 }
+.dashboard-container .filter-bar .filter-group label {
+  margin-right: 10px;
+}
 .dashboard-container .filter-bar .filter-group select {
   background: #FFFFFF;
-  margin-left: 10px;
   border: 1px solid #e3e3e3;
   font-size: 14px;
   text-align: left;
@@ -790,15 +792,17 @@ a:hover {
 }
 .expenses-page .filter-bar {
   font-size: 14px;
-  padding: 15px;
+  padding: 5px;
 }
 .expenses-page .filter-bar .filter-group {
   display: inline;
   margin-right: 10px;
 }
+.expenses-page .filter-bar .filter-group label {
+  margin-right: 10px;
+}
 .expenses-page .filter-bar .filter-group select {
   background: #FFFFFF;
-  margin-left: 10px;
   border: 1px solid #e3e3e3;
   font-size: 14px;
   text-align: left;
