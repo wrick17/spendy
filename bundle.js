@@ -5917,7 +5917,9 @@
 	    this.setDateBounty = this.setDateBounty.bind(this);
 	    this.state = {
 	      expenses: 'loading',
-	      contributors: 'loading'
+	      contributors: 'loading',
+	      overviewDate: new Date(),
+	      expensesDate: new Date()
 	    };
 	  }
 
@@ -5930,7 +5932,7 @@
 	  }, {
 	    key: 'getExpenses',
 	    value: function getExpenses() {
-	      var date = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	      var date = arguments.length <= 0 || arguments[0] === undefined ? this.state.expensesDate : arguments[0];
 
 	      var that = this;
 	      that.setState({
@@ -5945,7 +5947,7 @@
 	  }, {
 	    key: 'getOverview',
 	    value: function getOverview() {
-	      var date = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	      var date = arguments.length <= 0 || arguments[0] === undefined ? this.state.overviewDate : arguments[0];
 
 	      var that = this;
 	      that.setState({
@@ -5966,11 +5968,17 @@
 	  }, {
 	    key: 'setDateBounty',
 	    value: function setDateBounty(date) {
+	      this.setState({
+	        overviewDate: date
+	      });
 	      this.getOverview(date);
 	    }
 	  }, {
 	    key: 'setDateExpenses',
 	    value: function setDateExpenses(date) {
+	      this.setState({
+	        expensesDate: date
+	      });
 	      this.getExpenses(date);
 	    }
 	  }, {
@@ -11208,7 +11216,7 @@
 	              null,
 	              'Tag Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', ref: 'name', onChange: this.onChangeTagName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', ref: 'name', onChange: this.onChangeTagName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -11495,7 +11503,7 @@
 	                null,
 	                'Tag Name:'
 	              ),
-	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', value: this.state.tagName, 'data-id': this.state.tagId, onChange: this.onChangeTagName })
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', value: this.state.tagName, 'data-id': this.state.tagId, onChange: this.onChangeTagName })
 	            ),
 	            this.state.tagError ? _react2['default'].createElement(
 	              'div',
@@ -11657,7 +11665,7 @@
 	              null,
 	              'Contributor Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', ref: 'name', onChange: this.onChangeContributorName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', ref: 'name', onChange: this.onChangeContributorName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -11944,7 +11952,7 @@
 	                null,
 	                'Contributor Name:'
 	              ),
-	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
 	            ),
 	            this.state.contributorError ? _react2['default'].createElement(
 	              'div',

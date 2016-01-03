@@ -56,7 +56,7 @@ class AddContributor extends React.Component {
         <form className="form" onSubmit={this.onAddContributor} >
           <div className="form-group">
             <label>Contributor Name:</label>
-            <input type="text" placeholder="Contributor Name..." ref="name" onChange={this.onChangeContributorName} />
+            <input type="text" placeholder="Contributor Name..." pattern="^[A-Za-z ]+" ref="name" onChange={this.onChangeContributorName} />
           </div>
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
           <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
@@ -251,7 +251,7 @@ export default class ContributorPage extends React.Component {
           <form className="form" onSubmit={this.onSaveContributor} >
             <div className="form-group">
               <label>Contributor Name:</label>
-              <input type="text" placeholder="Contributor Name..." value={this.state.contributorName} data-id={this.state.contributorId} onChange={this.onChangeContributorName} />
+              <input type="text" placeholder="Contributor Name..." pattern="^[A-Za-z ]+" value={this.state.contributorName} data-id={this.state.contributorId} onChange={this.onChangeContributorName} />
             </div>
             { this.state.contributorError ? <div className="error right">Don't be this lazy!</div> : null }
             <button className="button right">{this.state.submiting ? 'Saving...' : 'Save'}</button>

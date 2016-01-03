@@ -18,14 +18,16 @@ export default class Dashboard extends React.Component {
     this.setDateBounty = this.setDateBounty.bind(this);
     this.state = {
       expenses: 'loading',
-      contributors: 'loading'
+      contributors: 'loading',
+      overviewDate: new Date(),
+      expensesDate: new Date()
     };
   }
   componentWillMount() {
     this.getExpenses();
     this.getOverview();
   }
-  getExpenses(date = null) {
+  getExpenses(date = this.state.expensesDate) {
     var that = this;
     that.setState({
       expenses: 'loading'
@@ -36,7 +38,7 @@ export default class Dashboard extends React.Component {
       });
     }, date);
   }
-  getOverview(date = null) {
+  getOverview(date = this.state.overviewDate) {
     var that = this;
     that.setState({
       contributors: 'loading'
@@ -52,9 +54,15 @@ export default class Dashboard extends React.Component {
     this.getOverview();
   }
   setDateBounty(date) {
+    this.setState({
+      overviewDate: date
+    });
     this.getOverview(date);
   }
   setDateExpenses(date) {
+    this.setState({
+      expensesDate: date
+    });
     this.getExpenses(date);
   }
   render() {
