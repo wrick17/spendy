@@ -9821,7 +9821,7 @@
 	        'tagId': this.state.tagId
 	      };
 	      if (this.props.edit) return this.props.updateEntry(data);
-	      if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '') {
+	      if (data.item !== '' && data.cost !== '' && data.contributorId !== 'default' && data.tagId !== 'default') {
 	        this.setState({
 	          submiting: true
 	        });
@@ -9874,7 +9874,7 @@
 	              null,
 	              'Cost:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', value: this.state.cost, onChange: this.onChangeCost })
+	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', value: this.state.cost, onChange: this.onChangeCost, step: '0.01' })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9884,7 +9884,7 @@
 	              null,
 	              'Item:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', value: this.state.item, onChange: this.onChangeItemName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', pattern: '^[A-Za-z0-9].*$', value: this.state.item, onChange: this.onChangeItemName })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
