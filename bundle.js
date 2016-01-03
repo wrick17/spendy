@@ -5861,7 +5861,7 @@
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x3, _x4, _x5) { var _again = true; _function: while (_again) { var object = _x3, property = _x4, receiver = _x5; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x3 = parent; _x4 = property; _x5 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -5930,6 +5930,8 @@
 	  }, {
 	    key: 'getExpenses',
 	    value: function getExpenses() {
+	      var date = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
 	      var that = this;
 	      that.setState({
 	        expenses: 'loading'
@@ -5938,7 +5940,7 @@
 	        that.setState({
 	          expenses: expenses
 	        });
-	      });
+	      }, date);
 	    }
 	  }, {
 	    key: 'getOverview',
@@ -5968,7 +5970,9 @@
 	    }
 	  }, {
 	    key: 'setDateExpenses',
-	    value: function setDateExpenses(date) {}
+	    value: function setDateExpenses(date) {
+	      this.getExpenses(date);
+	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -9948,7 +9952,13 @@
 
 	// entries
 	services.getAllEntries = function (callback) {
-	  _superagent2['default'].get(baseUrl + '/entry').end(function (err, res) {
+	  var date = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+	  var dateParams = '';
+	  if (date) {
+	    dateParams += '?fromDate=' + _utilsJsx2['default'].firstDay(date) + '&toDate=' + _utilsJsx2['default'].lastDay(date);
+	  }
+	  _superagent2['default'].get(baseUrl + '/entry/' + dateParams).end(function (err, res) {
 	    if (err) return callback(err);
 	    return callback(res.body.reverse());
 	  });
@@ -10565,7 +10575,7 @@
 	            null,
 	            'Show all expenses by'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.contributors, onChange: this.onChangeContributor })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
 	        ),
 	        _react2['default'].createElement(
 	          'div',
@@ -10575,7 +10585,7 @@
 	            null,
 	            'for'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.tags, onChange: this.onChangeTag })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.tags, selectedValue: this.props.selectedValueTag, onChange: this.onChangeTag })
 	        )
 	      );
 	    }
@@ -10647,7 +10657,9 @@
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      this.setState({
-	        expenses: nextProps.expenses
+	        expenses: nextProps.expenses,
+	        contributorId: 'default',
+	        tagId: 'default'
 	      });
 	    }
 	  }, {
@@ -10717,27 +10729,23 @@
 	      function tagDefault(tagId) {
 	        return tagId === 'default' || tagId === '' ? true : false;
 	      }
-	      console.log(this.state.contributorMap[contributorId], this.state.tagMap[tagId]);
 	      var expenses = this.props.expenses,
 	          expensesFiltered = expenses,
 	          that = this;
 	      if (contributorDefault(contributorId) && tagDefault(tagId)) return this.setState({
 	        expenses: expenses
 	      });
-	      console.log('one or more not default');
 	      if (!contributorDefault(contributorId)) {
 	        expensesFiltered = expenses.filter(function (expense) {
 	          return expense.contributorId === contributorId;
 	        });
 	        expenses = expensesFiltered;
-	        console.log('contributor filter', expenses);
 	      }
 	      if (!tagDefault(tagId)) {
 	        expensesFiltered = expenses.filter(function (expense) {
 	          return expense.tagId === tagId;
 	        });
 	        expenses = expensesFiltered;
-	        console.log('tag filter', expenses);
 	      }
 	      this.setState({
 	        expenses: expenses
@@ -10769,6 +10777,8 @@
 	          contributors: this.state.contributors,
 	          tags: this.state.tags,
 	          filterByTag: this.filterByTag,
+	          selectedValueContributor: this.state.contributorId,
+	          selectedValueTag: this.state.tagId,
 	          filterByContributor: this.filterByContributor }),
 	        _react2['default'].createElement(ExpenseTable, {
 	          expenses: this.state.expenses,
@@ -10854,11 +10864,11 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(
+	          this.props.title ? _react2['default'].createElement(
 	            'h2',
 	            { className: 'modal-title' },
-	            this.props.title || null
-	          ),
+	            this.props.title
+	          ) : null,
 	          _react2['default'].createElement(
 	            'a',
 	            { onClick: this.props.closeModal, className: 'close-modal' },
@@ -10887,7 +10897,7 @@
 	    key: 'closeModal',
 	    value: function closeModal(e) {
 	      e.preventDefault();
-	      this.props.closeModal();
+	      if (this.props.closeModal) this.props.closeModal();
 	    }
 	  }, {
 	    key: 'render',

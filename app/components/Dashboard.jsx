@@ -25,7 +25,7 @@ export default class Dashboard extends React.Component {
     this.getExpenses();
     this.getOverview();
   }
-  getExpenses() {
+  getExpenses(date = null) {
     var that = this;
     that.setState({
       expenses: 'loading'
@@ -34,7 +34,7 @@ export default class Dashboard extends React.Component {
       that.setState({
         expenses: expenses
       });
-    });
+    }, date);
   }
   getOverview(date = null) {
     var that = this;
@@ -55,6 +55,7 @@ export default class Dashboard extends React.Component {
     this.getOverview(date);
   }
   setDateExpenses(date) {
+    this.getExpenses(date);
   }
   render() {
     return (
