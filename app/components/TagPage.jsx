@@ -78,8 +78,8 @@ class ManageTagList extends React.Component {
         <li className={classes}  key={tag._id} >
           <label>{tag.name}</label>
           <div>
+            { tag.isDeletable ? <a onClick={that.props.deleteTag} data-id={tag._id} >Delete</a> : null }
             <a onClick={that.props.editTag} data-id={tag._id} data-name={tag.name} data-active={tag.active} >Edit</a>
-            <a onClick={that.props.deleteTag} data-id={tag._id} >Delete</a>
           </div>
         </li>
       );

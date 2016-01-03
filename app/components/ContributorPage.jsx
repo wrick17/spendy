@@ -78,8 +78,8 @@ class ManageContributorList extends React.Component {
         <li className={classes}  key={contributor._id} >
           <label>{contributor.name}</label>
           <div>
+            { contributor.isDeletable ? <a onClick={that.props.deleteContributor} data-id={contributor._id} >Delete</a> : null }
             <a onClick={that.props.editContributor} data-id={contributor._id} data-name={contributor.name} data-active={contributor.active} >Edit</a>
-            <a onClick={that.props.deleteContributor} data-id={contributor._id} >Delete</a>
           </div>
         </li>
       );
