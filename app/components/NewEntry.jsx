@@ -73,7 +73,7 @@ export default class NewEntry extends React.Component {
       'tagId': this.state.tagId
     };
     if (this.props.edit) return this.props.updateEntry(data);
-    if (data.item !== '' && data.cost !== '' && data.contributorId !== '' && data.tagId !== '' ) {
+    if (data.item !== '' && data.cost !== '' && data.contributorId !== 'default' && data.tagId !== 'default' ) {
       this.setState({
         submiting: true
       });
@@ -107,11 +107,11 @@ export default class NewEntry extends React.Component {
           </div>
           <div className="form-group">
             <label>Cost:</label>
-            <input type="number" placeholder="Total Cost" value={this.state.cost} onChange={this.onChangeCost} />
+            <input type="number" placeholder="Total Cost" value={this.state.cost} onChange={this.onChangeCost} step="0.01" />
           </div>
           <div className="form-group">
             <label>Item:</label>
-            <input type="text" placeholder="Item spent on" value={this.state.item} onChange={this.onChangeItemName} />
+            <input type="text" placeholder="Item spent on" pattern="^[A-Za-z0-9].*$" value={this.state.item} onChange={this.onChangeItemName} />
           </div>
           <div className="form-group">
             <label>Contributor:</label>
