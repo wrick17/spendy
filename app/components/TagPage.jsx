@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from './Container.jsx';
 import services from './../services.jsx';
+import utils from './../utils.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import Modal from './Modal.jsx';
@@ -26,7 +27,8 @@ class AddTag extends React.Component {
     e.preventDefault();
     var that = this;
     var data = {
-      'name': this.state.newTagName
+      'name': this.state.newTagName,
+      'active': true
     }
     if (this.state.newTagName !== '') {
       this.setState({
@@ -69,12 +71,14 @@ class ManageTagList extends React.Component {
     if (this.props.tags === 'loading') return <Loading />;
     if (this.props.tags.length < 1) return <NoRecords />;
     var that = this;
-    var tags = this.props.tags.map(function(tag) {
+    var tags = utils.sortByKey(this.props.tags, 'active').map(function(tag) {
+      var classes = 'tag';
+      if (!tag.active) classes += ' disabled';
       return (
-        <li className="tag" key={tag._id} >
+        <li className={classes}  key={tag._id} >
           <label>{tag.name}</label>
           <div>
-            <a onClick={that.props.editTag} data-id={tag._id} data-name={tag.name} >Edit</a>
+            <a onClick={that.props.editTag} data-id={tag._id} data-name={tag.name} data-active={tag.active} >Edit</a>
             <a onClick={that.props.deleteTag} data-id={tag._id} >Delete</a>
           </div>
         </li>
@@ -109,6 +113,7 @@ export default class TagPage extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.onSaveTag = this.onSaveTag.bind(this);
     this.onChangeTagName = this.onChangeTagName.bind(this);
+    this.changeTagStatus = this.changeTagStatus.bind(this);
     this.confirmDelete = this.confirmDelete.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.showDeleteModal = this.showDeleteModal.bind(this);
@@ -119,6 +124,8 @@ export default class TagPage extends React.Component {
       tagName: '',
       tagId: '',
       tagError: false,
+      tagActive: true,
+      statusChanging: false,
       submiting: false
     };
   }
@@ -128,7 +135,8 @@ export default class TagPage extends React.Component {
   getAllTags() {
     var that = this;
     that.setState({
-      tags: 'loading'
+      tags: 'loading',
+      tagError: false
     });
     services.getAllTags(function(tags) {
       that.setState({
@@ -152,7 +160,8 @@ export default class TagPage extends React.Component {
     this.setState({
       isEditModalOpen: true,
       tagName: e.target.dataset.name,
-      tagId: e.target.dataset.id
+      tagId: e.target.dataset.id,
+      tagActive: JSON.parse(e.target.dataset.active)
     });
   }
   onChangeTagName(e) {
@@ -163,24 +172,55 @@ export default class TagPage extends React.Component {
   onSaveTag(e) {
     e.preventDefault();
     var data = {
-      name: this.state.tagName
+      name: this.state.tagName,
+      active: this.state.tagActive
     }
     var that = this;
     this.setState({
       submiting: true
     });
-    services.updateTag(this.state.tagId, data, function(res) {
-      that.setState({
-        submiting: false
+    if (this.state.tagName !== '')
+      services.updateTag(this.state.tagId, data, function(res) {
+        that.setState({
+          submiting: false
+        });
+        that.refresh();
+        that.closeModal();
       });
-      that.refresh();
-      that.closeModal();
-    });
+    else
+      this.setState({
+        tagError: true
+      });
   }
   closeModal() {
     this.setState({
       isEditModalOpen: false
     });
+  }
+  changeTagStatus(e) {
+    e.preventDefault();
+    var data = {
+      name: this.state.tagName,
+      active: !this.state.tagActive
+    }
+    var that = this;
+    if (this.state.tagName !== '') {
+      that.setState({
+        statusChanging: true
+      });
+      services.updateTag(this.state.tagId, data, function(res) {
+        that.refresh();
+        that.setState({
+          statusChanging: false
+        });
+        that.closeModal();
+      });
+    }
+    else
+      this.setState({
+        tagError: true
+      });
+
   }
   showDeleteModal(e) {
     this.setState({
@@ -215,6 +255,7 @@ export default class TagPage extends React.Component {
             </div>
             { this.state.tagError ? <div className="error right">Don't be this lazy!</div> : null }
             <button className="button right">{this.state.submiting ? 'Saving...' : 'Save'}</button>
+            <button onClick={this.changeTagStatus} className="button">{this.state.statusChanging ? 'Making' : 'Make'} { this.state.tagActive ? 'Inactive' : 'Active' } {this.state.statusChanging ? '...' : null}</button>
           </form>
         </Modal>
         <DeleteModal

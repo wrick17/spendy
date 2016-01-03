@@ -11107,6 +11107,10 @@
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
 
+	var _utilsJsx = __webpack_require__(316);
+
+	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
+
 	var _LoadingJsx = __webpack_require__(317);
 
 	var _LoadingJsx2 = _interopRequireDefault(_LoadingJsx);
@@ -11152,7 +11156,8 @@
 	      e.preventDefault();
 	      var that = this;
 	      var data = {
-	        'name': this.state.newTagName
+	        'name': this.state.newTagName,
+	        'active': true
 	      };
 	      if (this.state.newTagName !== '') {
 	        this.setState({
@@ -11228,10 +11233,12 @@
 	      if (this.props.tags === 'loading') return _react2['default'].createElement(_LoadingJsx2['default'], null);
 	      if (this.props.tags.length < 1) return _react2['default'].createElement(_NoRecordsJsx2['default'], null);
 	      var that = this;
-	      var tags = this.props.tags.map(function (tag) {
+	      var tags = _utilsJsx2['default'].sortByKey(this.props.tags, 'active').map(function (tag) {
+	        var classes = 'tag';
+	        if (!tag.active) classes += ' disabled';
 	        return _react2['default'].createElement(
 	          'li',
-	          { className: 'tag', key: tag._id },
+	          { className: classes, key: tag._id },
 	          _react2['default'].createElement(
 	            'label',
 	            null,
@@ -11242,7 +11249,7 @@
 	            null,
 	            _react2['default'].createElement(
 	              'a',
-	              { onClick: that.props.editTag, 'data-id': tag._id, 'data-name': tag.name },
+	              { onClick: that.props.editTag, 'data-id': tag._id, 'data-name': tag.name, 'data-active': tag.active },
 	              'Edit'
 	            ),
 	            _react2['default'].createElement(
@@ -11306,6 +11313,7 @@
 	    this.closeModal = this.closeModal.bind(this);
 	    this.onSaveTag = this.onSaveTag.bind(this);
 	    this.onChangeTagName = this.onChangeTagName.bind(this);
+	    this.changeTagStatus = this.changeTagStatus.bind(this);
 	    this.confirmDelete = this.confirmDelete.bind(this);
 	    this.closeDeleteModal = this.closeDeleteModal.bind(this);
 	    this.showDeleteModal = this.showDeleteModal.bind(this);
@@ -11316,6 +11324,8 @@
 	      tagName: '',
 	      tagId: '',
 	      tagError: false,
+	      tagActive: true,
+	      statusChanging: false,
 	      submiting: false
 	    };
 	  }
@@ -11330,7 +11340,8 @@
 	    value: function getAllTags() {
 	      var that = this;
 	      that.setState({
-	        tags: 'loading'
+	        tags: 'loading',
+	        tagError: false
 	      });
 	      _servicesJsx2['default'].getAllTags(function (tags) {
 	        that.setState({
@@ -11360,7 +11371,8 @@
 	      this.setState({
 	        isEditModalOpen: true,
 	        tagName: e.target.dataset.name,
-	        tagId: e.target.dataset.id
+	        tagId: e.target.dataset.id,
+	        tagActive: JSON.parse(e.target.dataset.active)
 	      });
 	    }
 	  }, {
@@ -11375,18 +11387,21 @@
 	    value: function onSaveTag(e) {
 	      e.preventDefault();
 	      var data = {
-	        name: this.state.tagName
+	        name: this.state.tagName,
+	        active: this.state.tagActive
 	      };
 	      var that = this;
 	      this.setState({
 	        submiting: true
 	      });
-	      _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
+	      if (this.state.tagName !== '') _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
 	        that.setState({
 	          submiting: false
 	        });
 	        that.refresh();
 	        that.closeModal();
+	      });else this.setState({
+	        tagError: true
 	      });
 	    }
 	  }, {
@@ -11394,6 +11409,30 @@
 	    value: function closeModal() {
 	      this.setState({
 	        isEditModalOpen: false
+	      });
+	    }
+	  }, {
+	    key: 'changeTagStatus',
+	    value: function changeTagStatus(e) {
+	      e.preventDefault();
+	      var data = {
+	        name: this.state.tagName,
+	        active: !this.state.tagActive
+	      };
+	      var that = this;
+	      if (this.state.tagName !== '') {
+	        that.setState({
+	          statusChanging: true
+	        });
+	        _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
+	          that.refresh();
+	          that.setState({
+	            statusChanging: false
+	          });
+	          that.closeModal();
+	        });
+	      } else this.setState({
+	        tagError: true
 	      });
 	    }
 	  }, {
@@ -11457,6 +11496,15 @@
 	              'button',
 	              { className: 'button right' },
 	              this.state.submiting ? 'Saving...' : 'Save'
+	            ),
+	            _react2['default'].createElement(
+	              'button',
+	              { onClick: this.changeTagStatus, className: 'button' },
+	              this.state.statusChanging ? 'Making' : 'Make',
+	              ' ',
+	              this.state.tagActive ? 'Inactive' : 'Active',
+	              ' ',
+	              this.state.statusChanging ? '...' : null
 	            )
 	          )
 	        ),
