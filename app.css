@@ -24,10 +24,14 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   background: #EF5350;
   border: 0;
-  border-bottom: 2px solid #eb2521;
+  border-bottom: 2px solid #EF5350;
   cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #eb2521;
-  box-shadow: inset 0 -2px #eb2521;
+}
+.button:hover {
+  background: #ed3c39;
+  border-bottom-color: #de1814;
+  -webkit-box-shadow: inset 0 -2px #de1814;
+  box-shadow: inset 0 -2px #de1814;
 }
 .form {
   margin: 15px 0;
@@ -929,13 +933,14 @@ a:hover {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  margin: 10px 10px 0;
+  margin: 10px 10px 0 0;
 }
 .add-container .manage-tag-container,
 .add-container .manage-contributor-container {
   flex: 1 0 300px;
   padding: 10px;
   margin: 10px 10px 0;
+  border-radius: 5px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
@@ -949,6 +954,7 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   padding: 5px 10px;
+  border-radius: 5px;
 }
 .add-container .manage-tag-container ul li:hover,
 .add-container .manage-contributor-container ul li:hover {
