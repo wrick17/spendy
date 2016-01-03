@@ -9564,11 +9564,13 @@
 	      months = [];
 	  items.map(function (item) {
 	    var month = new Date(item.date).toString().slice(4, 7) + ' ' + new Date(item.date).toString().slice(11, 15);
+	    var monthIndex = new Date(item.date).toString().slice(11, 15) + utils.zeroPadding(new Date(item.date).getMonth());
 	    if (months.indexOf(month) === -1) {
 	      months.push(month);
 	      group.push({
 	        month: month,
-	        items: [item]
+	        items: [item],
+	        monthIndex: monthIndex
 	      });
 	    } else {
 	      var _iteratorNormalCompletion = true;
@@ -9597,8 +9599,7 @@
 	      }
 	    }
 	  });
-
-	  return group;
+	  return utils.sortByKey(group, 'monthIndex');
 	};
 
 	exports['default'] = utils;
