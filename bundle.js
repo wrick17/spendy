@@ -11262,11 +11262,11 @@
 	              { onClick: that.props.editTag, 'data-id': tag._id, 'data-name': tag.name, 'data-active': tag.active },
 	              'Edit'
 	            ),
-	            _react2['default'].createElement(
+	            tag.isDeletable ? _react2['default'].createElement(
 	              'a',
 	              { onClick: that.props.deleteTag, 'data-id': tag._id },
 	              'Delete'
-	            )
+	            ) : null
 	          )
 	        );
 	      });
@@ -11711,11 +11711,11 @@
 	              { onClick: that.props.editContributor, 'data-id': contributor._id, 'data-name': contributor.name, 'data-active': contributor.active },
 	              'Edit'
 	            ),
-	            _react2['default'].createElement(
+	            tag.isDeletable ? _react2['default'].createElement(
 	              'a',
 	              { onClick: that.props.deleteContributor, 'data-id': contributor._id },
 	              'Delete'
-	            )
+	            ) : null
 	          )
 	        );
 	      });
