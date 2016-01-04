@@ -4229,7 +4229,7 @@
 	          _react2['default'].createElement(
 	            'span',
 	            null,
-	            'Alpha'
+	            'Beta'
 	          )
 	        )
 	      );
