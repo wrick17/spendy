@@ -10587,7 +10587,7 @@
 	            null,
 	            'Show all expenses by'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'everyone', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'Everyone', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
 	        ),
 	        _react2['default'].createElement(
 	          'div',
@@ -10597,7 +10597,7 @@
 	            null,
 	            'for'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'everything', noDisabled: true, options: this.props.tags, selectedValue: this.props.selectedValueTag, onChange: this.onChangeTag })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'Everything', noDisabled: true, options: this.props.tags, selectedValue: this.props.selectedValueTag, onChange: this.onChangeTag })
 	        )
 	      );
 	    }

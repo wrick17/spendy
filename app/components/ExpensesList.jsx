@@ -93,11 +93,11 @@ class FilterBar extends React.Component {
       <div className="filter-bar">
         <div className="filter-group">
           <label>Show all expenses by</label>
-          <Select default="everyone" noDisabled options={this.props.contributors} selectedValue={this.props.selectedValueContributor} onChange={this.onChangeContributor} />
+          <Select default="Everyone" noDisabled options={this.props.contributors} selectedValue={this.props.selectedValueContributor} onChange={this.onChangeContributor} />
         </div>
         <div className="filter-group">
           <label>for</label>
-          <Select default="everything" noDisabled options={this.props.tags} selectedValue={this.props.selectedValueTag} onChange={this.onChangeTag} />
+          <Select default="Everything" noDisabled options={this.props.tags} selectedValue={this.props.selectedValueTag} onChange={this.onChangeTag} />
         </div>
       </div>
     );
