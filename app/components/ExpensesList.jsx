@@ -19,8 +19,8 @@ class ExpenseGroup extends React.Component {
           <td data-label="Date">{displayDate}</td>
           <td data-label="Cost">₹{expense.cost}</td>
           <td data-label="Item">{expense.item}</td>
-          <td data-label="Contributor">{that.props.contributorMap[expense.contributorId] || 'Loading..'}</td>
-          <td data-label="Tag">{that.props.tagMap[expense.tagId] || 'Loading..'}</td>
+          <td data-label="Contributor">{expense.contributorName || 'Loading..'}</td>
+          <td data-label="Tag">{expense.tagName || 'Loading..'}</td>
           <td data-label="Actions" className="actions">
             <div onClick={that.props.editEntry}
                 data-cost={expense.cost}
@@ -55,8 +55,6 @@ class ExpenseTable extends React.Component {
                 minimal={that.props.minimal}
                 key={expenseGroup.month}
                 expenseGroup={expenseGroup}
-                contributorMap={that.props.contributorMap}
-                tagMap={that.props.tagMap}
                 editEntry={that.props.editEntry}
                 deleteEntry={that.props.deleteEntry} />
     });
@@ -95,11 +93,11 @@ class FilterBar extends React.Component {
       <div className="filter-bar">
         <div className="filter-group">
           <label>Show all expenses by</label>
-          <Select default="All" noDisabled options={this.props.contributors} selectedValue={this.props.selectedValueContributor} onChange={this.onChangeContributor} />
+          <Select default="Everyone" noDisabled options={this.props.contributors} selectedValue={this.props.selectedValueContributor} onChange={this.onChangeContributor} />
         </div>
         <div className="filter-group">
           <label>for</label>
-          <Select default="All" noDisabled options={this.props.tags} selectedValue={this.props.selectedValueTag} onChange={this.onChangeTag} />
+          <Select default="Everything" noDisabled options={this.props.tags} selectedValue={this.props.selectedValueTag} onChange={this.onChangeTag} />
         </div>
       </div>
     );
@@ -121,10 +119,8 @@ export default class ExpensesList extends React.Component {
     this.filterExpenses = this.filterExpenses.bind(this);
     this.state = {
       id: '',
-      tagMap: [],
-      contributorMap: [],
-      contributors: [],
-      tags: [],
+      contributors: this.props.contributors,
+      tags: this.props.tags,
       isModalOpen: false,
       isDeleteModalOpen: false,
       date: '',
@@ -137,32 +133,14 @@ export default class ExpensesList extends React.Component {
   }
   componentDidMount() {
     var that = this;
-    var tagMap = {};
-    var contributorMap = {};
-    services.getAllTags(function(tags) {
-      tags.map(function(tag) {
-        tagMap[tag._id] = tag.name;
-      });
-      that.setState({
-        tagMap: tagMap,
-        tags: tags
-      });
-    });
-    services.getAllContributors(function(contributors) {
-      contributors.map(function(contributor) {
-        contributorMap[contributor._id] = contributor.name;
-      });
-      that.setState({
-        contributorMap: contributorMap,
-        contributors: contributors
-      });
-    });
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
       expenses: nextProps.expenses,
       contributorId: 'default',
-      tagId: 'default'
+      tagId: 'default',
+      contributors: nextProps.contributors,
+      tags: nextProps.tags
     });
   }
   deleteEntry() {
@@ -260,8 +238,6 @@ export default class ExpensesList extends React.Component {
           filterByContributor={this.filterByContributor} />
         <ExpenseTable
           expenses={this.state.expenses}
-          contributorMap={this.state.contributorMap}
-          tagMap={this.state.tagMap}
           editEntry={this.editEntry}
           minimal={this.props.minimal}
           deleteEntry={this.showDeleteModal} />
@@ -273,6 +249,8 @@ export default class ExpensesList extends React.Component {
             item={this.state.item}
             date={this.state.date}
             cost={this.state.cost}
+            contributors={this.state.contributors}
+            tags={this.state.tags}
             contributorId={this.state.contributorId}
             tagId={this.state.tagId}
             updateEntry={this.updateEntry}

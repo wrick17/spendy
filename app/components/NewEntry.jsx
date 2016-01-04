@@ -18,24 +18,9 @@ export default class NewEntry extends React.Component {
       cost: this.props.cost || '',
       item: this.props.item || '',
       date: this.props.date || '',
-      tags: [],
-      contributors: [],
       error: false,
       submiting: false
     };
-  }
-  componentDidMount() {
-    var that = this;
-    services.getAllTags(function(tags) {
-      that.setState({
-        tags: tags
-      });
-    });
-    services.getAllContributors(function(contributors) {
-      that.setState({
-        contributors: contributors
-      });
-    });
   }
   onChangeTag(e) {
     this.setState({
@@ -115,11 +100,11 @@ export default class NewEntry extends React.Component {
           </div>
           <div className="form-group">
             <label>Contributor:</label>
-            <Select options={this.state.contributors} default="Choose Contributor" selectedValue={this.state.contributorId} onChange={this.onChangeContributor} />
+            <Select options={this.props.contributors} default="Choose Contributor" selectedValue={this.state.contributorId} onChange={this.onChangeContributor} />
           </div>
           <div className="form-group">
             <label>Tag:</label>
-            <Select options={this.state.tags} default="Choose Tag" selectedValue={this.state.tagId} onChange={this.onChangeTag} />
+            <Select options={this.props.tags} default="Choose Tag" selectedValue={this.state.tagId} onChange={this.onChangeTag} />
           </div>
           { this.state.error ? <div className="error right">Please fill out all the details above</div> : null }
           <button className="button right">{this.props.edit ? (this.state.submiting ? 'Saving...' : 'Save') : (this.state.submiting ? 'Adding...' : 'Add')}</button>

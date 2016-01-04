@@ -5915,9 +5915,11 @@
 	    this.refresh = this.refresh.bind(this);
 	    this.setDateExpenses = this.setDateExpenses.bind(this);
 	    this.setDateBounty = this.setDateBounty.bind(this);
+	    this.getTags = this.getTags.bind(this);
 	    this.state = {
 	      expenses: 'loading',
 	      contributors: 'loading',
+	      tags: 'loading',
 	      overviewDate: new Date(),
 	      expensesDate: new Date()
 	    };
@@ -5926,8 +5928,17 @@
 	  _createClass(Dashboard, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this.getExpenses();
-	      this.getOverview();
+	      this.getTags();
+	    }
+	  }, {
+	    key: 'getTags',
+	    value: function getTags() {
+	      var that = this;
+	      _servicesJsx2['default'].getAllTags(function (tags) {
+	        that.setState({
+	          tags: tags
+	        });
+	      });
 	    }
 	  }, {
 	    key: 'getExpenses',
@@ -5994,7 +6005,7 @@
 	            'div',
 	            { className: 'dashboard' },
 	            _react2['default'].createElement(_OverviewJsx2['default'], { contributors: this.state.contributors, setDate: this.setDateBounty }),
-	            _react2['default'].createElement(_NewEntryJsx2['default'], { refresh: this.refresh })
+	            _react2['default'].createElement(_NewEntryJsx2['default'], { refresh: this.refresh, contributors: this.state.contributors, tags: this.state.tags })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -6014,7 +6025,7 @@
 	              ),
 	              _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDateExpenses, view: 'year' })
 	            ),
-	            _react2['default'].createElement(_ExpensesListJsx2['default'], { minimal: true, expenses: this.state.expenses, refresh: this.refresh })
+	            _react2['default'].createElement(_ExpensesListJsx2['default'], { minimal: true, expenses: this.state.expenses, contributors: this.state.contributors, tags: this.state.tags, refresh: this.refresh })
 	          )
 	        )
 	      );
@@ -9602,6 +9613,16 @@
 	  return utils.sortByKey(group, 'monthIndex');
 	};
 
+	utils.gatherUnique = function (array, key) {
+	  var unique = {};
+	  var distinct = [];
+	  for (var i in array) {
+	    if (typeof unique[array[i][key]] == "undefined") distinct.push(array[i]);
+	    unique[array[i][key]] = 0;
+	  }
+	  return distinct;
+	};
+
 	exports['default'] = utils;
 	module.exports = exports['default'];
 
@@ -9760,29 +9781,12 @@
 	      cost: this.props.cost || '',
 	      item: this.props.item || '',
 	      date: this.props.date || '',
-	      tags: [],
-	      contributors: [],
 	      error: false,
 	      submiting: false
 	    };
 	  }
 
 	  _createClass(NewEntry, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var that = this;
-	      _servicesJsx2['default'].getAllTags(function (tags) {
-	        that.setState({
-	          tags: tags
-	        });
-	      });
-	      _servicesJsx2['default'].getAllContributors(function (contributors) {
-	        that.setState({
-	          contributors: contributors
-	        });
-	      });
-	    }
-	  }, {
 	    key: 'onChangeTag',
 	    value: function onChangeTag(e) {
 	      this.setState({
@@ -9903,7 +9907,7 @@
 	              null,
 	              'Contributor:'
 	            ),
-	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.state.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
+	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.props.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9913,7 +9917,7 @@
 	              null,
 	              'Tag:'
 	            ),
-	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.state.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
+	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.props.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -10305,6 +10309,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var that = this;
+	      if (this.props.options === 'loading') return null;
 	      var optionList = this.props.options.map(function (option) {
 	        if (option.hasOwnProperty('active') && !option.active) return null;
 	        return _react2['default'].createElement(
@@ -10426,12 +10431,12 @@
 	          _react2['default'].createElement(
 	            'td',
 	            { 'data-label': 'Contributor' },
-	            that.props.contributorMap[expense.contributorId] || 'Loading..'
+	            expense.contributorName || 'Loading..'
 	          ),
 	          _react2['default'].createElement(
 	            'td',
 	            { 'data-label': 'Tag' },
-	            that.props.tagMap[expense.tagId] || 'Loading..'
+	            expense.tagName || 'Loading..'
 	          ),
 	          _react2['default'].createElement(
 	            'td',
@@ -10495,8 +10500,6 @@
 	          minimal: that.props.minimal,
 	          key: expenseGroup.month,
 	          expenseGroup: expenseGroup,
-	          contributorMap: that.props.contributorMap,
-	          tagMap: that.props.tagMap,
 	          editEntry: that.props.editEntry,
 	          deleteEntry: that.props.deleteEntry });
 	      });
@@ -10584,7 +10587,7 @@
 	            null,
 	            'Show all expenses by'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'Everyone', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
 	        ),
 	        _react2['default'].createElement(
 	          'div',
@@ -10594,7 +10597,7 @@
 	            null,
 	            'for'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.tags, selectedValue: this.props.selectedValueTag, onChange: this.onChangeTag })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'Everything', noDisabled: true, options: this.props.tags, selectedValue: this.props.selectedValueTag, onChange: this.onChangeTag })
 	        )
 	      );
 	    }
@@ -10622,10 +10625,8 @@
 	    this.filterExpenses = this.filterExpenses.bind(this);
 	    this.state = {
 	      id: '',
-	      tagMap: [],
-	      contributorMap: [],
-	      contributors: [],
-	      tags: [],
+	      contributors: this.props.contributors,
+	      tags: this.props.tags,
 	      isModalOpen: false,
 	      isDeleteModalOpen: false,
 	      date: '',
@@ -10641,26 +10642,6 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var that = this;
-	      var tagMap = {};
-	      var contributorMap = {};
-	      _servicesJsx2['default'].getAllTags(function (tags) {
-	        tags.map(function (tag) {
-	          tagMap[tag._id] = tag.name;
-	        });
-	        that.setState({
-	          tagMap: tagMap,
-	          tags: tags
-	        });
-	      });
-	      _servicesJsx2['default'].getAllContributors(function (contributors) {
-	        contributors.map(function (contributor) {
-	          contributorMap[contributor._id] = contributor.name;
-	        });
-	        that.setState({
-	          contributorMap: contributorMap,
-	          contributors: contributors
-	        });
-	      });
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -10668,7 +10649,9 @@
 	      this.setState({
 	        expenses: nextProps.expenses,
 	        contributorId: 'default',
-	        tagId: 'default'
+	        tagId: 'default',
+	        contributors: nextProps.contributors,
+	        tags: nextProps.tags
 	      });
 	    }
 	  }, {
@@ -10791,8 +10774,6 @@
 	          filterByContributor: this.filterByContributor }),
 	        _react2['default'].createElement(ExpenseTable, {
 	          expenses: this.state.expenses,
-	          contributorMap: this.state.contributorMap,
-	          tagMap: this.state.tagMap,
 	          editEntry: this.editEntry,
 	          minimal: this.props.minimal,
 	          deleteEntry: this.showDeleteModal }),
@@ -10806,6 +10787,8 @@
 	            item: this.state.item,
 	            date: this.state.date,
 	            cost: this.state.cost,
+	            contributors: this.state.contributors,
+	            tags: this.state.tags,
 	            contributorId: this.state.contributorId,
 	            tagId: this.state.tagId,
 	            updateEntry: this.updateEntry,
@@ -11047,9 +11030,13 @@
 
 	    _get(Object.getPrototypeOf(Expenses.prototype), 'constructor', this).call(this, props);
 	    this.getExpenses = this.getExpenses.bind(this);
+	    this.getContributors = this.getContributors.bind(this);
+	    this.getTags = this.getTags.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      expenses: 'loading'
+	      expenses: 'loading',
+	      contributors: 'loading',
+	      tags: 'loading'
 	    };
 	  }
 
@@ -11057,6 +11044,28 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.getExpenses();
+	      this.getContributors();
+	      this.getTags();
+	    }
+	  }, {
+	    key: 'getContributors',
+	    value: function getContributors() {
+	      var that = this;
+	      _servicesJsx2['default'].getAllContributors(function (contributors) {
+	        that.setState({
+	          contributors: contributors
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'getTags',
+	    value: function getTags() {
+	      var that = this;
+	      _servicesJsx2['default'].getAllTags(function (tags) {
+	        that.setState({
+	          tags: tags
+	        });
+	      });
 	    }
 	  }, {
 	    key: 'getExpenses',
@@ -11082,7 +11091,7 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(_ExpensesListJsx2['default'], { expenses: this.state.expenses, refresh: this.refresh })
+	          _react2['default'].createElement(_ExpensesListJsx2['default'], { expenses: this.state.expenses, contributors: this.state.contributors, tags: this.state.tags, refresh: this.refresh })
 	        )
 	      );
 	    }
