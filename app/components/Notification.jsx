@@ -19,7 +19,7 @@ export default class Notification extends React.Component {
     var that = this;
     setTimeout(function() {
       that.closeModal();
-    }, 3000);
+    }, 2000);
   }
   closeModal() {
     this.setState({

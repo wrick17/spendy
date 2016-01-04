@@ -58,6 +58,7 @@ class DatePicker extends React.Component {
         { this.state.open ? <DayPicker
           date={this.state.date}
           maxDate={new Date()}
+          hideFooter={(this.props.view === 'year')}
           view={ this.props.view || "month" }
           onSelect={this.setMonth}
           onChange={this.setDate} /> : null }

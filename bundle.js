@@ -6086,6 +6086,8 @@
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
+	var _reactRouter = __webpack_require__(162);
+
 	var Bounty = (function (_React$Component) {
 	  _inherits(Bounty, _React$Component);
 
@@ -6156,14 +6158,25 @@
 	      contributors.map(function (contributor) {
 	        if (!contributor.active) return null;
 	        rank++;
-	        return total += parseInt(contributor.expenditure);
+	        return total += parseFloat(contributor.expenditure);
 	      });
 	      average = total / rank;
 	      rank = 0;
-	      var bountyList = contributors.map(function (contributor) {
-	        if (!contributor.active) return null;
+	      var bountyList = contributors.filter(function (contributor) {
+	        return contributor.active;
+	      }).map(function (contributor) {
 	        return _react2['default'].createElement(Bounty, { key: contributor._id, average: average, rank: ++rank, name: contributor.name, bounty: contributor.expenditure });
 	      });
+	      if (bountyList.length < 1) return _react2['default'].createElement(
+	        'div',
+	        { className: 'no-records' },
+	        'No active contributors. You can add some ',
+	        _react2['default'].createElement(
+	          _reactRouter.Link,
+	          { to: '/contributor' },
+	          'here'
+	        )
+	      );
 	      return _react2['default'].createElement(
 	        'ul',
 	        { className: 'bounty-list' },
@@ -6350,6 +6363,7 @@
 	        this.state.open ? _react2['default'].createElement(_reactDatePicker2['default'], {
 	          date: this.state.date,
 	          maxDate: new Date(),
+	          hideFooter: this.props.view === 'year',
 	          view: this.props.view || "month",
 	          onSelect: this.setMonth,
 	          onChange: this.setDate }) : null
@@ -9792,7 +9806,7 @@
 	      contributorId: this.props.contributorId || 'default',
 	      cost: this.props.cost || '',
 	      item: this.props.item || '',
-	      date: this.props.date || '',
+	      date: this.props.date || new Date(),
 	      error: false,
 	      submiting: false
 	    };
@@ -9859,7 +9873,7 @@
 	            contributorId: 'default',
 	            cost: '',
 	            item: '',
-	            date: '',
+	            date: new Date(),
 	            submiting: false
 	          });
 	        });
@@ -9900,7 +9914,7 @@
 	              null,
 	              'Cost:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', value: this.state.cost, onChange: this.onChangeCost, step: '0.01' })
+	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', min: '0', max: '999999', value: this.state.cost, onChange: this.onChangeCost, step: '0.01' })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9910,7 +9924,7 @@
 	              null,
 	              'Item:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', pattern: '^[A-Za-z0-9].*$', value: this.state.item, onChange: this.onChangeItemName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', pattern: '^[A-Za-z0-9].*$', maxLength: '20', value: this.state.item, onChange: this.onChangeItemName })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -10440,7 +10454,7 @@
 	      var that = this;
 	      setTimeout(function () {
 	        that.closeModal();
-	      }, 3000);
+	      }, 2000);
 	    }
 	  }, {
 	    key: 'closeModal',
@@ -10659,7 +10673,7 @@
 	            'td',
 	            { 'data-label': 'Cost' },
 	            '₹',
-	            expense.cost
+	            expense.cost.toFixed(2)
 	          ),
 	          _react2['default'].createElement(
 	            'td',
@@ -11384,7 +11398,7 @@
 	              null,
 	              'Tag Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', ref: 'name', onChange: this.onChangeTagName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', maxLength: '15', ref: 'name', onChange: this.onChangeTagName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -11678,7 +11692,7 @@
 	                null,
 	                'Tag Name:'
 	              ),
-	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', value: this.state.tagName, 'data-id': this.state.tagId, onChange: this.onChangeTagName })
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', maxLength: '15', value: this.state.tagName, 'data-id': this.state.tagId, onChange: this.onChangeTagName })
 	            ),
 	            this.state.tagError ? _react2['default'].createElement(
 	              'div',
@@ -11847,7 +11861,7 @@
 	              null,
 	              'Contributor Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', ref: 'name', onChange: this.onChangeContributorName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', maxLength: '20', ref: 'name', onChange: this.onChangeContributorName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -12141,7 +12155,7 @@
 	                null,
 	                'Contributor Name:'
 	              ),
-	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', maxLength: '20', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
 	            ),
 	            this.state.contributorError ? _react2['default'].createElement(
 	              'div',

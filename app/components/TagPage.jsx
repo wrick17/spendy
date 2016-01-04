@@ -59,7 +59,7 @@ class AddTag extends React.Component {
         <form className="form" onSubmit={this.onAddTag} >
           <div className="form-group">
             <label>Tag Name:</label>
-            <input type="text" placeholder="Tag Name..." pattern="^[A-Za-z0-9].*$" ref="name" onChange={this.onChangeTagName} />
+            <input type="text" placeholder="Tag Name..." pattern="^[A-Za-z0-9].*$" maxLength="15" ref="name" onChange={this.onChangeTagName} />
           </div>
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
           <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
@@ -261,7 +261,7 @@ export default class TagPage extends React.Component {
           <form className="form" onSubmit={this.onSaveTag} >
             <div className="form-group">
               <label>Tag Name:</label>
-              <input type="text" placeholder="Tag Name..." pattern="^[A-Za-z0-9].*$" value={this.state.tagName} data-id={this.state.tagId} onChange={this.onChangeTagName} />
+              <input type="text" placeholder="Tag Name..." pattern="^[A-Za-z0-9].*$"  maxLength="15" value={this.state.tagName} data-id={this.state.tagId} onChange={this.onChangeTagName} />
             </div>
             { this.state.tagError ? <div className="error right">Don't be this lazy!</div> : null }
             <button className="button right">{this.state.submiting ? 'Saving...' : 'Save'}</button>
