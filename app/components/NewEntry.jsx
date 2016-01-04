@@ -94,11 +94,11 @@ export default class NewEntry extends React.Component {
           </div>
           <div className="form-group">
             <label>Cost:</label>
-            <input type="number" placeholder="Total Cost" min="0" value={this.state.cost} onChange={this.onChangeCost} step="0.01" />
+            <input type="number" placeholder="Total Cost" min="0" max="999999" value={this.state.cost} onChange={this.onChangeCost} step="0.01" />
           </div>
           <div className="form-group">
             <label>Item:</label>
-            <input type="text" placeholder="Item spent on" pattern="^[A-Za-z0-9].*$" value={this.state.item} onChange={this.onChangeItemName} />
+            <input type="text" placeholder="Item spent on" pattern="^[A-Za-z0-9].*$" maxLength="20" value={this.state.item} onChange={this.onChangeItemName} />
           </div>
           <div className="form-group">
             <label>Contributor:</label>

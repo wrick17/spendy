@@ -9914,7 +9914,7 @@
 	              null,
 	              'Cost:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', min: '0', value: this.state.cost, onChange: this.onChangeCost, step: '0.01' })
+	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', min: '0', max: '999999', value: this.state.cost, onChange: this.onChangeCost, step: '0.01' })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9924,7 +9924,7 @@
 	              null,
 	              'Item:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', pattern: '^[A-Za-z0-9].*$', value: this.state.item, onChange: this.onChangeItemName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Item spent on', pattern: '^[A-Za-z0-9].*$', maxLength: '20', value: this.state.item, onChange: this.onChangeItemName })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -11398,7 +11398,7 @@
 	              null,
 	              'Tag Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', ref: 'name', onChange: this.onChangeTagName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', maxLength: '15', ref: 'name', onChange: this.onChangeTagName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -11692,7 +11692,7 @@
 	                null,
 	                'Tag Name:'
 	              ),
-	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', value: this.state.tagName, 'data-id': this.state.tagId, onChange: this.onChangeTagName })
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Tag Name...', pattern: '^[A-Za-z0-9].*$', maxLength: '15', value: this.state.tagName, 'data-id': this.state.tagId, onChange: this.onChangeTagName })
 	            ),
 	            this.state.tagError ? _react2['default'].createElement(
 	              'div',
@@ -11861,7 +11861,7 @@
 	              null,
 	              'Contributor Name:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', ref: 'name', onChange: this.onChangeContributorName })
+	            _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', maxLength: '20', ref: 'name', onChange: this.onChangeContributorName })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -12155,7 +12155,7 @@
 	                null,
 	                'Contributor Name:'
 	              ),
-	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
+	              _react2['default'].createElement('input', { type: 'text', placeholder: 'Contributor Name...', pattern: '^[A-Za-z ]+', maxLength: '20', value: this.state.contributorName, 'data-id': this.state.contributorId, onChange: this.onChangeContributorName })
 	            ),
 	            this.state.contributorError ? _react2['default'].createElement(
 	              'div',
