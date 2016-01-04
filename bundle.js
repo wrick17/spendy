@@ -6025,7 +6025,7 @@
 	              ),
 	              _react2['default'].createElement(_DatePickerJsx2['default'], { setDate: this.setDateExpenses, view: 'year' })
 	            ),
-	            _react2['default'].createElement(_ExpensesListJsx2['default'], { minimal: true, expenses: this.state.expenses, refresh: this.refresh })
+	            _react2['default'].createElement(_ExpensesListJsx2['default'], { minimal: true, expenses: this.state.expenses, contributors: this.state.contributors, tags: this.state.tags, refresh: this.refresh })
 	          )
 	        )
 	      );
@@ -10623,12 +10623,10 @@
 	    this.filterByContributor = this.filterByContributor.bind(this);
 	    this.filterByTag = this.filterByTag.bind(this);
 	    this.filterExpenses = this.filterExpenses.bind(this);
-	    this.gatherContributors = this.gatherContributors.bind(this);
-	    this.gatherTags = this.gatherTags.bind(this);
 	    this.state = {
 	      id: '',
-	      contributors: [],
-	      tags: [],
+	      contributors: this.props.contributors,
+	      tags: this.props.tags,
 	      isModalOpen: false,
 	      isDeleteModalOpen: false,
 	      date: '',
@@ -10644,46 +10642,16 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var that = this;
-	      this.gatherTags(this.props.expenses);
-	      this.gatherContributors(this.props.expenses);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      this.gatherTags(nextProps.expenses);
-	      this.gatherContributors(nextProps.expenses);
 	      this.setState({
 	        expenses: nextProps.expenses,
 	        contributorId: 'default',
-	        tagId: 'default'
-	      });
-	    }
-	  }, {
-	    key: 'gatherTags',
-	    value: function gatherTags(expenses) {
-	      if (expenses === 'loading') return;
-	      var tags = _utilsJsx2['default'].gatherUnique(expenses, 'tagId').map(function (expense) {
-	        return {
-	          name: expense.tagName,
-	          _id: expense.tagId
-	        };
-	      });
-	      this.setState({
-	        tags: tags
-	      });
-	    }
-	  }, {
-	    key: 'gatherContributors',
-	    value: function gatherContributors(expenses) {
-	      if (expenses === 'loading') return;
-	      var contributors = _utilsJsx2['default'].gatherUnique(expenses, 'contributorId').map(function (expense) {
-	        return {
-	          name: expense.contributorName,
-	          _id: expense.contributorId
-	        };
-	      });
-	      this.setState({
-	        contributors: contributors
+	        tagId: 'default',
+	        contributors: nextProps.contributors,
+	        tags: nextProps.tags
 	      });
 	    }
 	  }, {
@@ -11062,9 +11030,13 @@
 
 	    _get(Object.getPrototypeOf(Expenses.prototype), 'constructor', this).call(this, props);
 	    this.getExpenses = this.getExpenses.bind(this);
+	    this.getContributors = this.getContributors.bind(this);
+	    this.getTags = this.getTags.bind(this);
 	    this.refresh = this.refresh.bind(this);
 	    this.state = {
-	      expenses: 'loading'
+	      expenses: 'loading',
+	      contributors: 'loading',
+	      tags: 'loading'
 	    };
 	  }
 
@@ -11072,6 +11044,28 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.getExpenses();
+	      this.getContributors();
+	      this.getTags();
+	    }
+	  }, {
+	    key: 'getContributors',
+	    value: function getContributors() {
+	      var that = this;
+	      _servicesJsx2['default'].getAllContributors(function (contributors) {
+	        that.setState({
+	          contributors: contributors
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'getTags',
+	    value: function getTags() {
+	      var that = this;
+	      _servicesJsx2['default'].getAllTags(function (tags) {
+	        that.setState({
+	          tags: tags
+	        });
+	      });
 	    }
 	  }, {
 	    key: 'getExpenses',
@@ -11097,7 +11091,7 @@
 	        _react2['default'].createElement(
 	          _ContainerJsx2['default'],
 	          null,
-	          _react2['default'].createElement(_ExpensesListJsx2['default'], { expenses: this.state.expenses, refresh: this.refresh })
+	          _react2['default'].createElement(_ExpensesListJsx2['default'], { expenses: this.state.expenses, contributors: this.state.contributors, tags: this.state.tags, refresh: this.refresh })
 	        )
 	      );
 	    }

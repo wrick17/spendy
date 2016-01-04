@@ -117,12 +117,10 @@ export default class ExpensesList extends React.Component {
     this.filterByContributor = this.filterByContributor.bind(this);
     this.filterByTag = this.filterByTag.bind(this);
     this.filterExpenses = this.filterExpenses.bind(this);
-    this.gatherContributors = this.gatherContributors.bind(this);
-    this.gatherTags = this.gatherTags.bind(this);
     this.state = {
       id: '',
-      contributors: [],
-      tags: [],
+      contributors: this.props.contributors,
+      tags: this.props.tags,
       isModalOpen: false,
       isDeleteModalOpen: false,
       date: '',
@@ -135,40 +133,14 @@ export default class ExpensesList extends React.Component {
   }
   componentDidMount() {
     var that = this;
-    this.gatherTags(this.props.expenses);
-    this.gatherContributors(this.props.expenses);
   }
   componentWillReceiveProps(nextProps) {
-    this.gatherTags(nextProps.expenses);
-    this.gatherContributors(nextProps.expenses);
     this.setState({
       expenses: nextProps.expenses,
       contributorId: 'default',
-      tagId: 'default'
-    });
-  }
-  gatherTags(expenses) {
-    if (expenses === 'loading') return;
-    var tags = utils.gatherUnique(expenses, 'tagId').map(function(expense) {
-      return {
-        name: expense.tagName,
-        _id: expense.tagId
-      };
-    });
-    this.setState({
-      tags: tags
-    });
-  }
-  gatherContributors(expenses) {
-    if (expenses === 'loading') return;
-    var contributors = utils.gatherUnique(expenses, 'contributorId').map(function(expense) {
-      return {
-        name: expense.contributorName,
-        _id: expense.contributorId
-      };
-    });
-    this.setState({
-      contributors: contributors
+      tagId: 'default',
+      contributors: nextProps.contributors,
+      tags: nextProps.tags
     });
   }
   deleteEntry() {
