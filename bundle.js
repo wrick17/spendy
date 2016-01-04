@@ -6086,6 +6086,8 @@
 
 	var _NoRecordsJsx2 = _interopRequireDefault(_NoRecordsJsx);
 
+	var _reactRouter = __webpack_require__(162);
+
 	var Bounty = (function (_React$Component) {
 	  _inherits(Bounty, _React$Component);
 
@@ -6156,14 +6158,25 @@
 	      contributors.map(function (contributor) {
 	        if (!contributor.active) return null;
 	        rank++;
-	        return total += parseInt(contributor.expenditure);
+	        return total += parseFloat(contributor.expenditure);
 	      });
 	      average = total / rank;
 	      rank = 0;
-	      var bountyList = contributors.map(function (contributor) {
-	        if (!contributor.active) return null;
+	      var bountyList = contributors.filter(function (contributor) {
+	        return contributor.active;
+	      }).map(function (contributor) {
 	        return _react2['default'].createElement(Bounty, { key: contributor._id, average: average, rank: ++rank, name: contributor.name, bounty: contributor.expenditure });
 	      });
+	      if (bountyList.length < 1) return _react2['default'].createElement(
+	        'div',
+	        { className: 'no-records' },
+	        'No active contributors. You can add some ',
+	        _react2['default'].createElement(
+	          _reactRouter.Link,
+	          { to: '/contributor' },
+	          'here'
+	        )
+	      );
 	      return _react2['default'].createElement(
 	        'ul',
 	        { className: 'bounty-list' },
@@ -6350,6 +6363,7 @@
 	        this.state.open ? _react2['default'].createElement(_reactDatePicker2['default'], {
 	          date: this.state.date,
 	          maxDate: new Date(),
+	          hideFooter: this.props.view === 'year',
 	          view: this.props.view || "month",
 	          onSelect: this.setMonth,
 	          onChange: this.setDate }) : null
@@ -9792,7 +9806,7 @@
 	      contributorId: this.props.contributorId || 'default',
 	      cost: this.props.cost || '',
 	      item: this.props.item || '',
-	      date: this.props.date || '',
+	      date: this.props.date || new Date(),
 	      error: false,
 	      submiting: false
 	    };
@@ -9859,7 +9873,7 @@
 	            contributorId: 'default',
 	            cost: '',
 	            item: '',
-	            date: '',
+	            date: new Date(),
 	            submiting: false
 	          });
 	        });
@@ -9900,7 +9914,7 @@
 	              null,
 	              'Cost:'
 	            ),
-	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', value: this.state.cost, onChange: this.onChangeCost, step: '0.01' })
+	            _react2['default'].createElement('input', { type: 'number', placeholder: 'Total Cost', min: '0', value: this.state.cost, onChange: this.onChangeCost, step: '0.01' })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -10440,7 +10454,7 @@
 	      var that = this;
 	      setTimeout(function () {
 	        that.closeModal();
-	      }, 3000);
+	      }, 2000);
 	    }
 	  }, {
 	    key: 'closeModal',
@@ -10659,7 +10673,7 @@
 	            'td',
 	            { 'data-label': 'Cost' },
 	            '₹',
-	            expense.cost
+	            expense.cost.toFixed(2)
 	          ),
 	          _react2['default'].createElement(
 	            'td',

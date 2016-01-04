@@ -18,7 +18,7 @@ class ExpenseGroup extends React.Component {
       return (
         <tr key={expense._id}>
           <td data-label="Date">{displayDate}</td>
-          <td data-label="Cost">₹{expense.cost}</td>
+          <td data-label="Cost">₹{(expense.cost).toFixed(2)}</td>
           <td data-label="Item">{expense.item}</td>
           <td data-label="Contributor">{expense.contributorName || 'Loading..'}</td>
           <td data-label="Tag">{expense.tagName || 'Loading..'}</td>

@@ -3,6 +3,7 @@ import DatePicker from './DatePicker.jsx';
 import utils from './../utils.jsx';
 import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
+import { Link } from 'react-router'
 
 class Bounty extends React.Component {
   render() {
@@ -31,14 +32,16 @@ class BountyList extends React.Component {
     contributors.map(function(contributor) {
       if (!contributor.active) return null;
       rank++;
-      return total += parseInt(contributor.expenditure);
+      return total += parseFloat(contributor.expenditure);
     });
-    average = total/rank;
+    average = (total/rank);
     rank = 0;
-    var bountyList = contributors.map(function(contributor) {
-      if (!contributor.active) return null;
+    var bountyList = contributors.filter(function(contributor) {
+      return contributor.active;
+    }).map(function(contributor) {
       return (<Bounty key={contributor._id} average={average} rank={++rank} name={contributor.name} bounty={contributor.expenditure} />);
     });
+    if (bountyList.length < 1) return (<div className="no-records">No active contributors. You can add some <Link to="/contributor">here</Link></div>);
     return (
       <ul className="bounty-list">
         {bountyList}
