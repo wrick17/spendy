@@ -7,7 +7,7 @@ export default class Logo extends React.Component {
       <div className="logo">
         <Link to="/">
           <label>Spendy</label>
-          <span>Alpha</span>
+          <span>Beta</span>
         </Link>
       </div>
     );

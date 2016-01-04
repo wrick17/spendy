@@ -7,6 +7,7 @@ import DatePicker from './DatePicker.jsx';
 import services from './../services.jsx';
 import { Link } from 'react-router'
 import utils from './../utils.jsx';
+import Notification from './Notification.jsx';
 
 export default class Dashboard extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ export default class Dashboard extends React.Component {
   getTags() {
     var that = this;
     services.getAllTags(function(tags) {
+      if (tags.status) return that.refs.notification.showNotification(tags.message);
       that.setState({
         tags: tags
       });
@@ -42,6 +44,7 @@ export default class Dashboard extends React.Component {
       expenses: 'loading'
     });
     services.getAllEntries(function(expenses) {
+      if (expenses.status) return that.refs.notification.showNotification(expenses.message);
       that.setState({
         expenses: expenses
       });
@@ -53,6 +56,7 @@ export default class Dashboard extends React.Component {
       contributors: 'loading'
     });
     services.getAllContributors(function(contributors) {
+      if (contributors.status) return that.refs.notification.showNotification(contributors.message);
       that.setState({
         contributors: contributors
       });
@@ -90,6 +94,7 @@ export default class Dashboard extends React.Component {
             <ExpensesList minimal={true} expenses={this.state.expenses} contributors={this.state.contributors} tags={this.state.tags} refresh={this.refresh} />
           </div>
         </Container>
+        <Notification ref="notification" />
       </div>
     );
   }

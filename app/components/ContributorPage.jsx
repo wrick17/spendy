@@ -6,6 +6,7 @@ import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import Modal from './Modal.jsx';
 import DeleteModal from './DeleteModal.jsx';
+import Notification from './Notification.jsx';
 
 class AddContributor extends React.Component {
   constructor(props) {
@@ -34,13 +35,15 @@ class AddContributor extends React.Component {
       this.setState({
         submiting: true
       });
-      services.createContributor(data, function(data, res) {
-        that.props.refresh();
-        that.refs.name.value = '';
+      services.createContributor(data, function(res) {
         that.setState({
           error: false,
           submiting: false
         });
+        if (res.status) return that.refs.notification.showNotification(res.message);
+        that.refs.notification.showNotification('Contributor Successfully Added');
+        that.props.refresh();
+        that.refs.name.value = '';
       });
     }
     else
@@ -61,6 +64,7 @@ class AddContributor extends React.Component {
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
           <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
         </form>
+        <Notification ref="notification" />
       </div>
     );
   }
@@ -150,6 +154,8 @@ export default class ContributorPage extends React.Component {
       contributors: 'loading'
     });
     services.deleteContributor(this.state.contributorId, function(res) {
+      if (res.status) return that.refs.notification.showNotification(res.message);
+      that.refs.notification.showNotification('Contributor Successfully Deleted');
       that.getAllContributors();
     });
   }
@@ -181,11 +187,13 @@ export default class ContributorPage extends React.Component {
     });
     if (this.state.contributorName !== '')
       services.updateContributor(this.state.contributorId, data, function(res) {
-        that.refresh();
         that.setState({
           submiting: false
         });
         that.closeModal();
+        if (res.status) return that.refs.notification.showNotification(res.message);
+        that.refs.notification.showNotification('Contributor Successfully Changed');
+        that.refresh();
       });
     else
       this.setState({
@@ -209,11 +217,13 @@ export default class ContributorPage extends React.Component {
         statusChanging: true
       });
       services.updateContributor(this.state.contributorId, data, function(res) {
-        that.refresh();
         that.setState({
           statusChanging: false
         });
         that.closeModal();
+        if (res.status) return that.refs.notification.showNotification(res.message);
+        that.refs.notification.showNotification('Contributor Status Successfully Changed');
+        that.refresh();
       });
     }
     else
@@ -264,6 +274,7 @@ export default class ContributorPage extends React.Component {
           confirmDelete={this.confirmDelete}
           closeDeleteModal={this.closeDeleteModal}
           item="contributor" />
+        <Notification ref="notification" />
       </div>
     );
   }
