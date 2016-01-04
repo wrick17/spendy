@@ -5915,9 +5915,11 @@
 	    this.refresh = this.refresh.bind(this);
 	    this.setDateExpenses = this.setDateExpenses.bind(this);
 	    this.setDateBounty = this.setDateBounty.bind(this);
+	    this.getTags = this.getTags.bind(this);
 	    this.state = {
 	      expenses: 'loading',
 	      contributors: 'loading',
+	      tags: 'loading',
 	      overviewDate: new Date(),
 	      expensesDate: new Date()
 	    };
@@ -5926,8 +5928,17 @@
 	  _createClass(Dashboard, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this.getExpenses();
-	      this.getOverview();
+	      this.getTags();
+	    }
+	  }, {
+	    key: 'getTags',
+	    value: function getTags() {
+	      var that = this;
+	      _servicesJsx2['default'].getAllTags(function (tags) {
+	        that.setState({
+	          tags: tags
+	        });
+	      });
 	    }
 	  }, {
 	    key: 'getExpenses',
@@ -5994,7 +6005,7 @@
 	            'div',
 	            { className: 'dashboard' },
 	            _react2['default'].createElement(_OverviewJsx2['default'], { contributors: this.state.contributors, setDate: this.setDateBounty }),
-	            _react2['default'].createElement(_NewEntryJsx2['default'], { refresh: this.refresh })
+	            _react2['default'].createElement(_NewEntryJsx2['default'], { refresh: this.refresh, contributors: this.state.contributors, tags: this.state.tags })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9770,29 +9781,12 @@
 	      cost: this.props.cost || '',
 	      item: this.props.item || '',
 	      date: this.props.date || '',
-	      tags: [],
-	      contributors: [],
 	      error: false,
 	      submiting: false
 	    };
 	  }
 
 	  _createClass(NewEntry, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var that = this;
-	      _servicesJsx2['default'].getAllTags(function (tags) {
-	        that.setState({
-	          tags: tags
-	        });
-	      });
-	      _servicesJsx2['default'].getAllContributors(function (contributors) {
-	        that.setState({
-	          contributors: contributors
-	        });
-	      });
-	    }
-	  }, {
 	    key: 'onChangeTag',
 	    value: function onChangeTag(e) {
 	      this.setState({
@@ -9913,7 +9907,7 @@
 	              null,
 	              'Contributor:'
 	            ),
-	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.state.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
+	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.props.contributors, 'default': 'Choose Contributor', selectedValue: this.state.contributorId, onChange: this.onChangeContributor })
 	          ),
 	          _react2['default'].createElement(
 	            'div',
@@ -9923,7 +9917,7 @@
 	              null,
 	              'Tag:'
 	            ),
-	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.state.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
+	            _react2['default'].createElement(_SelectJsx2['default'], { options: this.props.tags, 'default': 'Choose Tag', selectedValue: this.state.tagId, onChange: this.onChangeTag })
 	          ),
 	          this.state.error ? _react2['default'].createElement(
 	            'div',
@@ -10315,6 +10309,7 @@
 	    key: 'render',
 	    value: function render() {
 	      var that = this;
+	      if (this.props.options === 'loading') return null;
 	      var optionList = this.props.options.map(function (option) {
 	        if (option.hasOwnProperty('active') && !option.active) return null;
 	        return _react2['default'].createElement(
@@ -10824,6 +10819,8 @@
 	            item: this.state.item,
 	            date: this.state.date,
 	            cost: this.state.cost,
+	            contributors: this.state.contributors,
+	            tags: this.state.tags,
 	            contributorId: this.state.contributorId,
 	            tagId: this.state.tagId,
 	            updateEntry: this.updateEntry,

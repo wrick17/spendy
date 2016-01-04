@@ -3,6 +3,7 @@ import React from 'react';
 export default class Select extends React.Component {
   render() {
     var that = this;
+    if (this.props.options === 'loading') return null;
     var optionList = this.props.options.map(function(option) {
       if (option.hasOwnProperty('active') && !option.active) return null;
       return (<option key={option._id} value={option._id} >{option.name}</option>);

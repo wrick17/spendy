@@ -16,16 +16,25 @@ export default class Dashboard extends React.Component {
     this.refresh = this.refresh.bind(this);
     this.setDateExpenses = this.setDateExpenses.bind(this);
     this.setDateBounty = this.setDateBounty.bind(this);
+    this.getTags = this.getTags.bind(this);
     this.state = {
       expenses: 'loading',
       contributors: 'loading',
+      tags: 'loading',
       overviewDate: new Date(),
       expensesDate: new Date()
     };
   }
   componentWillMount() {
-    this.getExpenses();
-    this.getOverview();
+    this.getTags();
+  }
+  getTags() {
+    var that = this;
+    services.getAllTags(function(tags) {
+      that.setState({
+        tags: tags
+      });
+    });
   }
   getExpenses(date = this.state.expensesDate) {
     var that = this;
@@ -71,7 +80,7 @@ export default class Dashboard extends React.Component {
         <Container>
           <div className="dashboard">
             <Overview contributors={this.state.contributors} setDate={this.setDateBounty} />
-            <NewEntry refresh={this.refresh} />
+            <NewEntry refresh={this.refresh} contributors={this.state.contributors} tags={this.state.tags} />
           </div>
           <div className="expenses-container">
             <h2 className="expenses-header" onClick={this.showModal} >

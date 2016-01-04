@@ -277,6 +277,8 @@ export default class ExpensesList extends React.Component {
             item={this.state.item}
             date={this.state.date}
             cost={this.state.cost}
+            contributors={this.state.contributors}
+            tags={this.state.tags}
             contributorId={this.state.contributorId}
             tagId={this.state.tagId}
             updateEntry={this.updateEntry}
