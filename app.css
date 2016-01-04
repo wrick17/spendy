@@ -429,21 +429,21 @@ a:hover {
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
-  border-top: 1.1em solid #fcdddc;
-  border-right: 1.1em solid #fcdddc;
-  border-bottom: 1.1em solid #fcdddc;
-  border-left: 1.1em solid #EF5350;
+  border-top: 0.6em solid #fcdddc;
+  border-right: 0.6em solid #fcdddc;
+  border-bottom: 0.6em solid #fcdddc;
+  border-left: 0.6em solid #EF5350;
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
-  -webkit-animation: load8 1.1s infinite linear;
-  animation: load8 1.1s infinite linear;
+  -webkit-animation: load8 0.5s infinite linear;
+  animation: load8 0.5s infinite linear;
 }
 .loading,
 .loading:after {
   border-radius: 50%;
-  width: 10em;
-  height: 10em;
+  width: 5em;
+  height: 5em;
 }
 @-webkit-keyframes load8 {
   0% {
