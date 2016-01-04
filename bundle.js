@@ -70,15 +70,15 @@
 
 	var _componentsDashboardJsx2 = _interopRequireDefault(_componentsDashboardJsx);
 
-	var _componentsExpensesJsx = __webpack_require__(328);
+	var _componentsExpensesJsx = __webpack_require__(329);
 
 	var _componentsExpensesJsx2 = _interopRequireDefault(_componentsExpensesJsx);
 
-	var _componentsTagPageJsx = __webpack_require__(329);
+	var _componentsTagPageJsx = __webpack_require__(330);
 
 	var _componentsTagPageJsx2 = _interopRequireDefault(_componentsTagPageJsx);
 
-	var _componentsContributorPageJsx = __webpack_require__(330);
+	var _componentsContributorPageJsx = __webpack_require__(331);
 
 	var _componentsContributorPageJsx2 = _interopRequireDefault(_componentsContributorPageJsx);
 
@@ -5885,7 +5885,7 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(325);
+	var _ExpensesListJsx = __webpack_require__(327);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
@@ -5902,6 +5902,10 @@
 	var _utilsJsx = __webpack_require__(316);
 
 	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
+
+	var _NotificationJsx = __webpack_require__(325);
+
+	var _NotificationJsx2 = _interopRequireDefault(_NotificationJsx);
 
 	var Dashboard = (function (_React$Component) {
 	  _inherits(Dashboard, _React$Component);
@@ -5935,6 +5939,7 @@
 	    value: function getTags() {
 	      var that = this;
 	      _servicesJsx2['default'].getAllTags(function (tags) {
+	        if (tags.status) return that.refs.notification.showNotification(tags.message);
 	        that.setState({
 	          tags: tags
 	        });
@@ -5950,6 +5955,7 @@
 	        expenses: 'loading'
 	      });
 	      _servicesJsx2['default'].getAllEntries(function (expenses) {
+	        if (expenses.status) return that.refs.notification.showNotification(expenses.message);
 	        that.setState({
 	          expenses: expenses
 	        });
@@ -5965,6 +5971,7 @@
 	        contributors: 'loading'
 	      });
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
+	        if (contributors.status) return that.refs.notification.showNotification(contributors.message);
 	        that.setState({
 	          contributors: contributors
 	        });
@@ -6027,7 +6034,8 @@
 	            ),
 	            _react2['default'].createElement(_ExpensesListJsx2['default'], { minimal: true, expenses: this.state.expenses, contributors: this.state.contributors, tags: this.state.tags, refresh: this.refresh })
 	          )
-	        )
+	        ),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);
@@ -9762,6 +9770,10 @@
 
 	var _SelectJsx2 = _interopRequireDefault(_SelectJsx);
 
+	var _NotificationJsx = __webpack_require__(325);
+
+	var _NotificationJsx2 = _interopRequireDefault(_NotificationJsx);
+
 	var NewEntry = (function (_React$Component) {
 	  _inherits(NewEntry, _React$Component);
 
@@ -9839,6 +9851,7 @@
 	          submiting: true
 	        });
 	        _servicesJsx2['default'].createEntry(data, function (res) {
+	          that.refs.notification.showNotification('Entry added successfully');
 	          that.props.refresh();
 	          that.setState({
 	            error: false,
@@ -9929,7 +9942,8 @@
 	            { className: 'button right' },
 	            this.props.edit ? this.state.submiting ? 'Saving...' : 'Save' : this.state.submiting ? 'Adding...' : 'Add'
 	          )
-	        )
+	        ),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);
@@ -9972,27 +9986,39 @@
 	    dateParams += '?fromDate=' + _utilsJsx2['default'].firstDay(date) + '&toDate=' + _utilsJsx2['default'].lastDay(date);
 	  }
 	  _superagent2['default'].get(baseUrl + '/entry/' + dateParams).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body.reverse());
 	  });
 	};
 
 	services.createEntry = function (data, callback) {
 	  _superagent2['default'].post(baseUrl + '/entry').set('Content-Type', 'application/json').send(data).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 	services.deleteEntry = function (id, callback) {
 	  _superagent2['default']['delete'](baseUrl + '/entry/' + id).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 
 	services.updateEntry = function (id, data, callback) {
 	  _superagent2['default'].put(baseUrl + '/entry/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
@@ -10000,28 +10026,40 @@
 	//tags
 	services.getAllTags = function (callback) {
 	  _superagent2['default'].get(baseUrl + '/tag').end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 
 	services.createTag = function (data, callback) {
 	  _superagent2['default'].post(baseUrl + '/tag').set('Content-Type', 'application/json').send(data).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 
 	services.deleteTag = function (id, callback) {
 	  _superagent2['default']['delete'](baseUrl + '/tag/' + id).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 
 	services.updateTag = function (id, data, callback) {
 	  _superagent2['default'].put(baseUrl + '/tag/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
@@ -10035,28 +10073,40 @@
 	    dateParams += '?fromDate=' + _utilsJsx2['default'].firstDay(date) + '&toDate=' + _utilsJsx2['default'].lastDay(date);
 	  }
 	  _superagent2['default'].get(baseUrl + '/contributor/' + dateParams).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 
 	services.createContributor = function (data, callback) {
 	  _superagent2['default'].post(baseUrl + '/contributor').set('Content-Type', 'application/json').send(data).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 
 	services.deleteContributor = function (id, callback) {
 	  _superagent2['default']['delete'](baseUrl + '/contributor/' + id).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
 
 	services.updateContributor = function (id, data, callback) {
 	  _superagent2['default'].put(baseUrl + '/contributor/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
-	    if (err) return callback(err);
+	    if (err) return callback({
+	      status: err.status,
+	      message: err.message
+	    });
 	    return callback(res.body);
 	  });
 	};
@@ -10361,6 +10411,190 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _ModalJsx = __webpack_require__(326);
+
+	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
+
+	var Notification = (function (_React$Component) {
+	  _inherits(Notification, _React$Component);
+
+	  function Notification(props) {
+	    _classCallCheck(this, Notification);
+
+	    _get(Object.getPrototypeOf(Notification.prototype), 'constructor', this).call(this, props);
+	    this.showNotification = this.showNotification.bind(this);
+	    this.closeModal = this.closeModal.bind(this);
+	    this.state = {
+	      open: false,
+	      message: ''
+	    };
+	  }
+
+	  _createClass(Notification, [{
+	    key: 'showNotification',
+	    value: function showNotification(message) {
+	      this.setState({
+	        open: true,
+	        message: message
+	      });
+	      var that = this;
+	      setTimeout(function () {
+	        that.closeModal();
+	      }, 3000);
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.setState({
+	        open: false
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        _ModalJsx2['default'],
+	        {
+	          open: this.state.open,
+	          closeModal: this.closeModal },
+	        _react2['default'].createElement(
+	          'label',
+	          { className: 'message' },
+	          this.state.message
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Notification;
+	})(_react2['default'].Component);
+
+	exports['default'] = Notification;
+	module.exports = exports['default'];
+
+/***/ },
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ContainerJsx = __webpack_require__(209);
+
+	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
+
+	var ModalBody = (function (_React$Component) {
+	  _inherits(ModalBody, _React$Component);
+
+	  function ModalBody() {
+	    _classCallCheck(this, ModalBody);
+
+	    _get(Object.getPrototypeOf(ModalBody.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(ModalBody, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'modal' },
+	        _react2['default'].createElement(
+	          _ContainerJsx2['default'],
+	          null,
+	          this.props.title ? _react2['default'].createElement(
+	            'h2',
+	            { className: 'modal-title' },
+	            this.props.title
+	          ) : null,
+	          _react2['default'].createElement(
+	            'a',
+	            { onClick: this.props.closeModal, className: 'close-modal' },
+	            '✕'
+	          ),
+	          this.props.content
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ModalBody;
+	})(_react2['default'].Component);
+
+	var Modal = (function (_React$Component2) {
+	  _inherits(Modal, _React$Component2);
+
+	  function Modal(props) {
+	    _classCallCheck(this, Modal);
+
+	    _get(Object.getPrototypeOf(Modal.prototype), 'constructor', this).call(this, props);
+	    this.closeModal = this.closeModal.bind(this);
+	  }
+
+	  _createClass(Modal, [{
+	    key: 'closeModal',
+	    value: function closeModal(e) {
+	      e.preventDefault();
+	      if (this.props.closeModal) this.props.closeModal();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'modal-wrapper' },
+	        this.props.open ? _react2['default'].createElement('div', { className: 'modal-backdrop', onClick: this.closeModal }) : null,
+	        this.props.open ? _react2['default'].createElement(ModalBody, { closeModal: this.closeModal, title: this.props.title, content: this.props.children }) : null
+	      );
+	    }
+	  }]);
+
+	  return Modal;
+	})(_react2['default'].Component);
+
+	exports['default'] = Modal;
+	module.exports = exports['default'];
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
@@ -10385,13 +10619,17 @@
 
 	var _NewEntryJsx2 = _interopRequireDefault(_NewEntryJsx);
 
-	var _DeleteModalJsx = __webpack_require__(327);
+	var _DeleteModalJsx = __webpack_require__(328);
 
 	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
 
 	var _SelectJsx = __webpack_require__(324);
 
 	var _SelectJsx2 = _interopRequireDefault(_SelectJsx);
+
+	var _NotificationJsx = __webpack_require__(325);
+
+	var _NotificationJsx2 = _interopRequireDefault(_NotificationJsx);
 
 	var ExpenseGroup = (function (_React$Component) {
 	  _inherits(ExpenseGroup, _React$Component);
@@ -10659,6 +10897,8 @@
 	    value: function deleteEntry() {
 	      var that = this;
 	      _servicesJsx2['default'].deleteEntry(this.state.id, function (res) {
+	        if (res.status) return that.refs.notification.showNotification(res.message);
+	        that.refs.notification.showNotification('Entry Deleted Successfully');
 	        if (that.props.refresh) that.props.refresh();
 	      });
 	    }
@@ -10688,6 +10928,8 @@
 	      var that = this;
 	      _servicesJsx2['default'].updateEntry(this.state.id, data, function (res) {
 	        that.closeModal();
+	        if (res.status) return that.refs.notification.showNotification(res.message);
+	        that.refs.notification.showNotification('Entry Updated Successfully');
 	        if (that.props.refresh) that.props.refresh();
 	      });
 	    }
@@ -10799,7 +11041,8 @@
 	          closeModal: this.closeDeleteModal,
 	          confirmDelete: this.confirmDelete,
 	          closeDeleteModal: this.closeDeleteModal,
-	          item: 'expense' })
+	          item: 'expense' }),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);
@@ -10811,106 +11054,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 326 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _ContainerJsx = __webpack_require__(209);
-
-	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
-
-	var ModalBody = (function (_React$Component) {
-	  _inherits(ModalBody, _React$Component);
-
-	  function ModalBody() {
-	    _classCallCheck(this, ModalBody);
-
-	    _get(Object.getPrototypeOf(ModalBody.prototype), 'constructor', this).apply(this, arguments);
-	  }
-
-	  _createClass(ModalBody, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2['default'].createElement(
-	        'div',
-	        { className: 'modal' },
-	        _react2['default'].createElement(
-	          _ContainerJsx2['default'],
-	          null,
-	          this.props.title ? _react2['default'].createElement(
-	            'h2',
-	            { className: 'modal-title' },
-	            this.props.title
-	          ) : null,
-	          _react2['default'].createElement(
-	            'a',
-	            { onClick: this.props.closeModal, className: 'close-modal' },
-	            '✕'
-	          ),
-	          this.props.content
-	        )
-	      );
-	    }
-	  }]);
-
-	  return ModalBody;
-	})(_react2['default'].Component);
-
-	var Modal = (function (_React$Component2) {
-	  _inherits(Modal, _React$Component2);
-
-	  function Modal(props) {
-	    _classCallCheck(this, Modal);
-
-	    _get(Object.getPrototypeOf(Modal.prototype), 'constructor', this).call(this, props);
-	    this.closeModal = this.closeModal.bind(this);
-	  }
-
-	  _createClass(Modal, [{
-	    key: 'closeModal',
-	    value: function closeModal(e) {
-	      e.preventDefault();
-	      if (this.props.closeModal) this.props.closeModal();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2['default'].createElement(
-	        'div',
-	        { className: 'modal-wrapper' },
-	        this.props.open ? _react2['default'].createElement('div', { className: 'modal-backdrop', onClick: this.closeModal }) : null,
-	        this.props.open ? _react2['default'].createElement(ModalBody, { closeModal: this.closeModal, title: this.props.title, content: this.props.children }) : null
-	      );
-	    }
-	  }]);
-
-	  return Modal;
-	})(_react2['default'].Component);
-
-	exports['default'] = Modal;
-	module.exports = exports['default'];
-
-/***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10987,7 +11131,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11014,13 +11158,17 @@
 
 	var _ContainerJsx2 = _interopRequireDefault(_ContainerJsx);
 
-	var _ExpensesListJsx = __webpack_require__(325);
+	var _ExpensesListJsx = __webpack_require__(327);
 
 	var _ExpensesListJsx2 = _interopRequireDefault(_ExpensesListJsx);
 
 	var _servicesJsx = __webpack_require__(320);
 
 	var _servicesJsx2 = _interopRequireDefault(_servicesJsx);
+
+	var _NotificationJsx = __webpack_require__(325);
+
+	var _NotificationJsx2 = _interopRequireDefault(_NotificationJsx);
 
 	var Expenses = (function (_React$Component) {
 	  _inherits(Expenses, _React$Component);
@@ -11052,6 +11200,7 @@
 	    value: function getContributors() {
 	      var that = this;
 	      _servicesJsx2['default'].getAllContributors(function (contributors) {
+	        if (contributors.status) return that.refs.notification.showNotification(contributors.message);
 	        that.setState({
 	          contributors: contributors
 	        });
@@ -11062,6 +11211,7 @@
 	    value: function getTags() {
 	      var that = this;
 	      _servicesJsx2['default'].getAllTags(function (tags) {
+	        if (tags.status) return that.refs.notification.showNotification(tags.message);
 	        that.setState({
 	          tags: tags
 	        });
@@ -11072,6 +11222,7 @@
 	    value: function getExpenses() {
 	      var that = this;
 	      _servicesJsx2['default'].getAllEntries(function (expenses) {
+	        if (expenses.status) return that.refs.notification.showNotification(expenses.message);
 	        that.setState({
 	          expenses: expenses
 	        });
@@ -11092,7 +11243,8 @@
 	          _ContainerJsx2['default'],
 	          null,
 	          _react2['default'].createElement(_ExpensesListJsx2['default'], { expenses: this.state.expenses, contributors: this.state.contributors, tags: this.state.tags, refresh: this.refresh })
-	        )
+	        ),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);
@@ -11104,7 +11256,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11151,9 +11303,13 @@
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
-	var _DeleteModalJsx = __webpack_require__(327);
+	var _DeleteModalJsx = __webpack_require__(328);
 
 	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
+
+	var _NotificationJsx = __webpack_require__(325);
+
+	var _NotificationJsx2 = _interopRequireDefault(_NotificationJsx);
 
 	var AddTag = (function (_React$Component) {
 	  _inherits(AddTag, _React$Component);
@@ -11191,13 +11347,15 @@
 	        this.setState({
 	          submiting: true
 	        });
-	        _servicesJsx2['default'].createTag(data, function (data, res) {
-	          that.props.refresh();
-	          that.refs.name.value = '';
+	        _servicesJsx2['default'].createTag(data, function (res) {
 	          that.setState({
 	            error: false,
 	            submiting: false
 	          });
+	          if (res.status) return that.refs.notification.showNotification(res.message);
+	          that.refs.notification.showNotification('Tag Successfully Added');
+	          that.props.refresh();
+	          that.refs.name.value = '';
 	        });
 	      } else this.setState({
 	        error: true,
@@ -11238,7 +11396,8 @@
 	            { className: 'button right' },
 	            this.state.submiting ? 'Adding...' : 'Add'
 	          )
-	        )
+	        ),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);
@@ -11385,6 +11544,8 @@
 	        tags: 'loading'
 	      });
 	      _servicesJsx2['default'].deleteTag(this.state.tagId, function (res) {
+	        if (res.status) return that.refs.notification.showNotification(res.message);
+	        that.refs.notification.showNotification('Tag Successfully Deleted');
 	        that.getAllTags();
 	      });
 	    }
@@ -11426,8 +11587,10 @@
 	        that.setState({
 	          submiting: false
 	        });
-	        that.refresh();
 	        that.closeModal();
+	        if (res.status) return that.refs.notification.showNotification(res.message);
+	        that.refs.notification.showNotification('Tag Successfully Changed');
+	        that.refresh();
 	      });else this.setState({
 	        tagError: true
 	      });
@@ -11453,11 +11616,13 @@
 	          statusChanging: true
 	        });
 	        _servicesJsx2['default'].updateTag(this.state.tagId, data, function (res) {
-	          that.refresh();
 	          that.setState({
 	            statusChanging: false
 	          });
 	          that.closeModal();
+	          if (res.status) return that.refs.notification.showNotification(res.message);
+	          that.refs.notification.showNotification('Tag Status Successfully Changed');
+	          that.refresh();
 	        });
 	      } else this.setState({
 	        tagError: true
@@ -11541,7 +11706,8 @@
 	          closeModal: this.closeDeleteModal,
 	          confirmDelete: this.confirmDelete,
 	          closeDeleteModal: this.closeDeleteModal,
-	          item: 'tag' })
+	          item: 'tag' }),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);
@@ -11553,7 +11719,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11600,9 +11766,13 @@
 
 	var _ModalJsx2 = _interopRequireDefault(_ModalJsx);
 
-	var _DeleteModalJsx = __webpack_require__(327);
+	var _DeleteModalJsx = __webpack_require__(328);
 
 	var _DeleteModalJsx2 = _interopRequireDefault(_DeleteModalJsx);
+
+	var _NotificationJsx = __webpack_require__(325);
+
+	var _NotificationJsx2 = _interopRequireDefault(_NotificationJsx);
 
 	var AddContributor = (function (_React$Component) {
 	  _inherits(AddContributor, _React$Component);
@@ -11640,13 +11810,15 @@
 	        this.setState({
 	          submiting: true
 	        });
-	        _servicesJsx2['default'].createContributor(data, function (data, res) {
-	          that.props.refresh();
-	          that.refs.name.value = '';
+	        _servicesJsx2['default'].createContributor(data, function (res) {
 	          that.setState({
 	            error: false,
 	            submiting: false
 	          });
+	          if (res.status) return that.refs.notification.showNotification(res.message);
+	          that.refs.notification.showNotification('Contributor Successfully Added');
+	          that.props.refresh();
+	          that.refs.name.value = '';
 	        });
 	      } else this.setState({
 	        error: true,
@@ -11687,7 +11859,8 @@
 	            { className: 'button right' },
 	            this.state.submiting ? 'Adding...' : 'Add'
 	          )
-	        )
+	        ),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);
@@ -11834,6 +12007,8 @@
 	        contributors: 'loading'
 	      });
 	      _servicesJsx2['default'].deleteContributor(this.state.contributorId, function (res) {
+	        if (res.status) return that.refs.notification.showNotification(res.message);
+	        that.refs.notification.showNotification('Contributor Successfully Deleted');
 	        that.getAllContributors();
 	      });
 	    }
@@ -11872,11 +12047,13 @@
 	        submiting: true
 	      });
 	      if (this.state.contributorName !== '') _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
-	        that.refresh();
 	        that.setState({
 	          submiting: false
 	        });
 	        that.closeModal();
+	        if (res.status) return that.refs.notification.showNotification(res.message);
+	        that.refs.notification.showNotification('Contributor Successfully Changed');
+	        that.refresh();
 	      });else this.setState({
 	        contributorError: true
 	      });
@@ -11902,11 +12079,13 @@
 	          statusChanging: true
 	        });
 	        _servicesJsx2['default'].updateContributor(this.state.contributorId, data, function (res) {
-	          that.refresh();
 	          that.setState({
 	            statusChanging: false
 	          });
 	          that.closeModal();
+	          if (res.status) return that.refs.notification.showNotification(res.message);
+	          that.refs.notification.showNotification('Contributor Status Successfully Changed');
+	          that.refresh();
 	        });
 	      } else this.setState({
 	        contributorError: true
@@ -11990,7 +12169,8 @@
 	          closeModal: this.closeDeleteModal,
 	          confirmDelete: this.confirmDelete,
 	          closeDeleteModal: this.closeDeleteModal,
-	          item: 'contributor' })
+	          item: 'contributor' }),
+	        _react2['default'].createElement(_NotificationJsx2['default'], { ref: 'notification' })
 	      );
 	    }
 	  }]);

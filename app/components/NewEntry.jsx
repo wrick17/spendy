@@ -2,6 +2,7 @@ import React from 'react';
 import DatePicker from './DatePicker.jsx';
 import services from './../services.jsx';
 import Select from './Select.jsx';
+import Notification from './Notification.jsx';
 
 export default class NewEntry extends React.Component {
   constructor(props) {
@@ -63,6 +64,7 @@ export default class NewEntry extends React.Component {
         submiting: true
       });
       services.createEntry(data, function(res) {
+        that.refs.notification.showNotification('Entry added successfully');
         that.props.refresh();
         that.setState({
           error: false,
@@ -109,6 +111,7 @@ export default class NewEntry extends React.Component {
           { this.state.error ? <div className="error right">Please fill out all the details above</div> : null }
           <button className="button right">{this.props.edit ? (this.state.submiting ? 'Saving...' : 'Save') : (this.state.submiting ? 'Adding...' : 'Add')}</button>
         </form>
+        <Notification ref="notification" />
       </div>
     );
   }

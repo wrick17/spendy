@@ -2,6 +2,7 @@ import React from 'react';
 import Container from './Container.jsx';
 import ExpensesList from './ExpensesList.jsx';
 import services from './../services.jsx';
+import Notification from './Notification.jsx';
 
 export default class Expenses extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class Expenses extends React.Component {
   getContributors() {
     var that = this;
     services.getAllContributors(function(contributors) {
+      if (contributors.status) return that.refs.notification.showNotification(contributors.message);
       that.setState({
         contributors: contributors
       });
@@ -32,6 +34,7 @@ export default class Expenses extends React.Component {
   getTags() {
     var that = this;
     services.getAllTags(function(tags) {
+      if (tags.status) return that.refs.notification.showNotification(tags.message);
       that.setState({
         tags: tags
       });
@@ -40,6 +43,7 @@ export default class Expenses extends React.Component {
   getExpenses() {
     var that = this;
     services.getAllEntries(function(expenses) {
+      if (expenses.status) return that.refs.notification.showNotification(expenses.message);
       that.setState({
         expenses: expenses
       });
@@ -54,6 +58,7 @@ export default class Expenses extends React.Component {
         <Container>
           <ExpensesList expenses={this.state.expenses} contributors={this.state.contributors} tags={this.state.tags} refresh={this.refresh} />
         </Container>
+        <Notification ref="notification" />
       </div>
     );
   }

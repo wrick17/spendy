@@ -7,6 +7,7 @@ import Modal from './Modal.jsx';
 import NewEntry from './NewEntry.jsx';
 import DeleteModal from './DeleteModal.jsx';
 import Select from './Select.jsx';
+import Notification from './Notification.jsx';
 
 class ExpenseGroup extends React.Component {
   render() {
@@ -146,6 +147,8 @@ export default class ExpensesList extends React.Component {
   deleteEntry() {
     var that = this;
     services.deleteEntry(this.state.id, function(res) {
+      if (res.status) return that.refs.notification.showNotification(res.message);
+      that.refs.notification.showNotification('Entry Deleted Successfully');
       if (that.props.refresh) that.props.refresh();
     });
   }
@@ -169,6 +172,8 @@ export default class ExpensesList extends React.Component {
     var that = this;
     services.updateEntry(this.state.id, data, function(res) {
       that.closeModal();
+      if (res.status) return that.refs.notification.showNotification(res.message);
+      that.refs.notification.showNotification('Entry Updated Successfully');
       if (that.props.refresh) that.props.refresh();
     });
   }
@@ -262,6 +267,7 @@ export default class ExpensesList extends React.Component {
           confirmDelete={this.confirmDelete}
           closeDeleteModal={this.closeDeleteModal}
           item="expense" />
+        <Notification ref="notification" />
       </div>
     );
   }

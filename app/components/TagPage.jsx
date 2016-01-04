@@ -6,6 +6,7 @@ import Loading from './Loading.jsx';
 import NoRecords from './NoRecords.jsx';
 import Modal from './Modal.jsx';
 import DeleteModal from './DeleteModal.jsx';
+import Notification from './Notification.jsx';
 
 class AddTag extends React.Component {
   constructor(props) {
@@ -34,13 +35,15 @@ class AddTag extends React.Component {
       this.setState({
         submiting: true
       });
-      services.createTag(data, function(data, res) {
-        that.props.refresh();
-        that.refs.name.value = '';
+      services.createTag(data, function(res) {
         that.setState({
           error: false,
           submiting: false
         });
+        if (res.status) return that.refs.notification.showNotification(res.message);
+        that.refs.notification.showNotification('Tag Successfully Added');
+        that.props.refresh();
+        that.refs.name.value = '';
       });
     }
     else
@@ -61,6 +64,7 @@ class AddTag extends React.Component {
           { this.state.error ? <div className="error right">Don't be this lazy!</div> : null }
           <button className="button right">{this.state.submiting ? 'Adding...' : 'Add'}</button>
         </form>
+        <Notification ref="notification" />
       </div>
     );
   }
@@ -150,6 +154,8 @@ export default class TagPage extends React.Component {
       tags: 'loading'
     });
     services.deleteTag(this.state.tagId, function(res) {
+      if (res.status) return that.refs.notification.showNotification(res.message);
+      that.refs.notification.showNotification('Tag Successfully Deleted');
       that.getAllTags();
     });
   }
@@ -184,8 +190,10 @@ export default class TagPage extends React.Component {
         that.setState({
           submiting: false
         });
-        that.refresh();
         that.closeModal();
+        if (res.status) return that.refs.notification.showNotification(res.message);
+        that.refs.notification.showNotification('Tag Successfully Changed');
+        that.refresh();
       });
     else
       this.setState({
@@ -209,11 +217,13 @@ export default class TagPage extends React.Component {
         statusChanging: true
       });
       services.updateTag(this.state.tagId, data, function(res) {
-        that.refresh();
         that.setState({
           statusChanging: false
         });
         that.closeModal();
+        if (res.status) return that.refs.notification.showNotification(res.message);
+        that.refs.notification.showNotification('Tag Status Successfully Changed');
+        that.refresh();
       });
     }
     else
@@ -264,6 +274,7 @@ export default class TagPage extends React.Component {
           confirmDelete={this.confirmDelete}
           closeDeleteModal={this.closeDeleteModal}
           item="tag" />
+        <Notification ref="notification" />
       </div>
     );
   }

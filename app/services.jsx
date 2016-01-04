@@ -12,7 +12,10 @@ services.getAllEntries = function(callback, date = null) {
   superagent
     .get(baseUrl + '/entry/' + dateParams)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body.reverse());
     });
 }
@@ -23,7 +26,10 @@ services.createEntry = function(data, callback) {
     .set('Content-Type', 'application/json')
     .send(data)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -31,7 +37,10 @@ services.deleteEntry = function(id, callback) {
   superagent
     .delete(baseUrl + '/entry/' + id)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -42,17 +51,24 @@ services.updateEntry = function(id, data, callback) {
     .set('Content-Type', 'application/json')
     .send(data)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
+
 
 //tags
 services.getAllTags = function(callback) {
   superagent
     .get(baseUrl + '/tag')
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -63,7 +79,10 @@ services.createTag = function(data, callback) {
     .set('Content-Type', 'application/json')
     .send(data)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -72,7 +91,10 @@ services.deleteTag = function(id, callback) {
   superagent
     .delete(baseUrl + '/tag/' + id)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -83,10 +105,14 @@ services.updateTag = function(id, data, callback) {
     .set('Content-Type', 'application/json')
     .send(data)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
+
 
 //contributor
 services.getAllContributors = function(callback, date = null) {
@@ -97,7 +123,10 @@ services.getAllContributors = function(callback, date = null) {
   superagent
     .get(baseUrl + '/contributor/' + dateParams)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -108,7 +137,10 @@ services.createContributor = function(data, callback) {
     .set('Content-Type', 'application/json')
     .send(data)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -117,7 +149,10 @@ services.deleteContributor = function(id, callback) {
   superagent
     .delete(baseUrl + '/contributor/' + id)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
@@ -128,7 +163,10 @@ services.updateContributor = function(id, data, callback) {
     .set('Content-Type', 'application/json')
     .send(data)
     .end(function(err, res) {
-      if (err) return callback(err);
+      if (err) return callback({
+        status: err.status,
+        message: err.message
+      });
       return callback(res.body);
     });
 }
