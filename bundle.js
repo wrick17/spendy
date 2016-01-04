@@ -9602,6 +9602,16 @@
 	  return utils.sortByKey(group, 'monthIndex');
 	};
 
+	utils.gatherUnique = function (array, key) {
+	  var unique = {};
+	  var distinct = [];
+	  for (var i in array) {
+	    if (typeof unique[array[i][key]] == "undefined") distinct.push(array[i]);
+	    unique[array[i][key]] = 0;
+	  }
+	  return distinct;
+	};
+
 	exports['default'] = utils;
 	module.exports = exports['default'];
 
@@ -10426,12 +10436,12 @@
 	          _react2['default'].createElement(
 	            'td',
 	            { 'data-label': 'Contributor' },
-	            that.props.contributorMap[expense.contributorId] || 'Loading..'
+	            expense.contributorName || 'Loading..'
 	          ),
 	          _react2['default'].createElement(
 	            'td',
 	            { 'data-label': 'Tag' },
-	            that.props.tagMap[expense.tagId] || 'Loading..'
+	            expense.tagName || 'Loading..'
 	          ),
 	          _react2['default'].createElement(
 	            'td',
@@ -10495,8 +10505,6 @@
 	          minimal: that.props.minimal,
 	          key: expenseGroup.month,
 	          expenseGroup: expenseGroup,
-	          contributorMap: that.props.contributorMap,
-	          tagMap: that.props.tagMap,
 	          editEntry: that.props.editEntry,
 	          deleteEntry: that.props.deleteEntry });
 	      });
@@ -10584,7 +10592,7 @@
 	            null,
 	            'Show all expenses by'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'everyone', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
 	        ),
 	        _react2['default'].createElement(
 	          'div',
@@ -10594,7 +10602,7 @@
 	            null,
 	            'for'
 	          ),
-	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'All', noDisabled: true, options: this.props.tags, selectedValue: this.props.selectedValueTag, onChange: this.onChangeTag })
+	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'everything', noDisabled: true, options: this.props.tags, selectedValue: this.props.selectedValueTag, onChange: this.onChangeTag })
 	        )
 	      );
 	    }
@@ -10620,10 +10628,10 @@
 	    this.filterByContributor = this.filterByContributor.bind(this);
 	    this.filterByTag = this.filterByTag.bind(this);
 	    this.filterExpenses = this.filterExpenses.bind(this);
+	    this.gatherContributors = this.gatherContributors.bind(this);
+	    this.gatherTags = this.gatherTags.bind(this);
 	    this.state = {
 	      id: '',
-	      tagMap: [],
-	      contributorMap: [],
 	      contributors: [],
 	      tags: [],
 	      isModalOpen: false,
@@ -10641,34 +10649,46 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var that = this;
-	      var tagMap = {};
-	      var contributorMap = {};
-	      _servicesJsx2['default'].getAllTags(function (tags) {
-	        tags.map(function (tag) {
-	          tagMap[tag._id] = tag.name;
-	        });
-	        that.setState({
-	          tagMap: tagMap,
-	          tags: tags
-	        });
-	      });
-	      _servicesJsx2['default'].getAllContributors(function (contributors) {
-	        contributors.map(function (contributor) {
-	          contributorMap[contributor._id] = contributor.name;
-	        });
-	        that.setState({
-	          contributorMap: contributorMap,
-	          contributors: contributors
-	        });
-	      });
+	      this.gatherTags(this.props.expenses);
+	      this.gatherContributors(this.props.expenses);
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
+	      this.gatherTags(nextProps.expenses);
+	      this.gatherContributors(nextProps.expenses);
 	      this.setState({
 	        expenses: nextProps.expenses,
 	        contributorId: 'default',
 	        tagId: 'default'
+	      });
+	    }
+	  }, {
+	    key: 'gatherTags',
+	    value: function gatherTags(expenses) {
+	      if (expenses === 'loading') return;
+	      var tags = _utilsJsx2['default'].gatherUnique(expenses, 'tagId').map(function (expense) {
+	        return {
+	          name: expense.tagName,
+	          _id: expense.tagId
+	        };
+	      });
+	      this.setState({
+	        tags: tags
+	      });
+	    }
+	  }, {
+	    key: 'gatherContributors',
+	    value: function gatherContributors(expenses) {
+	      if (expenses === 'loading') return;
+	      var contributors = _utilsJsx2['default'].gatherUnique(expenses, 'contributorId').map(function (expense) {
+	        return {
+	          name: expense.contributorName,
+	          _id: expense.contributorId
+	        };
+	      });
+	      this.setState({
+	        contributors: contributors
 	      });
 	    }
 	  }, {
@@ -10791,8 +10811,6 @@
 	          filterByContributor: this.filterByContributor }),
 	        _react2['default'].createElement(ExpenseTable, {
 	          expenses: this.state.expenses,
-	          contributorMap: this.state.contributorMap,
-	          tagMap: this.state.tagMap,
 	          editEntry: this.editEntry,
 	          minimal: this.props.minimal,
 	          deleteEntry: this.showDeleteModal }),

@@ -43,4 +43,15 @@ utils.groupByMonth = function(items) {
   return utils.sortByKey(group, 'monthIndex');
 }
 
+utils.gatherUnique = function(array, key) {
+  var unique = {};
+  var distinct = [];
+  for( var i in array ){
+    if( typeof(unique[array[i][key]]) == "undefined")
+      distinct.push(array[i]);
+    unique[array[i][key]] = 0;
+  }
+  return distinct;
+}
+
 export default utils;
