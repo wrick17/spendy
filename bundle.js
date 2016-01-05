@@ -10002,7 +10002,7 @@
 	  _superagent2['default'].get(baseUrl + '/entry/' + dateParams).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body.reverse());
 	  });
@@ -10012,7 +10012,7 @@
 	  _superagent2['default'].post(baseUrl + '/entry').set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10021,7 +10021,7 @@
 	  _superagent2['default']['delete'](baseUrl + '/entry/' + id).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10031,7 +10031,7 @@
 	  _superagent2['default'].put(baseUrl + '/entry/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10042,7 +10042,7 @@
 	  _superagent2['default'].get(baseUrl + '/tag').end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10052,7 +10052,7 @@
 	  _superagent2['default'].post(baseUrl + '/tag').set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10062,7 +10062,7 @@
 	  _superagent2['default']['delete'](baseUrl + '/tag/' + id).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10072,7 +10072,7 @@
 	  _superagent2['default'].put(baseUrl + '/tag/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10089,7 +10089,7 @@
 	  _superagent2['default'].get(baseUrl + '/contributor/' + dateParams).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10099,7 +10099,7 @@
 	  _superagent2['default'].post(baseUrl + '/contributor').set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10109,7 +10109,7 @@
 	  _superagent2['default']['delete'](baseUrl + '/contributor/' + id).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
@@ -10119,7 +10119,7 @@
 	  _superagent2['default'].put(baseUrl + '/contributor/' + id).set('Content-Type', 'application/json').send(data).end(function (err, res) {
 	    if (err) return callback({
 	      status: err.status,
-	      message: err.message
+	      message: JSON.parse(res.text).message
 	    });
 	    return callback(res.body);
 	  });
