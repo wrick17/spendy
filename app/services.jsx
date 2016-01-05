@@ -14,7 +14,7 @@ services.getAllEntries = function(callback, date = null) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body.reverse());
     });
@@ -28,7 +28,7 @@ services.createEntry = function(data, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -39,7 +39,7 @@ services.deleteEntry = function(id, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -53,7 +53,7 @@ services.updateEntry = function(id, data, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -67,7 +67,7 @@ services.getAllTags = function(callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -81,7 +81,7 @@ services.createTag = function(data, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -93,7 +93,7 @@ services.deleteTag = function(id, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -107,7 +107,7 @@ services.updateTag = function(id, data, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -125,7 +125,7 @@ services.getAllContributors = function(callback, date = null) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -139,7 +139,7 @@ services.createContributor = function(data, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -151,7 +151,7 @@ services.deleteContributor = function(id, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });
@@ -165,7 +165,7 @@ services.updateContributor = function(id, data, callback) {
     .end(function(err, res) {
       if (err) return callback({
         status: err.status,
-        message: err.message
+        message: JSON.parse(res.text).message
       });
       return callback(res.body);
     });

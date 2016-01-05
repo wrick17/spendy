@@ -474,6 +474,7 @@ a:hover {
   left: 0;
   height: 100vh;
   width: 100%;
+  z-index: 100;
   background: rgba(0, 0, 0, 0.6);
 }
 .modal-wrapper .modal {
@@ -485,6 +486,7 @@ a:hover {
   height: auto;
   max-height: 100vh;
   overflow: auto;
+  z-index: 101;
 }
 .modal-wrapper .modal .container {
   padding: 20px;
@@ -676,12 +678,10 @@ a:hover {
 }
 .dashboard-container .filter-bar .filter-group {
   display: inline;
-  margin-right: 10px;
-}
-.dashboard-container .filter-bar .filter-group label {
-  margin-right: 10px;
+  margin-right: 6px;
 }
 .dashboard-container .filter-bar .filter-group select {
+  margin-left: 6px;
   background: #FFFFFF;
   border: 1px solid #e3e3e3;
   font-size: 14px;
@@ -800,12 +800,10 @@ a:hover {
 }
 .expenses-page .filter-bar .filter-group {
   display: inline;
-  margin-right: 10px;
-}
-.expenses-page .filter-bar .filter-group label {
-  margin-right: 10px;
+  margin-right: 6px;
 }
 .expenses-page .filter-bar .filter-group select {
+  margin-left: 6px;
   background: #FFFFFF;
   border: 1px solid #e3e3e3;
   font-size: 14px;
