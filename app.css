@@ -678,12 +678,10 @@ a:hover {
 }
 .dashboard-container .filter-bar .filter-group {
   display: inline;
-  margin-right: 10px;
-}
-.dashboard-container .filter-bar .filter-group label {
-  margin-right: 10px;
+  margin-right: 6px;
 }
 .dashboard-container .filter-bar .filter-group select {
+  margin-left: 6px;
   background: #FFFFFF;
   border: 1px solid #e3e3e3;
   font-size: 14px;
@@ -802,12 +800,10 @@ a:hover {
 }
 .expenses-page .filter-bar .filter-group {
   display: inline;
-  margin-right: 10px;
-}
-.expenses-page .filter-bar .filter-group label {
-  margin-right: 10px;
+  margin-right: 6px;
 }
 .expenses-page .filter-bar .filter-group select {
+  margin-left: 6px;
   background: #FFFFFF;
   border: 1px solid #e3e3e3;
   font-size: 14px;

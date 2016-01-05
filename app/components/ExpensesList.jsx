@@ -92,14 +92,15 @@ class FilterBar extends React.Component {
   render() {
     return (
       <div className="filter-bar">
-        <div className="filter-group">
-          <label>Show all expenses by</label>
-          <Select default="Everyone" noDisabled options={this.props.contributors} selectedValue={this.props.selectedValueContributor} onChange={this.onChangeContributor} />
-        </div>
-        <div className="filter-group">
-          <label>for</label>
-          <Select default="Everything" noDisabled options={this.props.tags} selectedValue={this.props.selectedValueTag} onChange={this.onChangeTag} />
-        </div>
+        { (this.props.contributors === 'loading' && this.props.tags === 'loading') ? null : (<div className="filter-group"><label>Show all expenses</label></div>) }
+        { (this.props.contributors === 'loading') ? null : (<div className="filter-group">
+                  <label>by</label>
+                  <Select default="Everyone" noDisabled options={this.props.contributors} selectedValue={this.props.selectedValueContributor} onChange={this.onChangeContributor} />
+                </div>) }
+        { (this.props.tags === 'loading') ? null : (<div className="filter-group">
+                  <label>for</label>
+                  <Select default="Everything" noDisabled options={this.props.tags} selectedValue={this.props.selectedValueTag} onChange={this.onChangeTag} />
+                </div>) }
       </div>
     );
   }
@@ -234,13 +235,13 @@ export default class ExpensesList extends React.Component {
   render() {
     return (
       <div>
-        <FilterBar
-          contributors={this.state.contributors}
-          tags={this.state.tags}
-          filterByTag={this.filterByTag}
-          selectedValueContributor={this.state.contributorId}
-          selectedValueTag={this.state.tagId}
-          filterByContributor={this.filterByContributor} />
+        { (this.state.expenses === 'loading' || this.state.expenses.length < 1) ? null : <FilterBar
+                  contributors={this.state.contributors}
+                  tags={this.state.tags}
+                  filterByTag={this.filterByTag}
+                  selectedValueContributor={this.state.contributorId}
+                  selectedValueTag={this.state.tagId}
+                  filterByContributor={this.filterByContributor} /> }
         <ExpenseTable
           expenses={this.state.expenses}
           editEntry={this.editEntry}

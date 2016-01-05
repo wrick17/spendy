@@ -10831,17 +10831,26 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'filter-bar' },
-	        _react2['default'].createElement(
+	        this.props.contributors === 'loading' && this.props.tags === 'loading' ? null : _react2['default'].createElement(
 	          'div',
 	          { className: 'filter-group' },
 	          _react2['default'].createElement(
 	            'label',
 	            null,
-	            'Show all expenses by'
+	            'Show all expenses'
+	          )
+	        ),
+	        this.props.contributors === 'loading' ? null : _react2['default'].createElement(
+	          'div',
+	          { className: 'filter-group' },
+	          _react2['default'].createElement(
+	            'label',
+	            null,
+	            'by'
 	          ),
 	          _react2['default'].createElement(_SelectJsx2['default'], { 'default': 'Everyone', noDisabled: true, options: this.props.contributors, selectedValue: this.props.selectedValueContributor, onChange: this.onChangeContributor })
 	        ),
-	        _react2['default'].createElement(
+	        this.props.tags === 'loading' ? null : _react2['default'].createElement(
 	          'div',
 	          { className: 'filter-group' },
 	          _react2['default'].createElement(
@@ -11021,7 +11030,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        null,
-	        _react2['default'].createElement(FilterBar, {
+	        this.state.expenses === 'loading' || this.state.expenses.length < 1 ? null : _react2['default'].createElement(FilterBar, {
 	          contributors: this.state.contributors,
 	          tags: this.state.tags,
 	          filterByTag: this.filterByTag,
