@@ -1,9 +1,11 @@
 var express = require('express'),
     path = require('path'),
     superagent = require('superagent'),
+    enforce = require('express-sslify'),
     app = express();
 
 app.use(express.static(path.join('./')));
+app.use(enforce.HTTPS());
 
 app.get('/*', function(req, res) {
  res.sendFile(__dirname + '/index.html');
