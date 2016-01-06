@@ -9991,6 +9991,8 @@
 	var baseUrl = 'https://spendyapi-dev.herokuapp.com/api/v1';
 	var services = {};
 
+	if (window.location.hostname === 'spendyweb.herokuapp.com') baseUrl = 'https://spendyapi.herokuapp.com/api/v1';
+
 	// entries
 	services.getAllEntries = function (callback) {
 	  var date = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
