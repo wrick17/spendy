@@ -19,12 +19,6 @@ export default class Notification extends React.Component {
           icon: 'https://cdn1.iconfinder.com/data/icons/freeline/32/bell_sound_notification_remind_reminder_ring_ringing_schedule-128.png'
         });
       });
-      // var notification = new window.Notification(message, {
-      //   icon: 'https://cdn1.iconfinder.com/data/icons/freeline/32/bell_sound_notification_remind_reminder_ring_ringing_schedule-128.png'
-      // });
-      // setTimeout(function() {
-      //   notification.close();
-      // }, 2000);
     }
     function notify(message) {
       if (!("Notification" in window)) {
