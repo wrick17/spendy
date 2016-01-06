@@ -12,14 +12,45 @@ export default class Notification extends React.Component {
     }
   }
   showNotification(message) {
-    this.setState({
-      open: true,
-      message: message
-    });
-    var that = this;
-    setTimeout(function() {
-      that.closeModal();
-    }, 2000);
+    function showNotification(message) {
+      var notification = new window.Notification(message, {
+        icon: 'https://cdn1.iconfinder.com/data/icons/freeline/32/bell_sound_notification_remind_reminder_ring_ringing_schedule-128.png'
+      });
+      setTimeout(function() {
+        notification.close();
+      }, 2000);
+    }
+    function notify(message) {
+      if (!("Notification" in window)) {
+        return false;
+      }
+      else if (window.Notification.permission === "granted") {
+        showNotification(message);
+        return true;
+      }
+      else if (window.Notification.permission !== 'denied') {
+        window.Notification.requestPermission(function (permission) {
+          if (permission === "granted") {
+            showNotification(message);
+            return true;
+          }
+          else
+            return false;
+        });
+      }
+      else
+        return false;
+    }
+    if (!notify(message)) {
+      this.setState({
+        open: true,
+        message: message
+      });
+      var that = this;
+      setTimeout(function() {
+        that.closeModal();
+      }, 2000);
+    }
   }
   closeModal() {
     this.setState({
