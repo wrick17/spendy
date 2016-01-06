@@ -9988,7 +9988,7 @@
 
 	var _utilsJsx2 = _interopRequireDefault(_utilsJsx);
 
-	var baseUrl = 'https://spendyapi-dev.herokuapp.com/api/v1';
+	var baseUrl = 'https://spendyapi.herokuapp.com/api/v1';
 	var services = {};
 
 	// entries

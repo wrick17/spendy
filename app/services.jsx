@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 import utils from './utils.jsx'
-var baseUrl = 'https://spendyapi-dev.herokuapp.com/api/v1';
+var baseUrl = 'https://spendyapi.herokuapp.com/api/v1';
 var services = {};
 
 
