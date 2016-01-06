@@ -1,18 +1,13 @@
 var express = require('express'),
     path = require('path'),
     superagent = require('superagent'),
+    enforce = require('express-sslify'),
     app = express();
 
 app.use(express.static(path.join('./')));
+app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
 app.get('/*', function(req, res) {
-  console.log(req.protocol);
-  if (req.hostname !== 'localhost' && req.protocol === 'http') {
-    res.writeHead(301, {
-      Location: "https://" + req.headers["host"] + req.url
-    });
-    res.end();
-  }
   res.sendFile(__dirname + '/entry.html');
 });
 
