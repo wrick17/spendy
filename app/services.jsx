@@ -3,6 +3,7 @@ import utils from './utils.jsx'
 var baseUrl = 'https://spendyapi-dev.herokuapp.com/api/v1';
 var services = {};
 
+
 // entries
 services.getAllEntries = function(callback, date = null) {
   var dateParams = '';
