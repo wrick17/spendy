@@ -5,7 +5,7 @@ var express = require('express'),
     app = express();
 
 app.use(express.static(path.join('./')));
-app.use(enforce.HTTPS());
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get('/*', function(req, res) {
  res.sendFile(__dirname + '/index.html');
