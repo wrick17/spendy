@@ -6,6 +6,7 @@ var express = require('express'),
 app.use(express.static(path.join('./')));
 
 app.get('/*', function(req, res) {
+  console.log(req.protocol);
   if (req.hostname !== 'localhost' && req.protocol === 'http') {
     res.writeHead(301, {
       Location: "https://" + req.headers["host"] + req.url
