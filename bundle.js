@@ -10447,14 +10447,39 @@
 	  _createClass(Notification, [{
 	    key: 'showNotification',
 	    value: function showNotification(message) {
-	      this.setState({
-	        open: true,
-	        message: message
-	      });
-	      var that = this;
-	      setTimeout(function () {
-	        that.closeModal();
-	      }, 2000);
+	      function showNotification(message) {
+	        navigator.serviceWorker.register('sw.js');
+	        navigator.serviceWorker.ready.then(function (registration) {
+	          registration.showNotification(message, {
+	            icon: 'https://cdn1.iconfinder.com/data/icons/freeline/32/bell_sound_notification_remind_reminder_ring_ringing_schedule-128.png'
+	          });
+	        });
+	      }
+	      function notify(message) {
+	        if (!("Notification" in window)) {
+	          return false;
+	        } else if (window.Notification.permission === "granted") {
+	          showNotification(message);
+	          return true;
+	        } else if (window.Notification.permission !== 'denied') {
+	          window.Notification.requestPermission(function (permission) {
+	            if (permission === "granted") {
+	              showNotification(message);
+	              return true;
+	            } else return false;
+	          });
+	        } else return false;
+	      }
+	      if (!notify(message)) {
+	        this.setState({
+	          open: true,
+	          message: message
+	        });
+	        var that = this;
+	        setTimeout(function () {
+	          that.closeModal();
+	        }, 2000);
+	      }
 	    }
 	  }, {
 	    key: 'closeModal',
